@@ -16,6 +16,15 @@ namespace SocketServer
         const int port = 8888; // Server port
         const int bufferSize = 1024; // Buffer size
 
+        public static List<Location> world = new List<Location>()
+        {
+            new Location("","").CryoStation()
+        };
+        public static Location FindLocation(List<Location> loc, string loc_name)
+        {
+            return loc.Find(location => location.Name == loc_name);
+        }
+
         public static List<User> onlineUserList = new List<User>();
         public static User FindOnlineUser(List<User> userList, string userName)
         {
@@ -93,6 +102,31 @@ namespace SocketServer
                         }
                         user.ConnectionCount++;
                         onlineUserList.Add(user);
+                        Location.AddVisitors(user, world);
+                    }
+                    else if (message.StartsWith("!help") || message.StartsWith("!h"))  // help function
+                    {
+                        string help_message = "Available commands:\n" +
+                            "!class [class_name] - Sets the user's class to [class_name], which must be one of: Soldier, Engineer, Explorer\n" +
+                            "!inventory - Displays your Inventory\n" +
+                            "!i [item name] - Use item from your inventory\n" +
+                            "!ir [item name] - Remove item from your inventory\n" +
+                            "!ii [item name] - Inspect item in your inventory\n" +
+                            "!is [item name] - Sell item from your inventory\n" +
+                            "!isa [item name] - Sell all [item name] from your inventory\n" +
+                            "!shop - Displays the local shop if there is one \n" +
+                            "!shop [item name] - Buy [Item name] from the Shop \n" +
+                            "!move [location name] - move to [location name] \n" +
+                            "!look around - Reveals info about your current location \n" +
+                            "!revive - Revives you for a price\n" +
+                            "!fight [enemy_level] - Initiates a battle with an enemy of the specified level\n" +
+                            "!duel [username] - Initiates a battle with another User if he/she is online\n" +
+                            "!allocate_attributes [speed] [intellect] [luck] - Increases the user's speed, intellect, and luck attributes by the specified amounts\n" +
+                            "!attributes - Displays the user's current attributes\n" +
+                            "!users - Displays a list of all connected users\n" +
+                            "!locals - Displays a list of all users in current location\n" +
+                            "![username] [message] - Send a private message to a user  \n";
+                        SendMessage(client, help_message);
                     }
                     else if (message.StartsWith("!users"))  // display users online
                     {
@@ -114,6 +148,69 @@ namespace SocketServer
                         string userlist = sb.ToString();
 
                         SendMessage(client, userlist);
+                    }
+                    else if (message.StartsWith("!look around") || message.StartsWith("!la")) // look around
+                    {
+                        if (FindLocation(world, user.CurrentLocation) != null)
+                        {
+                            SendMessage(client, $"You are currently in {user.CurrentLocation} | {FindLocation(world, user.CurrentLocation).Description}  \n");
+                        }
+                        else
+                        {
+                            SendMessage(client, $"You are currently in nowhere | The sound of Nigh̶̜̑ẗ̸̥m̴̲͝a̸̫͒res surrounds you. \n");
+                        }
+                    }
+                    else if (message.StartsWith("!locals") || message.StartsWith("!l"))  // display local users online
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        Location loc = FindLocation(world, user.CurrentLocation);
+                        foreach (User u in loc.Visitors)
+                        {
+                            sb.Append("< " + u.Name + " > Level: " + u.Level + " hp: " + u.Hp + " \n");
+                        }
+
+                        string locals = sb.ToString();
+
+                        SendMessage(client, locals);
+                    }
+                    else if (message.StartsWith("!move") || message.StartsWith("!m")) // move to location
+                    {
+                        string[] parts = message.Split(' ', 2);
+                        if (parts.Length > 1)
+                        {
+                            string locationName = message.Split()[1];
+                            if (FindLocation(world, locationName) != null)
+                            {
+                                user.Move(client, locationName, world);
+                            }
+                        }
+                    }
+                    else if (message.StartsWith("!shop")) // move to location
+                    {
+                        string[] parts = message.Split(' ', 2);
+                        StringBuilder sb = new StringBuilder();
+                        if (parts.Length > 1)
+                        {
+                            // buy item
+                            user.BuyItem(client, message.Split()[1], world);
+                        }
+                        else
+                        {
+                            // diplay shop items
+                            foreach (Item i in FindLocation(world, user.CurrentLocation).Shop)
+                            {
+                                sb.Append(i.Icon + "-" + i.Name + " | " + i.Value + "📀  \n");
+                            }
+                            string itemList = sb.ToString();
+                            if (string.IsNullOrEmpty(itemList))
+                            {
+                                SendMessage(client, "There is no Shop around here  \n");
+                            }
+                            else
+                            {
+                                SendMessage(client, itemList);
+                            }
+                        }
                     }
                     else if (message.StartsWith("!revive")) // revive
                     {
@@ -255,7 +352,6 @@ namespace SocketServer
                         {
                             int enemy_lvl = user.Level;
                             Enemy e = new Enemy("", 1).RougeDrone(enemy_lvl);
-                            e.userObj.FreeAP = 0;
                             SendMessage(client, "Your Opponent: ");
                             Game.DisplayProfile(client, e.userObj);
                             User.Fight(client, user, e.userObj);
@@ -281,7 +377,7 @@ namespace SocketServer
                     {
                         Game.DisplayProfile(client, user);
                     }
-                    else if (message.StartsWith("!"))  // PM function
+                    else if (message.StartsWith("!"))  // PM function  ____________________________________ should pre-last
                     {
                         string[] parts = message.Split(' ', 2);
 
@@ -301,27 +397,6 @@ namespace SocketServer
                                 }
                             }
                         }
-                    }
-                    else if (message.StartsWith("!help") || message.StartsWith("!h"))  // help function
-                    {
-                        string help_message = "Available commands:\n" +
-                            "!class [class_name] - Sets the user's class to [class_name], which must be one of: Soldier, Engineer, Explorer\n" +
-                            "!inventory - Displays your Inventory\n" +
-                            "!i [item name] - Use item from your inventory\n" +
-                            "!ir [item name] - Remove item from your inventory\n" +
-                            "!ii [item name] - Inspect item in your inventory\n" +
-                            "!is [item name] - Sell item from your inventory\n" +
-                            "!isa [item name] - Sell all [item name] from your inventory\n" +
-                            "!shop - Displays the local shop if there is one \n" +
-                            "!shop [item name] - Buy [Item name] from the Shop \n" +
-                            "!revive - Revives you\n" +
-                            "!fight [enemy_level] - Initiates a battle with an enemy of the specified level\n" +
-                            "!duel [username] - Initiates a battle with another User if he/she is online\n" +
-                            "!allocate_attributes [speed] [intellect] [luck] - Increases the user's speed, intellect, and luck attributes by the specified amounts\n" +
-                            "!attributes - Displays the user's current attributes\n" +
-                            "!users - Displays a list of all connected users\n" +
-                            "![username] [message] - Send a private message to a user";
-                        SendMessage(client, help_message);
                     }
                     else // ____________________________chat function____________________________
                     {
@@ -354,6 +429,7 @@ namespace SocketServer
                 BroadcastMessage(username + " has left the chat");
                 User.SaveToJsonFile(user);
                 onlineUserList.Remove(user);
+                Location.RemoveVisitors(user, world);
             }
 
             client.Close();

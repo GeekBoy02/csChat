@@ -3,7 +3,7 @@
   "Name_Enclosed": "\u003C two \u003E",
   "Name_Icon": "two \uD83D\uDC64",
   "address": "127.0.0.1:6647",
-  "connection_count": 1,
+  "connection_count": 3,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
@@ -16,6 +16,7 @@
   "Hp_Icon": "100 \u2764\uFE0F",
   "Credits": 0,
   "Credits_Icon": "0 \uD83D\uDCC0",
+  "Credits_Icon_Only": "\uD83D\uDCC0",
   "speed": 25,
   "Speed_Icon": "25 \u26A1",
   "intellect": 7,
@@ -41,5 +42,6 @@
       "Description": "Increases your SPEED.",
       "Value": 10
     }
-  ]
+  ],
+  "current_location": "Cryo-Station"
 }

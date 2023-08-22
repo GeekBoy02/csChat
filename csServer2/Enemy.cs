@@ -79,11 +79,12 @@ namespace SocketServer
             Enemy e = new Enemy("Rouge Drone", lvl)
             {
                 Loot = new List<Item>
-                                    {
-                                        new Item().Drink(),
-                                        new Item().Bandage()
-                                    }
+                    {
+                        new Item().Drink(),
+                        new Item().Bandage()
+                    }
             };
+            e.userObj.FreeAP = 0;
             return e;
         }
     }

@@ -3,10 +3,11 @@ using System.Text.Json;
 using System.Net.Sockets;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 
 namespace SocketServer
 {
-    class Location
+    public class Location
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -17,6 +18,9 @@ namespace SocketServer
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
+        [JsonPropertyName("welcomeMsg")]
+        public string WelcomeMessage { get; set; }
+
         [JsonPropertyName("quests")]
         public List<Quest> Quests { get; set; }
 
@@ -25,6 +29,10 @@ namespace SocketServer
 
         [JsonPropertyName("shop")]
         public List<Item> Shop { get; set; }
+        public static Item FindItemInShop(List<Item> shop, string itemName)
+        {
+            return shop.Find(item => item.Name == itemName);
+        }
 
         [JsonPropertyName("x")]
         public int x { get; set; }
@@ -38,14 +46,17 @@ namespace SocketServer
         {
             Name = name;
             Description = description;
+            WelcomeMessage = $"Welcome to {Name}";
             Quests = new List<Quest>();
             Enemies = new List<Enemy>();
+            Visitors = new List<User>();
         }
         public Location CryoStation()
         {
             Name = "Cryo-Station";
             Level = 1;
             Description = "The start of your Adventure.";
+            WelcomeMessage = $"Welcome to {Name}";
             Enemies = new List<Enemy>
             {
                 new Enemy("", 1).RougeDrone(Game.Randomize(1, 0, 10)),
@@ -56,6 +67,48 @@ namespace SocketServer
                 new Item().Bandage()
             };
             return this;
+        }
+        public static void AddVisitors(List<User> userOnline, List<Location> world)
+        {
+            foreach (var l in world)
+            {
+                foreach (var u in userOnline)
+                {
+                    if (u.CurrentLocation == l.Name)
+                    {
+                        l.Visitors.Add(u);
+                    }
+                }
+
+            }
+        }
+        public static void AddVisitors(User user, List<Location> world)
+        {
+            foreach (var l in world)
+            {
+                if (user.CurrentLocation == l.Name)
+                {
+                    l.Visitors.Add(user);
+                }
+            }
+        }
+        public void AddVisitors(User user)
+        {
+            Visitors.Add(user);
+        }
+        public static void RemoveVisitors(User user, List<Location> world)
+        {
+            foreach (var l in world)
+            {
+                if (user.CurrentLocation == l.Name)
+                {
+                    l.Visitors.Remove(user);
+                }
+            }
+        }
+        public void RemoveVisitors(User user)
+        {
+            Visitors.Remove(user);
         }
         public void AddQuest(Quest quest)
         {
@@ -91,7 +144,7 @@ namespace SocketServer
             Directory.CreateDirectory("locations");
             File.WriteAllText("locations/" + location.Name + ".json", json);
         }
-        public static void SaveToJsonFile(Location location)
+        public void SaveToJsonFile(Location location)
         {
             // Create a json serializer options object with some settings
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -113,5 +166,11 @@ namespace SocketServer
             }
             return new Location("notLoaded", "");
         }
+
+        public List<Location> LoadWorld()
+        {
+            return null;
+        }
+
     }
 }

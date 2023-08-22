@@ -95,7 +95,11 @@ namespace SocketServer
         }
         public string Credits_Icon
         {
-            get { return $"{Credits} 📀"; }
+            get { return $"{Credits} {Credits_Icon_Only}"; }
+        }
+        public string Credits_Icon_Only
+        {
+            get { return "📀"; }
         }
         [JsonPropertyName("speed")] // Specify the name of the json property
         public int Speed { get; set; }
@@ -142,6 +146,21 @@ namespace SocketServer
         }
         [JsonPropertyName("inventory")] // Specify the name of the json property
         public List<Item> Inventory { get; set; } = new List<Item>();
+        [JsonPropertyName("current_location")]
+        public string CurrentLocation { get; set; }
+
+        /* 
+
+
+
+
+
+
+
+
+
+
+        */
 
         // Define a constructor that takes two parameters: name and address
         public User(string name, string address)
@@ -522,6 +541,26 @@ namespace SocketServer
                     u.Hp += 10;
                     SaveToJsonFile(u);
                 }
+            }
+        }
+        public void Move(TcpClient client, string locationName, List<Location> world)
+        {
+            Location loc = Program.FindLocation(world, locationName);
+            loc.Visitors.Add(this);   // add user to location visitors
+            CurrentLocation = locationName;
+            Program.SendMessage(client, $"You travel to {locationName} \n \n  << " + loc.WelcomeMessage + " >> \n");
+            SaveToJsonFile(this);
+            //loc.SaveToJsonFile(loc);
+        }
+        public void BuyItem(TcpClient client, string itemName, List<Location> world)
+        {
+            List<Item> shop = Program.FindLocation(world, CurrentLocation).Shop;
+            if (!string.IsNullOrEmpty(itemName) && shop.Contains(Location.FindItemInShop(shop, itemName)))
+            {
+                Item i = Location.FindItemInShop(shop, itemName);
+                AddItemToInventory(i);
+                Credits -= i.Value;
+                Program.SendMessage(client, $"You bought {i.Name} for {i.Value} {Credits_Icon_Only} \n");
             }
         }
     }

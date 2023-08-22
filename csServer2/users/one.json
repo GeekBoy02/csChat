@@ -3,19 +3,20 @@
   "Name_Enclosed": "\u003C one \u003E",
   "Name_Icon": "one \uD83D\uDC64",
   "address": "127.0.0.1:2986",
-  "connection_count": 54,
+  "connection_count": 59,
   "message_count": 7,
   "class": "Engineer",
   "Class_Icon": "Engineer \uD83E\uDEAA",
   "level": 23,
   "Level_Icon": "23 \uD83C\uDF96\uFE0F",
-  "xp": 1930,
-  "Xp_Icon": "1930 \u2B50",
+  "xp": 1950,
+  "Xp_Icon": "1950 \u2B50",
   "max_hp": 100,
-  "Hp": 26,
-  "Hp_Icon": "26 \u2764\uFE0F",
-  "Credits": 192,
-  "Credits_Icon": "192 \uD83D\uDCC0",
+  "Hp": 0,
+  "Hp_Icon": "0 \u2764\uFE0F",
+  "Credits": 95,
+  "Credits_Icon": "95 \uD83D\uDCC0",
+  "Credits_Icon_Only": "\uD83D\uDCC0",
   "speed": 64,
   "Speed_Icon": "64 \u26A1",
   "intellect": 43,
@@ -48,12 +49,6 @@
       "Value": 10
     },
     {
-      "Name": "Bandage",
-      "Icon": "\uD83E\uDE79",
-      "Description": "Restores some health.",
-      "Value": 1
-    },
-    {
       "Name": "Drink",
       "Icon": "\uD83E\uDDC3",
       "Description": "Restores some health.",
@@ -64,12 +59,6 @@
       "Icon": "\uD83D\uDCE1",
       "Description": "Increases your LUCK by 0% in a Fight",
       "Value": 10
-    },
-    {
-      "Name": "Bandage",
-      "Icon": "\uD83E\uDE79",
-      "Description": "Restores some health.",
-      "Value": 1
     },
     {
       "Name": "Drink",
@@ -90,12 +79,6 @@
       "Value": 10
     },
     {
-      "Name": "Bandage",
-      "Icon": "\uD83E\uDE79",
-      "Description": "Restores some health.",
-      "Value": 1
-    },
-    {
       "Name": "Glasses",
       "Icon": "\uD83D\uDC53",
       "Description": "Increases your INTELLECT by 0% in a Fight",
@@ -114,16 +97,53 @@
       "Value": 10
     },
     {
+      "Name": "Glasses",
+      "Icon": "\uD83D\uDC53",
+      "Description": "Increases your INTELLECT by 0% in a Fight",
+      "Value": 10
+    },
+    {
       "Name": "Bandage",
       "Icon": "\uD83E\uDE79",
       "Description": "Restores some health.",
       "Value": 1
     },
     {
-      "Name": "Glasses",
-      "Icon": "\uD83D\uDC53",
-      "Description": "Increases your INTELLECT by 0% in a Fight",
-      "Value": 10
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
     }
-  ]
+  ],
+  "current_location": "Cryo-Station"
 }
