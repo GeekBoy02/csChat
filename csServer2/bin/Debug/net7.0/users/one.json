@@ -1,0 +1,33 @@
+{
+  "name": "one",
+  "Name_Enclosed": "\u003Cone\u003E",
+  "address": "127.0.0.1:5938",
+  "connection_count": 6,
+  "message_count": 2,
+  "class": "Soldier",
+  "level": 3,
+  "xp": 0,
+  "max_hp": 100,
+  "Hp": 100,
+  "speed": 26,
+  "intellect": 7,
+  "luck": 10,
+  "freeAP": 4,
+  "inventory": [
+    {
+      "Name": "Bandage",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Bandage",
+      "Description": "Restores some health.",
+      "Value": 1
+    }
+  ]
+}

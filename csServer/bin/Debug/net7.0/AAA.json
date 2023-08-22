@@ -1,0 +1,14 @@
+{
+  "name": "AAA",
+  "address": "127.0.0.1:9121",
+  "connection_count": 1,
+  "message_count": 7,
+  "class": "Soldier",
+  "level": 1,
+  "xp": 0,
+  "healthpoints": 100,
+  "speed": 15,
+  "intellect": 7,
+  "luck": 10,
+  "freeAP": 5
+}

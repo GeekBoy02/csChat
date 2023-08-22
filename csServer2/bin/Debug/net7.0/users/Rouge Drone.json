@@ -1,0 +1,30 @@
+{
+  "name": "Rouge Drone",
+  "Name_Enclosed": "\u003CRouge Drone\u003E",
+  "address": "",
+  "connection_count": 0,
+  "message_count": 0,
+  "class": "Mob",
+  "level": 2,
+  "xp": 0,
+  "max_hp": 100,
+  "Hp": 10,
+  "speed": 10,
+  "intellect": 7,
+  "luck": 10,
+  "freeAP": 5,
+  "inventory": [
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Restores some health.",
+      "Value": 2
+    }
+  ]
+}
