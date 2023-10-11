@@ -1,33 +1,35 @@
 {
+  "isDead": false,
   "name": "one",
-  "Name_Enclosed": "\u003Cone\u003E",
-  "address": "127.0.0.1:5938",
-  "connection_count": 6,
-  "message_count": 2,
-  "class": "Soldier",
-  "level": 3,
-  "xp": 0,
+  "Name_Enclosed": "\u003C one \u003E",
+  "Name_Icon": "one \uD83D\uDC64",
+  "address": "127.0.0.1:7727",
+  "connection_count": 1,
+  "message_count": 0,
+  "class": "Explorer",
+  "Class_Icon": "Explorer \uD83E\uDEAA",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 20,
+  "Xp_Icon": "20 \u2B50",
   "max_hp": 100,
-  "Hp": 100,
-  "speed": 26,
-  "intellect": 7,
-  "luck": 10,
-  "freeAP": 4,
-  "inventory": [
-    {
-      "Name": "Bandage",
-      "Description": "Restores some health.",
-      "Value": 1
-    },
-    {
-      "Name": "Bandage",
-      "Description": "Restores some health.",
-      "Value": 1
-    },
-    {
-      "Name": "Bandage",
-      "Description": "Restores some health.",
-      "Value": 1
-    }
-  ]
+  "Hp": 43,
+  "Hp_Icon": "43 \u2764\uFE0F",
+  "Credits": 2,
+  "Credits_Icon": "2 \uD83D\uDCC0",
+  "Credits_Icon_Only": "\uD83D\uDCC0",
+  "speed": 15,
+  "Speed_Icon": "15 \u26A1",
+  "intellect": 5,
+  "Intellect_Icon": "5 \uD83E\uDDE0",
+  "luck": 15,
+  "Luck_Icon": "15 \uD83C\uDF40",
+  "EquippedItem": {
+    "Value": 0
+  },
+  "EquippedItem_Icon": " ",
+  "freeAP": 0,
+  "FreeAP_Icon": "0 \u2795",
+  "inventory": [],
+  "quest_progress": 0
 }

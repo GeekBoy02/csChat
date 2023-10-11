@@ -1,4 +1,5 @@
 {
+  "isDead": false,
   "name": "Rouge Drone",
   "Name_Enclosed": "\u003C Rouge Drone \u003E",
   "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -7,20 +8,20 @@
   "message_count": 0,
   "class": "Mob",
   "Class_Icon": "Mob \uD83E\uDEAA",
-  "level": 23,
-  "Level_Icon": "23 \uD83C\uDF96\uFE0F",
-  "xp": 230,
-  "Xp_Icon": "230 \u2B50",
+  "level": 2,
+  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
+  "xp": 0,
+  "Xp_Icon": "0 \u2B50",
   "max_hp": 100,
-  "Hp": 38,
-  "Hp_Icon": "38 \u2764\uFE0F",
-  "Credits": 142,
-  "Credits_Icon": "142 \uD83D\uDCC0",
+  "Hp": 10,
+  "Hp_Icon": "10 \u2764\uFE0F",
+  "Credits": 2,
+  "Credits_Icon": "2 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 59,
-  "Speed_Icon": "59 \u26A1",
-  "intellect": 50,
-  "Intellect_Icon": "50 \uD83E\uDDE0",
+  "speed": 9,
+  "Speed_Icon": "9 \u26A1",
+  "intellect": 9,
+  "Intellect_Icon": "9 \uD83E\uDDE0",
   "luck": 10,
   "Luck_Icon": "10 \uD83C\uDF40",
   "EquippedItem": {
@@ -29,5 +30,19 @@
   "EquippedItem_Icon": " ",
   "freeAP": 0,
   "FreeAP_Icon": "0 \u2795",
-  "inventory": []
+  "inventory": [
+    {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    }
+  ],
+  "quest_progress": 0
 }

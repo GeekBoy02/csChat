@@ -51,52 +51,57 @@ namespace SocketServer
             return this;
         }
 
-        public static void UseItem(TcpClient client, User user, Item item, bool sendMsg)
+        public static void UseItem(TcpClient client, User user, Item item, bool sendMsg, int amount)
         {
             if (!user.Inventory.Contains(item))
             {
                 Program.SendMessage(client, "Item not found in Inventory.");
                 return;
             }
-            switch (item.Name)
+
+            for (int i = 0; i < amount; i++)
             {
-                case "Bandage":
-                    if (sendMsg) Program.SendMessage(client, "You used a Bandage. \n");
-                    user.Hp += item.Value * 5;
-                    user.RemoveItemFromInventory(item);
-                    break;
+                switch (item.Name)
+                {
+                    case "Bandage":
+                        if (sendMsg) Program.SendMessage(client, "You used a Bandage.");
+                        user.Hp += item.Value * 5;
+                        user.RemoveItemFromInventory(item);
+                        break;
 
-                case "Drink":
-                    if (sendMsg) Program.SendMessage(client, "You drank a Drink. \n");
-                    user.Hp += item.Value * 5;
-                    user.RemoveItemFromInventory(item);
-                    break;
+                    case "Drink":
+                        if (sendMsg) Program.SendMessage(client, "You drank a Drink.");
+                        user.Hp += item.Value * 5;
+                        user.RemoveItemFromInventory(item);
+                        break;
 
-                case "Boots":
-                    if (sendMsg) Program.SendMessage(client, "You equipped some Boots. \n");
-                    user.EquippedItem = item;
-                    user.RemoveItemFromInventory(item);
-                    break;
+                    case "Boots":
+                        if (sendMsg) Program.SendMessage(client, "You equipped some Boots.");
+                        user.EquippedItem = item;
+                        user.RemoveItemFromInventory(item);
+                        break;
 
-                case "Glasses":
-                    if (sendMsg) Program.SendMessage(client, "You equipped Glasses. \n");
-                    user.EquippedItem = item;
-                    user.RemoveItemFromInventory(item);
-                    break;
+                    case "Glasses":
+                        if (sendMsg) Program.SendMessage(client, "You equipped Glasses.");
+                        user.EquippedItem = item;
+                        user.RemoveItemFromInventory(item);
+                        break;
 
-                case "Scanner":
-                    if (sendMsg) Program.SendMessage(client, "You equipped a Scanner. \n");
-                    user.EquippedItem = item;
-                    user.RemoveItemFromInventory(item);
-                    break;
+                    case "Scanner":
+                        if (sendMsg) Program.SendMessage(client, "You equipped a Scanner.");
+                        user.EquippedItem = item;
+                        user.RemoveItemFromInventory(item);
+                        break;
 
-                // Add more cases for other items as needed
+                    // Add more cases for other items as needed
 
-                default:
-                    Program.SendMessage(client, "Unknown item.");
-                    break;
+                    default:
+                        Program.SendMessage(client, "Unknown item.");
+                        break;
+                }
             }
         }
+        
         public static int Consider_Speed_Equipment(User user)
         {
             switch (user.EquippedItem.Name)
@@ -138,4 +143,3 @@ namespace SocketServer
         }
     }
 }
-

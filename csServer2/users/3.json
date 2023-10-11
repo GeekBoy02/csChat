@@ -1,24 +1,25 @@
 {
-  "name": "two",
-  "Name_Enclosed": "\u003C two \u003E",
-  "Name_Icon": "two \uD83D\uDC64",
-  "address": "127.0.0.1:6647",
-  "connection_count": 3,
+  "isDead": false,
+  "name": "3",
+  "Name_Enclosed": "\u003C 3 \u003E",
+  "Name_Icon": "3 \uD83D\uDC64",
+  "address": "127.0.0.1:8134",
+  "connection_count": 2,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 2,
-  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
-  "xp": 100,
-  "Xp_Icon": "100 \u2B50",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 0,
+  "Xp_Icon": "0 \u2B50",
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
   "Credits": 0,
   "Credits_Icon": "0 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 25,
-  "Speed_Icon": "25 \u26A1",
+  "speed": 15,
+  "Speed_Icon": "15 \u26A1",
   "intellect": 7,
   "Intellect_Icon": "7 \uD83E\uDDE0",
   "luck": 10,
@@ -27,21 +28,16 @@
     "Value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 0,
-  "FreeAP_Icon": "0 \u2795",
+  "freeAP": 5,
+  "FreeAP_Icon": "5 \u2795",
   "inventory": [
     {
       "Name": "Bandage",
       "Icon": "\uD83E\uDE79",
       "Description": "Restores some health.",
       "Value": 1
-    },
-    {
-      "Name": "Boots",
-      "Icon": "\uD83D\uDC62",
-      "Description": "Increases your SPEED.",
-      "Value": 10
     }
   ],
-  "current_location": "Cryo-Station"
+  "current_location": "Cryo-Station",
+  "quest_progress": 0
 }

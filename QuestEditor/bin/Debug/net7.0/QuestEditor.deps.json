@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "QuestEditor/1.0.0": {
+        "dependencies": {
+          "csServer2": "1.0.0"
+        },
+        "runtime": {
+          "QuestEditor.dll": {}
+        }
+      },
+      "csServer2/1.0.0": {
+        "runtime": {
+          "csServer2.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "QuestEditor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "csServer2/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

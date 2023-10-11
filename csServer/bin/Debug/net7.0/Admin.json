@@ -1,8 +1,8 @@
 {
   "name": "Admin",
   "address": "127.0.0.1:6689",
-  "connection_count": 15,
-  "message_count": 261,
+  "connection_count": 17,
+  "message_count": 263,
   "class": "Soldier",
   "level": 1,
   "xp": 0,

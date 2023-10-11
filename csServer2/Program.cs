@@ -108,14 +108,17 @@ namespace SocketServer
                     {
                         string help_message = "Available commands:\n" +
                             "!class [class_name] - Sets the user's class to [class_name], which must be one of: Soldier, Engineer, Explorer\n" +
+                            "!quest - Advance in you active quest\n" +      // -------------   wip   ----------------------
                             "!inventory - Displays your Inventory\n" +
                             "!i [item name] - Use item from your inventory\n" +
+                            "!i [item name] [amount] - Use [amount] of [item name] from your inventory\n" +
                             "!ir [item name] - Remove item from your inventory\n" +
                             "!ii [item name] - Inspect item in your inventory\n" +
                             "!is [item name] - Sell item from your inventory\n" +
                             "!isa [item name] - Sell all [item name] from your inventory\n" +
                             "!shop - Displays the local shop if there is one \n" +
                             "!shop [item name] - Buy [Item name] from the Shop \n" +
+                            "!shop [item name] [amount]- Buy [amount] of [Item name] from the Shop \n" +
                             "!move [location name] - move to [location name] \n" +
                             "!look around - Reveals info about your current location \n" +
                             "!revive - Revives you for a price\n" +
@@ -153,20 +156,27 @@ namespace SocketServer
                     {
                         if (FindLocation(world, user.CurrentLocation) != null)
                         {
-                            SendMessage(client, $"You are currently in {user.CurrentLocation} | {FindLocation(world, user.CurrentLocation).Description}  \n");
+                            SendMessage(client, $"You are currently in {user.CurrentLocation} | {FindLocation(world, user.CurrentLocation).Description}  ");
                         }
                         else
                         {
-                            SendMessage(client, $"You are currently in nowhere | The sound of Nigh̶̜̑ẗ̸̥m̴̲͝a̸̫͒res surrounds you. \n");
+                            SendMessage(client, $"You are currently in nowhere | The sound of Nigh̶̜̑ẗ̸̥m̴̲͝a̸̫͒res surrounds you. ");
                         }
                     }
                     else if (message.StartsWith("!locals") || message.StartsWith("!l"))  // display local users online
                     {
                         StringBuilder sb = new StringBuilder();
                         Location loc = FindLocation(world, user.CurrentLocation);
-                        foreach (User u in loc.Visitors)
+                        if (FindLocation(world, user.CurrentLocation) == null)
                         {
-                            sb.Append("< " + u.Name + " > Level: " + u.Level + " hp: " + u.Hp + " \n");
+                            SendMessage(client, $"You are currently in nowhere | The sound of Nigh̶̜̑ẗ̸̥m̴̲͝a̸̫͒res surrounds you. ");
+                        }
+                        else
+                        {
+                            foreach (User u in loc.Visitors)
+                            {
+                                sb.Append("< " + u.Name + " > LVL: " + u.Level + " || HP: " + u.Hp + " \n");
+                            }
                         }
 
                         string locals = sb.ToString();
@@ -183,32 +193,60 @@ namespace SocketServer
                             {
                                 user.Move(client, locationName, world);
                             }
+                            else
+                            {
+                                SendMessage(client, "Input a valid Location  ");
+                            }
                         }
                     }
-                    else if (message.StartsWith("!shop")) // move to location
+                    else if (message.StartsWith("!quest") || message.StartsWith("!q")) // move to location
                     {
-                        string[] parts = message.Split(' ', 2);
+                        // Quest q = user.ActiveQuest.CurrentQuest;
+                        // user.ActiveQuest.StartQuest(new Quest("", "", 1).Introduction(), client, user);
+                    }
+                    else if (message.StartsWith("!shop")) // buy item from local shop
+                    {
+                        string[] parts = message.Split(' ', 3);
                         StringBuilder sb = new StringBuilder();
-                        if (parts.Length > 1)
+                        if (String.IsNullOrEmpty(user.CurrentLocation))
                         {
-                            // buy item
-                            user.BuyItem(client, message.Split()[1], world);
+                            SendMessage(client, "There is no Shop around here  ");
                         }
                         else
                         {
-                            // diplay shop items
-                            foreach (Item i in FindLocation(world, user.CurrentLocation).Shop)
+                            if (parts.Length > 2)
                             {
-                                sb.Append(i.Icon + "-" + i.Name + " | " + i.Value + "📀  \n");
+                                // buy x amount of item
+                                if (int.TryParse(parts[2], out _))
+                                {
+                                    user.BuyItem(client, parts[1], world, int.Parse(parts[2]));
+                                }
+                                else
+                                {
+                                    SendMessage(client, "Input a valid amount ");
+                                }
                             }
-                            string itemList = sb.ToString();
-                            if (string.IsNullOrEmpty(itemList))
+                            else if (parts.Length > 1)
                             {
-                                SendMessage(client, "There is no Shop around here  \n");
+                                // buy item
+                                user.BuyItem(client, message.Split()[1], world);
                             }
                             else
                             {
-                                SendMessage(client, itemList);
+                                // diplay shop items
+                                foreach (Item i in FindLocation(world, user.CurrentLocation).Shop)
+                                {
+                                    sb.Append(i.Icon + "-" + i.Name + " | " + i.Value + "📀  \n");
+                                }
+                                string itemList = sb.ToString();
+                                if (string.IsNullOrEmpty(itemList))
+                                {
+                                    SendMessage(client, "There is no Shop around here  ");
+                                }
+                                else
+                                {
+                                    SendMessage(client, itemList);
+                                }
                             }
                         }
                     }
@@ -218,16 +256,16 @@ namespace SocketServer
                         {
                             user.HealUser(client, 100, false);
                             user.Credits -= user.Credits / 4;
-                            SendMessage(client, $"You got revived for {user.Credits / 4}📀 and now have {user.Hp} HP \n");
+                            SendMessage(client, $"You got revived for {user.Credits / 4}📀 and now have {user.Hp} HP ");
                         }
                         else
                         {
-                            SendMessage(client, "You can only be revevied when you are DEAD \n");
+                            SendMessage(client, "You can only be revevied when you are DEAD ");
                         }
                     }
                     else if (message.StartsWith("!i")) // display and use inventory
                     {
-                        string[] parts = message.Split(' ', 2);
+                        string[] parts = message.Split(' ', 3);
                         StringBuilder sb = new StringBuilder();
                         if (message.StartsWith("!inventory"))
                         {
@@ -272,10 +310,34 @@ namespace SocketServer
                         }
                         else
                         {
-                            if (parts.Length > 1)
+                            if (parts.Length > 2)
                             {
-                                string itemName = message.Split()[1];
-                                Item.UseItem(client, user, user.FindItemInInventory(itemName), true);
+                                if (user.IsDead)
+                                {
+                                    SendMessage(client, "You cannot use your inventory while dead  ");
+                                }
+                                else if (int.TryParse(parts[2], out int _))
+                                {
+                                    string itemName = parts[1];
+                                    int amount = int.Parse(parts[2]);
+                                    Item.UseItem(client, user, user.FindItemInInventory(itemName), true, amount);
+                                }
+                                else
+                                {
+                                    SendMessage(client, "Input a valid amount, for example: !i Drink 3");
+                                }
+                            }
+                            else if (parts.Length > 1)
+                            {
+                                if (user.IsDead)
+                                {
+                                    SendMessage(client, "You cannot use your inventory while dead  ");
+                                }
+                                else
+                                {
+                                    string itemName = message.Split()[1];
+                                    Item.UseItem(client, user, user.FindItemInInventory(itemName), true, 1);
+                                }
                             }
                             else
                             {
@@ -437,10 +499,23 @@ namespace SocketServer
 
         public static void SendMessage(TcpClient client, string message)
         {
+            message += " ";
             byte[] msg = Encoding.UTF8.GetBytes(message);
-
-            NetworkStream stream = client.GetStream();
-            stream.Write(msg, 0, msg.Length);
+            try
+            {
+                NetworkStream stream = client.GetStream();
+                stream.Write(msg, 0, msg.Length);
+            }
+            catch
+            {
+                string un = "";
+                foreach (string name in clients.Values)
+                {
+                    if (name == un) un = name;
+                }
+                Console.WriteLine("could not send msg to " + un);
+            }
+            Thread.Sleep(100);
         }
         public static void BroadcastMessage(string message)
         {
@@ -452,6 +527,7 @@ namespace SocketServer
                 NetworkStream stream = c.GetStream();
                 stream.Write(msg, 0, msg.Length);
             }
+            Thread.Sleep(100);
         }
         public static bool IsUserOnline(string username)
         {

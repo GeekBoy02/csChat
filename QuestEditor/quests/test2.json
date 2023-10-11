@@ -1,0 +1,46 @@
+{
+  "name": "test2",
+  "level": 1,
+  "description": "test 123",
+  "xp_reward": 1,
+  "steps": [
+    {
+      "text": "hello test 1"
+    },
+    {
+      "text": "hello test 2"
+    },
+    {
+      "text": "You wake up from a long Sleep and find yourself in a Cryo-Pod."
+    },
+    {
+      "text": "You remember that you are on a Colony Ship that is supposed to colonize a Planet called MATIO."
+    },
+    {
+      "text": "You realize that while asleep, your Body has been tamperd with and modified \nyou can move faster than you remember, and a lot more precise."
+    },
+    {
+      "text": "You notice Instructions on the Wall: \n1) Take tools from the Locker \n2) Grab a Speed-Suit from the wardrobe \n3) Head to the Control Room and activate the Fabricator"
+    },
+    {
+      "text": "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator."
+    },
+    {
+      "text": "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you."
+    },
+    {
+      "text": "hello test 3",
+      "enemies": [],
+      "items": [
+        {
+          "Name": "Bandage",
+          "Icon": "\uD83E\uDE79",
+          "Description": "Restores some health.",
+          "Value": 1
+        }
+      ]
+    }
+  ],
+  "currentStageIndex": 0,
+  "IsComplete": false
+}

@@ -4,11 +4,14 @@ using System.Net.Sockets;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace SocketServer
 {
     public class User
     {
+        [JsonPropertyName("isDead")]
+        public bool IsDead { get; set; }
         [JsonPropertyName("name")] // Specify the name of the json property
         public string Name { get; set; }
         public string Name_Enclosed
@@ -57,14 +60,17 @@ namespace SocketServer
                 if (value < 0)
                 {
                     _hp = 0;
+                    IsDead = true;
                 }
                 else if (value > MaxHp)
                 {
                     _hp = MaxHp;
+                    IsDead = false;
                 }
                 else
                 {
                     _hp = value;
+                    IsDead = false;
                 }
             }
         }
@@ -148,6 +154,10 @@ namespace SocketServer
         public List<Item> Inventory { get; set; } = new List<Item>();
         [JsonPropertyName("current_location")]
         public string CurrentLocation { get; set; }
+        [JsonPropertyName("active_quest")]
+        public Quest ActiveQuest { get; set; }
+        [JsonPropertyName("quest_progress")]
+        public int QuestProgress { get; set; }
 
         /* 
 
@@ -187,6 +197,8 @@ namespace SocketServer
             {
                 new Item().Bandage()
             };
+            ActiveQuest = null;
+            QuestProgress = 0;
         }
         public static Item FindItemInInventory(List<Item> inventory, string itemName)
         {
@@ -201,12 +213,12 @@ namespace SocketServer
         /// </summary>
         /// <param name="client">The client the message is send to</param>
         /// <param name="newItem">The Item that is added</param>
-        public void AddItemToInventory(TcpClient client, Item newItem)
+        public void AddItemToInventory(TcpClient client, Item newItem, bool sendMsg)
         {
             if (newItem != null)
             {
                 Inventory.Add(newItem);
-                Program.SendMessage(client, "📦 " + Name + " recived " + newItem.Name + " \n");
+                if (sendMsg) Program.SendMessage(client, "📦 " + Name + " recived " + newItem.Name + " \n");
             }
         }
         public void AddItemToInventory(Item newItem)
@@ -244,15 +256,15 @@ namespace SocketServer
             Item i = FindItemInInventory(itemName);
             if (Inventory.Contains(i))
             {
-                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} \n");
+                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
             }
             else if (EquippedItem == i)
             {
-                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} \n");
+                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
             }
             else
             {
-                Program.SendMessage(client, "Input valid Item \n");
+                Program.SendMessage(client, "Input valid Item ");
             }
         }
         public void SellItem(TcpClient client, string itemName, bool displayMsg)
@@ -260,13 +272,13 @@ namespace SocketServer
             Item i = FindItemInInventory(itemName);
             if (Inventory.Contains(i))
             {
-                if (displayMsg) Program.SendMessage(client, $" {i.Icon} {i.Name} sold for {i.Value}📀 \n");
+                if (displayMsg) Program.SendMessage(client, $" {i.Icon} {i.Name} sold for {i.Value}📀 ");
                 Credits += i.Value;
                 RemoveItemFromInventory(i);
             }
             else
             {
-                if (displayMsg) Program.SendMessage(client, "Input valid Item \n");
+                if (displayMsg) Program.SendMessage(client, "Input valid Item ");
             }
         }
         public void SellAllofItem(TcpClient client, string itemName)
@@ -280,7 +292,7 @@ namespace SocketServer
                 cGain += i.Value;
                 amountSold++;
             }
-            Program.SendMessage(client, $"{amountSold} {itemName} sold for {cGain}📀 \n");
+            Program.SendMessage(client, $"{amountSold} {itemName} sold for {cGain}📀 ");
         }
         public static void CreateJsonFile(User user)
         {
@@ -352,12 +364,20 @@ namespace SocketServer
         {
             if (File.Exists("users/" + name + ".json"))
             {
+
                 return JsonSerializer.Deserialize<User>(File.ReadAllText("users/" + name + ".json"));
+
             }
             return new User("notLoaded", "");
         }
         public static void Fight(TcpClient client, User p1, User p2)
         {
+            if (p1.IsDead || p2.IsDead)
+            {
+                Program.SendMessage(client, "Both parties must be alive");
+                return;
+            }
+
             User attacker = p1;
             User defender = p2;
 
@@ -369,22 +389,17 @@ namespace SocketServer
 
             while (true)
             {
+                Thread.Sleep(10);
                 AttackEnemy(client, attacker, defender);
                 if (defender.Hp <= 0)
                 {
-                    //Program.SendMessage(client, defender.Name_Enclosed + " has been defeated. " + Environment.NewLine);
-                    Game.LootDrop(client, attacker, attacker.Luck, defender);
-                    int creditDrop = defender.Credits / 2;
-                    attacker.Credits += creditDrop;
-                    defender.Credits -= creditDrop;
-                    Program.SendMessage(client, $"📀 {attacker.Name} recieved {creditDrop} CREDITS  \n");
+                    LevelUp(client, attacker);
                     break;
                 }
                 // switch roles
                 var temp = defender;
                 defender = attacker;
                 attacker = temp;
-
             }
             SaveToJsonFile(p1);
             SaveToJsonFile(p2);
@@ -397,11 +412,10 @@ namespace SocketServer
             int trueLuck = Item.Consider_Luck_Equipment(Attacker);
 
             string icon = "⚔️  ";
-            int damage = 0;
             int attackValue = Game.Randomize(trueSpeed);
             int defendValue = Game.Randomize(trueInt);
 
-            damage = attackValue - defendValue;
+            int damage = attackValue - defendValue;
 
             if (damage > 0)
             {
@@ -409,7 +423,6 @@ namespace SocketServer
                 {
                     damage *= 2;
                     icon = "🎯 ";
-                    //critIndicator += "~ ";
                 }
             }
             else
@@ -418,17 +431,20 @@ namespace SocketServer
             }
 
             Defender.Hp -= damage; // deal damage
-
-            Program.SendMessage(client, icon + Attacker.Name + " hits " + Defender.Name + " for " + damage + " DMG" + Environment.NewLine);
+            Program.SendMessage(client, $"{icon} {Attacker.Name} hits {Defender.Name} for {damage} DMG ");
 
             if (Defender.Hp <= 0)
             {
-                Program.SendMessage(client, "🏆 " + Attacker.Name + " defeated 💀 " + Defender.Name + " with " + Attacker.Hp + "HP remaining! " + Environment.NewLine);
                 int xpgain = Defender.Level * 10;
                 Attacker.Xp += xpgain;
-                Program.SendMessage(client, "⭐ " + Attacker.Name + " gained " + xpgain + " XP" + Environment.NewLine);
-
-                LevelUp(client, Attacker);
+                int creditDrop = Defender.Credits / 2;
+                Attacker.Credits += creditDrop;
+                Defender.Credits -= creditDrop;
+                string msg = "\n🥇 " + Attacker.Name + " defeated 💀 " + Defender.Name + " with " + Attacker.Hp + "HP remaining! " + Environment.NewLine +
+                            "⭐ " + Attacker.Name + " gained " + xpgain + " XP " + Environment.NewLine +
+                            $"📀 {Attacker.Name} looted {creditDrop} CREDITS from {Defender.Name}";
+                Program.SendMessage(client, msg);
+                Game.LootDrop(client, Attacker, Attacker.Luck, Defender);
             }
         }
         static bool CritStrike(int luck)
@@ -445,16 +461,16 @@ namespace SocketServer
         static void LevelUp(TcpClient client, User user)
         {
             bool playerDidLvlUp = false;
-            while (user.Xp >= (user.Level * 100))
+            while (user.Xp > (user.Level * 100))
             {
                 playerDidLvlUp = true;
                 user.Level++;
-                user.FreeAP += 4;
+                user.FreeAP += 3;
                 user.Hp += 100;
                 if (user.Class == "Soldier") user.Speed++;
                 else if (user.Class == "Engineer") user.Intellect++;
                 else if (user.Class == "Explorer") user.Luck++;
-                Program.SendMessage(client, "🆙 " + user.Name + " leveld up to Level " + user.Level + " \n");
+                Program.SendMessage(client, "🆙 " + user.Name + " leveld up to Level " + user.Level + " ");
             }
             if (playerDidLvlUp)
             {
@@ -471,12 +487,11 @@ namespace SocketServer
             Speed = 15;
             Intellect = 7;
             Luck = 10;
-            FreeAP = 5;
+            FreeAP = 3;
             Inventory = new List<Item>
             {
                 new Item().Bandage()
             };
-
         }
         public void ChangeTo_Engineer()
         {
@@ -488,7 +503,7 @@ namespace SocketServer
             Speed = 7;
             Intellect = 20;
             Luck = 5;
-            FreeAP = 5;
+            FreeAP = 3;
             Inventory = new List<Item>
             {
                 new Item().Drink()
@@ -502,7 +517,7 @@ namespace SocketServer
             Hp = 100;
 
             Speed = 10;
-            Intellect = 7;
+            Intellect = 5;
             Luck = 15;
             FreeAP = 5;
             Inventory = new List<Item>
@@ -513,7 +528,7 @@ namespace SocketServer
         public void HealUser(TcpClient client, int healAmount, bool sendMsg)
         {
             Hp += healAmount;
-            if (sendMsg) Program.SendMessage(client, "🩹 " + Name + " heals for " + healAmount + " HP and is now at " + Hp + " HP \n");
+            if (sendMsg) Program.SendMessage(client, "🩹 " + Name + " heals for " + healAmount + " HP and is now at " + Hp + " HP ");
         }
         public static void HealUser(TcpClient client, User user, int healAmount, bool sendMsg)
         {
@@ -548,7 +563,7 @@ namespace SocketServer
             Location loc = Program.FindLocation(world, locationName);
             loc.Visitors.Add(this);   // add user to location visitors
             CurrentLocation = locationName;
-            Program.SendMessage(client, $"You travel to {locationName} \n \n  << " + loc.WelcomeMessage + " >> \n");
+            Program.SendMessage(client, $"You travel to {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
             SaveToJsonFile(this);
             //loc.SaveToJsonFile(loc);
         }
@@ -558,9 +573,38 @@ namespace SocketServer
             if (!string.IsNullOrEmpty(itemName) && shop.Contains(Location.FindItemInShop(shop, itemName)))
             {
                 Item i = Location.FindItemInShop(shop, itemName);
-                AddItemToInventory(i);
-                Credits -= i.Value;
-                Program.SendMessage(client, $"You bought {i.Name} for {i.Value} {Credits_Icon_Only} \n");
+                if ((Credits - i.Value) > 0)
+                {
+                    AddItemToInventory(i);
+                    Credits -= i.Value;
+                    Program.SendMessage(client, $"You bought {i.Name} for {i.Value} {Credits_Icon_Only} ");
+                }
+                else
+                {
+                    Program.SendMessage(client, "You bought don't have enough CREDITS ");
+                }
+            }
+        }
+        public void BuyItem(TcpClient client, string itemName, List<Location> world, int amount)
+        {
+            List<Item> shop = Program.FindLocation(world, CurrentLocation).Shop;
+            if (!string.IsNullOrEmpty(itemName) && shop.Contains(Location.FindItemInShop(shop, itemName)))
+            {
+                Item item = Location.FindItemInShop(shop, itemName);
+                int credsRequired = Credits * amount;
+                if ((credsRequired - item.Value) > 0)
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        AddItemToInventory(item);
+                        Credits -= item.Value;
+                    }
+                    Program.SendMessage(client, $"You bought {amount} {item.Name} for {item.Value * amount} {Credits_Icon_Only} ");
+                }
+                else
+                {
+                    Program.SendMessage(client, "You bought don't have enough CREDITS ");
+                }
             }
         }
     }

@@ -80,7 +80,7 @@ namespace SocketServer
             Random rand = new Random();
             if (rand.Next(1, 101) <= probability)
             {
-                user.AddItemToInventory(client, item);
+                user.AddItemToInventory(client, item, true);
             }
         }
         public static void LootDrop(TcpClient client, User attacker, int probability, User defender)
@@ -88,7 +88,9 @@ namespace SocketServer
             Random rand = new Random();
             if (rand.Next(1, 101) <= probability)
             {
-                attacker.AddItemToInventory(client, defender.DropRandomItemOnDeath());
+                Item i = defender.DropRandomItemOnDeath();
+                attacker.AddItemToInventory(client, i, false);
+                Program.SendMessage(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
             }
         }
     }

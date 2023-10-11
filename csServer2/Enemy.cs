@@ -34,7 +34,6 @@ namespace SocketServer
         public int Intellect { get; set; }
         public int Luck { get; set; }
         public int Credits { get; set; }
-        public List<Item> Loot { get; set; }
         public Enemy(string name, int level)
         {
             Name = name;
@@ -45,7 +44,6 @@ namespace SocketServer
             Intellect = Game.Randomize(5 + (level * 2));
             Luck = 10;
             Credits = Game.Randomize(level * 2);
-            Loot = new List<Item>();
 
             userObj = new User(name, "")
             {
@@ -57,34 +55,23 @@ namespace SocketServer
                 Intellect = Intellect,
                 Luck = Luck,
                 Credits = Credits,
-                Inventory = Loot
             };
         }
         public Enemy DroneMother(int lvl)
         {
-            Enemy e = new Enemy("Rouge Drone Mother", lvl)
-            {
-                Loot = new List<Item>
-                                    {
-                                        new Item().Boots(),
-                                        new Item().Glasses(),
-                                        new Item().Scanner(),
-                                    }
-            };
+            Enemy e = new Enemy("Rouge Drone Mother", lvl);
             e.userObj.Class = "Boss";
+            e.userObj.AddItemToInventory(new Item().Boots());
+            e.userObj.AddItemToInventory(new Item().Glasses());
+            e.userObj.AddItemToInventory(new Item().Scanner());
             return e;
         }
         public Enemy RougeDrone(int lvl)
         {
-            Enemy e = new Enemy("Rouge Drone", lvl)
-            {
-                Loot = new List<Item>
-                    {
-                        new Item().Drink(),
-                        new Item().Bandage()
-                    }
-            };
+            Enemy e = new Enemy("Rouge Drone", lvl);
             e.userObj.FreeAP = 0;
+            e.userObj.AddItemToInventory(new Item().Bandage());
+            e.userObj.AddItemToInventory(new Item().Drink());
             return e;
         }
     }

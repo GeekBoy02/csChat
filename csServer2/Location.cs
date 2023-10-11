@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Net.Sockets;
-using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
 using System.Runtime.CompilerServices;
 
@@ -64,10 +63,21 @@ namespace SocketServer
             };
             Shop = new List<Item>
             {
-                new Item().Bandage()
+                new Item().Drink()
+            };
+            Quests = new List<Quest>()
+            {
+                new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
             };
             return this;
         }
+
+
+
+
+
+
+
         public static void AddVisitors(List<User> userOnline, List<Location> world)
         {
             foreach (var l in world)
@@ -164,13 +174,7 @@ namespace SocketServer
             {
                 return JsonSerializer.Deserialize<Location>(File.ReadAllText("locations/" + name + ".json"));
             }
-            return new Location("notLoaded", "");
+            return new Location("UserNotLoaded", "");
         }
-
-        public List<Location> LoadWorld()
-        {
-            return null;
-        }
-
     }
 }
