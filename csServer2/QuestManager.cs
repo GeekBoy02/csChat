@@ -1,4 +1,3 @@
-
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using SocketServer;
@@ -9,25 +8,33 @@ namespace SocketServer
 {
     public class QuestManager
     {
-        public Quest CurrentQuest { get; set; }
+        //public Quest CurrentQuest { get; set; }
         //public User user { get; set; }
 
         public void StartQuest(Quest quest, TcpClient client, User user)
         {
-            CurrentQuest = quest;
-            AdvanceQuestStep(client, user);
+            user.ActiveQuest = quest;
+            //CurrentQuest = user.ActiveQuest;
+            AdvanceQuestStep(client, user, true);
+        }
+        public void FinishQuest(TcpClient client, User user)
+        {
+            user.Xp += user.ActiveQuest.XP_reward;
+            user.completedQuests.Add(user.ActiveQuest.Name);
+            Program.SendMessage(client, "You completed the <" + user.ActiveQuest.Name + "> Quest and gained " + user.ActiveQuest.XP_reward + " XP ");
+            user.ActiveQuest = new Quest().DefaultQuest();
+            User.SaveToJsonFile(user);
         }
 
-        public void AdvanceQuestStep(TcpClient client, User user)
+        public void AdvanceQuestStep(TcpClient client, User user, bool autoAdvance)
         {
-            if (CurrentQuest.IsComplete)
+            if (user.ActiveQuest.IsComplete)
             {
-                user.Xp += CurrentQuest.XP_reward;
-                User.SaveToJsonFile(user);              // not tested
+                FinishQuest(client, user);
                 return;
             }
 
-            QuestStep currentStep = CurrentQuest.Steps[CurrentQuest.CurrentStepIndex];
+            QuestStep currentStep = user.ActiveQuest.Steps[user.ActiveQuest.CurrentStepIndex];
 
             // Display dialogue
             string Text = currentStep.Text;
@@ -39,6 +46,7 @@ namespace SocketServer
             {
                 foreach (Enemy enemy in currentStep.Enemies)
                 {
+                    Game.DisplayProfile(client, enemy.userObj);
                     User.Fight(client, user, enemy.userObj);
                 }
             }
@@ -51,10 +59,19 @@ namespace SocketServer
                     user.AddItemToInventory(item);
                 }
             }
+            // Move the player to a new Location
+            Location l = currentStep.MoveTo;
+            if (l != null)
+            {
+                user.Move(client, l.Name, Program.world);
+            }
             // Move to the next stage
-            CurrentQuest.CurrentStepIndex++;
-            Thread.Sleep(2000);
-            AdvanceQuestStep(client, user);
+            user.ActiveQuest.CurrentStepIndex++;
+            if (autoAdvance)
+            {
+                Thread.Sleep(1000);
+                AdvanceQuestStep(client, user, true);
+            }
         }
     }
 }

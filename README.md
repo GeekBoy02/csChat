@@ -29,11 +29,13 @@
 
 - `!attributes`: Displays your character's current attributes, including speed, intellect, and luck.
 
-- `!users`: Displays a list of all connected users in the game.
+- `!users`: Displays a list of all connected users.
+
+- `!local`: Displays a list of all nearby users in the game.
 
 - `![username] [message]`: Send a private message to a specific user by mentioning their username.
 
 
 
 problems:
-    users not loading
+    Deserialization now working with Quest-Class

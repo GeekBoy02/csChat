@@ -1,5 +1,5 @@
 {
-  "isDead": false,
+  "isDead": true,
   "name": "Rouge Drone",
   "Name_Enclosed": "\u003C Rouge Drone \u003E",
   "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -8,18 +8,18 @@
   "message_count": 0,
   "class": "Mob",
   "Class_Icon": "Mob \uD83E\uDEAA",
-  "level": 2,
-  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
+  "level": 3,
+  "Level_Icon": "3 \uD83C\uDF96\uFE0F",
   "xp": 0,
   "Xp_Icon": "0 \u2B50",
   "max_hp": 100,
-  "Hp": 10,
-  "Hp_Icon": "10 \u2764\uFE0F",
-  "Credits": 2,
-  "Credits_Icon": "2 \uD83D\uDCC0",
+  "Hp": 0,
+  "Hp_Icon": "0 \u2764\uFE0F",
+  "Credits": 3,
+  "Credits_Icon": "3 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 9,
-  "Speed_Icon": "9 \u26A1",
+  "speed": 12,
+  "Speed_Icon": "12 \u26A1",
   "intellect": 9,
   "Intellect_Icon": "9 \uD83E\uDDE0",
   "luck": 10,
@@ -38,11 +38,23 @@
       "Value": 1
     },
     {
+      "Name": "Bandage",
+      "Icon": "\uD83E\uDE79",
+      "Description": "Restores some health.",
+      "Value": 1
+    },
+    {
       "Name": "Drink",
       "Icon": "\uD83E\uDDC3",
       "Description": "Tasty Drink that restores some health.",
       "Value": 2
+    },
+    {
+      "Name": "Scanner",
+      "Icon": "\uD83D\uDCE1",
+      "Description": "Increases your LUCK by 0% in a Fight",
+      "Value": 10
     }
   ],
-  "quest_progress": 0
+  "completed_quests": []
 }

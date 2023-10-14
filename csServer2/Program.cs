@@ -18,7 +18,8 @@ namespace SocketServer
 
         public static List<Location> world = new List<Location>()
         {
-            new Location("","").CryoStation()
+            new Location("","").CryoStation(),
+            new Location("","").LandingBay()
         };
         public static Location FindLocation(List<Location> loc, string loc_name)
         {
@@ -95,14 +96,20 @@ namespace SocketServer
                         if (File.Exists("users/" + user.Name + ".json"))
                         {
                             user = User.LoadFromJsonFile(user.Name);
+                            Location.AddVisitors(user, world);          // add player to Location Visitors on login
                         }
                         else
                         {
-                            User.CreateJsonFile(user);
+                            User.CreateJsonFile(user);   // create user if non existent
+                                                         // assignt first quest to user
+                            QuestManager qm = new QuestManager();
+                            Quest q = new Quest().Introduction();
+                            //user.ActiveQuest = q;
+                            qm.StartQuest(q, client, user);
                         }
                         user.ConnectionCount++;
                         onlineUserList.Add(user);
-                        Location.AddVisitors(user, world);
+                        //Location.AddVisitors(user, world);
                     }
                     else if (message.StartsWith("!help") || message.StartsWith("!h"))  // help function
                     {
@@ -202,7 +209,21 @@ namespace SocketServer
                     else if (message.StartsWith("!quest") || message.StartsWith("!q")) // move to location
                     {
                         // Quest q = user.ActiveQuest.CurrentQuest;
-                        // user.ActiveQuest.StartQuest(new Quest("", "", 1).Introduction(), client, user);
+                        //user.ActiveQuest.StartQuest(new Quest("", "", 1).Introduction(), client, user);
+
+                        QuestManager qm = new QuestManager();
+
+                        if (user.ActiveQuest == null)
+                        {
+                            Quest q = new Quest().Introduction();
+                            user.ActiveQuest = q;
+                            qm.StartQuest(user.ActiveQuest, client, user);
+                        }
+                        else
+                        {
+                            //qm.CurrentQuest = user.ActiveQuest;
+                            qm.AdvanceQuestStep(client, user, false);
+                        }
                     }
                     else if (message.StartsWith("!shop")) // buy item from local shop
                     {
@@ -219,7 +240,8 @@ namespace SocketServer
                                 // buy x amount of item
                                 if (int.TryParse(parts[2], out _))
                                 {
-                                    user.BuyItem(client, parts[1], world, int.Parse(parts[2]));
+                                    int amount = int.Parse(parts[2]);
+                                    user.BuyItem(client, parts[1], world, amount);
                                 }
                                 else
                                 {

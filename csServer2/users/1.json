@@ -3,23 +3,23 @@
   "name": "1",
   "Name_Enclosed": "\u003C 1 \u003E",
   "Name_Icon": "1 \uD83D\uDC64",
-  "address": "127.0.0.1:7994",
-  "connection_count": 4,
-  "message_count": 5,
+  "address": "127.0.0.1:2143",
+  "connection_count": 3,
+  "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 2,
-  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
-  "xp": 40,
-  "Xp_Icon": "40 \u2B50",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 62,
+  "Xp_Icon": "62 \u2B50",
   "max_hp": 100,
-  "Hp": 82,
-  "Hp_Icon": "82 \u2764\uFE0F",
-  "Credits": 10,
-  "Credits_Icon": "10 \uD83D\uDCC0",
+  "Hp": 100,
+  "Hp_Icon": "100 \u2764\uFE0F",
+  "Credits": 2,
+  "Credits_Icon": "2 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 24,
-  "Speed_Icon": "24 \u26A1",
+  "speed": 20,
+  "Speed_Icon": "20 \u26A1",
   "intellect": 7,
   "Intellect_Icon": "7 \uD83E\uDDE0",
   "luck": 10,
@@ -32,24 +32,1544 @@
   "FreeAP_Icon": "0 \u2795",
   "inventory": [
     {
-      "Name": "Drink",
-      "Icon": "\uD83E\uDDC3",
-      "Description": "Tasty Drink that restores some health.",
-      "Value": 2
-    },
-    {
-      "Name": "Drink",
-      "Icon": "\uD83E\uDDC3",
-      "Description": "Tasty Drink that restores some health.",
-      "Value": 2
-    },
-    {
       "Name": "Bandage",
       "Icon": "\uD83E\uDE79",
       "Description": "Restores some health.",
       "Value": 1
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
+    },
+    {
+      "Name": "Drink",
+      "Icon": "\uD83E\uDDC3",
+      "Description": "Tasty Drink that restores some health.",
+      "Value": 2
     }
   ],
   "current_location": "Cryo-Station",
-  "quest_progress": 0
+  "active_quest": {
+    "name": "No Quest",
+    "level": 1,
+    "description": "You have no Quest",
+    "xp_reward": 0,
+    "steps": [
+      {
+        "text": "You have no Quest"
+      },
+      {
+        "enemies": [
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "Value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "Name": "Bandage",
+                  "Icon": "\uD83E\uDE79",
+                  "Description": "Restores some health.",
+                  "Value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          }
+        ]
+      },
+      {
+        "moveTo": {
+          "name": "Cryo-Station",
+          "level": 1,
+          "description": "The start of your Adventure.",
+          "welcomeMsg": "Welcome to Cryo-Station",
+          "quests": [],
+          "enemies": [
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2,
+              "userObj": {
+                "isDead": false,
+                "name": "Rouge Drone",
+                "Name_Enclosed": "\u003C Rouge Drone \u003E",
+                "Name_Icon": "Rouge Drone \uD83D\uDC64",
+                "address": "",
+                "connection_count": 0,
+                "message_count": 0,
+                "class": "Mob",
+                "Class_Icon": "Mob \uD83E\uDEAA",
+                "level": 1,
+                "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+                "xp": 0,
+                "Xp_Icon": "0 \u2B50",
+                "max_hp": 100,
+                "Hp": 100,
+                "Hp_Icon": "100 \u2764\uFE0F",
+                "Credits": 2,
+                "Credits_Icon": "2 \uD83D\uDCC0",
+                "Credits_Icon_Only": "\uD83D\uDCC0",
+                "speed": 7,
+                "Speed_Icon": "7 \u26A1",
+                "intellect": 7,
+                "Intellect_Icon": "7 \uD83E\uDDE0",
+                "luck": 10,
+                "Luck_Icon": "10 \uD83C\uDF40",
+                "EquippedItem": {
+                  "Value": 0
+                },
+                "EquippedItem_Icon": " ",
+                "freeAP": 5,
+                "FreeAP_Icon": "5 \u2795",
+                "inventory": [
+                  {
+                    "Name": "Bandage",
+                    "Icon": "\uD83E\uDE79",
+                    "Description": "Restores some health.",
+                    "Value": 1
+                  }
+                ],
+                "completed_quests": []
+              }
+            },
+            {
+              "name": "Rouge Drone Mother",
+              "Level": 17,
+              "hp": 100,
+              "speed": 39,
+              "int": 39,
+              "luck": 10,
+              "credits": 34,
+              "userObj": {
+                "isDead": false,
+                "name": "Rouge Drone Mother",
+                "Name_Enclosed": "\u003C Rouge Drone Mother \u003E",
+                "Name_Icon": "Rouge Drone Mother \uD83D\uDC64",
+                "address": "",
+                "connection_count": 0,
+                "message_count": 0,
+                "class": "Mob",
+                "Class_Icon": "Mob \uD83E\uDEAA",
+                "level": 17,
+                "Level_Icon": "17 \uD83C\uDF96\uFE0F",
+                "xp": 0,
+                "Xp_Icon": "0 \u2B50",
+                "max_hp": 100,
+                "Hp": 100,
+                "Hp_Icon": "100 \u2764\uFE0F",
+                "Credits": 34,
+                "Credits_Icon": "34 \uD83D\uDCC0",
+                "Credits_Icon_Only": "\uD83D\uDCC0",
+                "speed": 39,
+                "Speed_Icon": "39 \u26A1",
+                "intellect": 39,
+                "Intellect_Icon": "39 \uD83E\uDDE0",
+                "luck": 10,
+                "Luck_Icon": "10 \uD83C\uDF40",
+                "EquippedItem": {
+                  "Value": 0
+                },
+                "EquippedItem_Icon": " ",
+                "freeAP": 5,
+                "FreeAP_Icon": "5 \u2795",
+                "inventory": [
+                  {
+                    "Name": "Bandage",
+                    "Icon": "\uD83E\uDE79",
+                    "Description": "Restores some health.",
+                    "Value": 1
+                  }
+                ],
+                "completed_quests": []
+              }
+            }
+          ],
+          "shop": [
+            {
+              "Name": "Drink",
+              "Icon": "\uD83E\uDDC3",
+              "Description": "Tasty Drink that restores some health.",
+              "Value": 2
+            }
+          ],
+          "x": 0,
+          "y": 0,
+          "Visitors": []
+        }
+      }
+    ],
+    "currentStageIndex": 3,
+    "IsComplete": true
+  },
+  "completed_quests": [
+    "Introduction"
+  ]
 }

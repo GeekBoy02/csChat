@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace SocketServer
 {
@@ -154,10 +155,11 @@ namespace SocketServer
         public List<Item> Inventory { get; set; } = new List<Item>();
         [JsonPropertyName("current_location")]
         public string CurrentLocation { get; set; }
-        [JsonPropertyName("active_quest")]
+        [JsonPropertyName("active_quest")]         //  ______________ WIP _____________
+        //[JsonIgnore]
         public Quest ActiveQuest { get; set; }
-        [JsonPropertyName("quest_progress")]
-        public int QuestProgress { get; set; }
+        [JsonPropertyName("completed_quests")]
+        public List<string> completedQuests { get; set; }
 
         /* 
 
@@ -198,7 +200,7 @@ namespace SocketServer
                 new Item().Bandage()
             };
             ActiveQuest = null;
-            QuestProgress = 0;
+            completedQuests = new List<string>();
         }
         public static Item FindItemInInventory(List<Item> inventory, string itemName)
         {
@@ -352,7 +354,8 @@ namespace SocketServer
             JsonSerializerOptions options = new JsonSerializerOptions
             {
                 WriteIndented = true, // Write indented json for readability
-                IgnoreNullValues = true // Ignore null values in the object
+                IgnoreNullValues = true, // Ignore null values in the object
+                IncludeFields = true
             };
             // Serialize the user object to json format using the options
             string json = JsonSerializer.Serialize(user, options);
@@ -364,9 +367,7 @@ namespace SocketServer
         {
             if (File.Exists("users/" + name + ".json"))
             {
-
                 return JsonSerializer.Deserialize<User>(File.ReadAllText("users/" + name + ".json"));
-
             }
             return new User("notLoaded", "");
         }
@@ -560,10 +561,15 @@ namespace SocketServer
         }
         public void Move(TcpClient client, string locationName, List<Location> world)
         {
+            if (!string.IsNullOrEmpty(CurrentLocation))
+            {
+                Location oldLoc = Program.FindLocation(world, CurrentLocation);
+                oldLoc.Visitors.Remove(this);
+            }
             Location loc = Program.FindLocation(world, locationName);
             loc.Visitors.Add(this);   // add user to location visitors
             CurrentLocation = locationName;
-            Program.SendMessage(client, $"You travel to {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
+            Program.SendMessage(client, $"You arrive at {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
             SaveToJsonFile(this);
             //loc.SaveToJsonFile(loc);
         }
@@ -592,7 +598,7 @@ namespace SocketServer
             {
                 Item item = Location.FindItemInShop(shop, itemName);
                 int credsRequired = Credits * amount;
-                if ((credsRequired - item.Value) > 0)
+                if ((credsRequired - item.Value * amount) >= 0)
                 {
                     for (int i = 0; i < amount; i++)
                     {
@@ -603,7 +609,7 @@ namespace SocketServer
                 }
                 else
                 {
-                    Program.SendMessage(client, "You bought don't have enough CREDITS ");
+                    Program.SendMessage(client, "You don't have enough CREDITS ");
                 }
             }
         }

@@ -67,11 +67,32 @@ namespace SocketServer
             };
             Quests = new List<Quest>()
             {
-                new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
+                //new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
+                //new Quest("","",0).Introduction()
             };
             return this;
         }
-
+        public Location LandingBay()
+        {
+            Name = "Landing-Bay";
+            Level = 2;
+            Description = "Ships park here.";
+            WelcomeMessage = $"Welcome to {Name}";
+            Enemies = new List<Enemy>
+            {
+                new Enemy("", 1).RougeDrone(Game.Randomize(1, 0, 10)),
+                new Enemy("", 1).DroneMother(Game.Randomize(10, 0, 1))
+            };
+            Shop = new List<Item>
+            {
+                new Item().Drink()
+            };
+            Quests = new List<Quest>()
+            {
+                //new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
+            };
+            return this;
+        }
 
 
 

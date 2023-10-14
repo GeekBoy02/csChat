@@ -21,23 +21,29 @@ namespace SocketServer
         public bool IsComplete => CurrentStepIndex >= Steps.Count;
 
         [JsonConstructor]
-        public Quest(string name, string description, int xpReward)
+        public Quest()
         {
-            Name = name;
+
+        }
+        public Quest DefaultQuest()
+        {
+            Name = "No Quest";
             Level = 1;
-            Description = description;
-            XP_reward = xpReward;
-            CurrentStepIndex = 0;
-            Steps = new List<QuestStep>(){
-                new QuestStep(){
-                    Text = "test"
-                }
+            XP_reward = 0;
+            Description = "You have no Quest";
+            Steps = new List<QuestStep>()
+            {
+                new QuestStep() { Text = "You have no Quest" },
+                new QuestStep() { Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDrone(1) } },
+                new QuestStep() { MoveTo = new Location("","").CryoStation() }
             };
+            return this;
         }
         public Quest Introduction()
         {
             Name = "Introduction";
             Level = 1;
+            XP_reward = 12;
             Description = "The first Quest";
             Steps = new List<QuestStep>()
             {
@@ -47,7 +53,8 @@ namespace SocketServer
                 new QuestStep() { Text = "You notice Instructions on the Wall: \n1) Take tools from the Locker \n2) Grab a Speed-Suit from the wardrobe \n3) Head to the Control Room and activate the Fabricator" },
                 new QuestStep() { Text = "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator." },
                 new QuestStep() { Text = "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you." },
-                new QuestStep() { Text = "You grab your D-D and charge to attack.", Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDrone(1) } }
+                new QuestStep() { Text = "You grab your D-D and charge to attack.", Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDrone(1) } },
+                new QuestStep() { MoveTo = new Location("","").CryoStation() }
             };
             return this;
         }
@@ -96,7 +103,7 @@ namespace SocketServer
             {
                 return JsonSerializer.Deserialize<Quest>(File.ReadAllText(location + "7quests/" + name + ".json"));
             }
-            return new Quest("QuestNotLoaded", "", 1);
+            return new Quest() { Name = "Quest not loaded" };
         }
     }
 }

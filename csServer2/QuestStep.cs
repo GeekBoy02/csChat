@@ -11,5 +11,7 @@ namespace SocketServer
         public List<Enemy> Enemies { get; set; }
         [JsonPropertyName("items")]
         public List<Item> Items { get; set; }
+        [JsonPropertyName("moveTo")]
+        public Location MoveTo { get; set; }
     }
 }
