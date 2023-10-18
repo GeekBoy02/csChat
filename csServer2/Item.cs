@@ -59,6 +59,13 @@ namespace SocketServer
                 return;
             }
 
+            int iii = user.Inventory.Count(n => n == item);     // check if you have less items than you want to use
+            if (iii < amount)
+            {
+                Program.SendMessage(client, "Enter correct amount, you only have " + iii + " amount of " + item.Name);
+                return;
+            }
+
             for (int i = 0; i < amount; i++)
             {
                 switch (item.Name)
@@ -101,7 +108,7 @@ namespace SocketServer
                 }
             }
         }
-        
+
         public static int Consider_Speed_Equipment(User user)
         {
             switch (user.EquippedItem.Name)

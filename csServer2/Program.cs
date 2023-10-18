@@ -342,7 +342,8 @@ namespace SocketServer
                                 {
                                     string itemName = parts[1];
                                     int amount = int.Parse(parts[2]);
-                                    Item.UseItem(client, user, user.FindItemInInventory(itemName), true, amount);
+                                    Item i = user.FindItemInInventory(itemName);
+                                    Item.UseItem(client, user, i, true, amount);
                                 }
                                 else
                                 {
@@ -358,7 +359,8 @@ namespace SocketServer
                                 else
                                 {
                                     string itemName = message.Split()[1];
-                                    Item.UseItem(client, user, user.FindItemInInventory(itemName), true, 1);
+                                    Item i = user.FindItemInInventory(itemName);
+                                    Item.UseItem(client, user, i, true, 1);
                                 }
                             }
                             else

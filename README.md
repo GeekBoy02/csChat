@@ -38,4 +38,9 @@
 
 
 problems:
-    Deserialization now working with Quest-Class
+    -
+
+To-Do:
+    - Quest generator
+    - Location Generator
+    - Load Quests and Locations from JsonFiles 
