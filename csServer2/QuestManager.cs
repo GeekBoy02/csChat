@@ -20,7 +20,11 @@ namespace SocketServer
         public void FinishQuest(TcpClient client, User user)
         {
             user.Xp += user.ActiveQuest.XP_reward;
-            user.completedQuests.Add(user.ActiveQuest.Name);
+            user.ActiveQuest.CurrentStepIndex = 0;
+            if (!user.completedQuests.Contains(user.ActiveQuest.Name))
+            {
+                user.completedQuests.Add(user.ActiveQuest.Name);
+            }
             Program.SendMessage(client, "You completed the <" + user.ActiveQuest.Name + "> Quest and gained " + user.ActiveQuest.XP_reward + " XP ");
             user.ActiveQuest = new Quest().DefaultQuest();
             User.SaveToJsonFile(user);
@@ -31,6 +35,12 @@ namespace SocketServer
             if (user.ActiveQuest.IsComplete)
             {
                 FinishQuest(client, user);
+                return;
+            }
+
+            if (user.IsDead)
+            {
+                Program.SendMessage(client, "You need to be alive to progress your Quest");
                 return;
             }
 
@@ -48,6 +58,11 @@ namespace SocketServer
                 {
                     Game.DisplayProfile(client, enemy.userObj);
                     User.Fight(client, user, enemy.userObj);
+                    if (user.IsDead)
+                    {
+                        Program.SendMessage(client, "You died during the last Fight and abandoned the Quest");
+                        break;
+                    }
                 }
             }
             // Give the player items
@@ -56,14 +71,13 @@ namespace SocketServer
             {
                 foreach (Item item in currentStep.Items)
                 {
-                    user.AddItemToInventory(item);
+                    user.AddItemToInventory(client, item, true);
                 }
             }
             // Move the player to a new Location
-            Location l = currentStep.MoveTo;
-            if (l != null)
+            if (currentStep.MoveTo != null)
             {
-                user.Move(client, l.Name, Program.world);
+                user.Move(client, currentStep.MoveTo, Program.world);
             }
             // Move to the next stage
             user.ActiveQuest.CurrentStepIndex++;

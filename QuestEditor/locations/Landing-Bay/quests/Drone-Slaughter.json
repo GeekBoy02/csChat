@@ -1,0 +1,113 @@
+{
+  "name": "Drone-Slaughter",
+  "level": 2,
+  "description": "You need to kill 10 Rouge Drones",
+  "xp_reward": 24,
+  "steps": [
+    {
+      "enemies": [
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 1,
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
+        },
+        {
+          "name": "Rouge Drone",
+          "Level": 2,
+          "hp": 100,
+          "speed": 9,
+          "int": 9,
+          "luck": 10,
+          "credits": 4
+        }
+      ]
+    },
+    {
+      "items": [
+        {
+          "name": "Drink",
+          "icon": "\uD83E\uDDC3",
+          "description": "Tasty Drink that restores some health.",
+          "value": 2
+        }
+      ]
+    }
+  ],
+  "currentStageIndex": 0
+}

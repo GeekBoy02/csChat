@@ -1,14 +1,27 @@
 using System.Globalization;
 using System.Net.Sockets;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+
 namespace SocketServer
 {
     public class Item
     {
+        [JsonPropertyName("name")]
         public string Name { get; set; }
+        [JsonPropertyName("icon")]
         public string Icon { get; set; }
+        [JsonPropertyName("description")]
         public string Description { get; set; }
+        [JsonPropertyName("value")]
         public int Value { get; set; }
+
+        [JsonConstructor]
+        public Item()
+        {
+
+        }
 
         public Item Bandage()
         {
@@ -30,24 +43,24 @@ namespace SocketServer
         {
             Name = "Boots";
             Icon = "👢";
-            Description = $"Increases your SPEED by {Value}% in a Fight";
             Value = 10;
+            Description = $"Increases your SPEED by {Value}% in a Fight";
             return this;
         }
         public Item Glasses()
         {
             Name = "Glasses";
             Icon = "👓";
-            Description = $"Increases your INTELLECT by {Value}% in a Fight";
             Value = 10;
+            Description = $"Increases your INTELLECT by {Value}% in a Fight";
             return this;
         }
         public Item Scanner()
         {
             Name = "Scanner";
             Icon = "📡";
-            Description = $"Increases your LUCK by {Value}% in a Fight";
             Value = 10;
+            Description = $"Increases your LUCK by {Value}% in a Fight";
             return this;
         }
 

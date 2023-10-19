@@ -2,7 +2,7 @@
   "name": "Introduction",
   "level": 1,
   "description": "The first Quest",
-  "xp_reward": 1,
+  "xp_reward": 12,
   "steps": [
     {
       "text": "You wake up from a long Sleep and find yourself in a Cryo-Pod."
@@ -26,17 +26,29 @@
       "text": "You grab your D-D and charge to attack.",
       "enemies": [
         {
-          "Name": "Rouge Drone",
+          "name": "Rouge Drone",
           "Level": 1,
-          "HP": 100,
-          "Speed": 8,
-          "Intellect": 7,
-          "Luck": 10,
-          "Credits": 2
+          "hp": 100,
+          "speed": 7,
+          "int": 7,
+          "luck": 10,
+          "credits": 2
         }
       ]
+    },
+    {
+      "items": [
+        {
+          "name": "Drink",
+          "icon": "\uD83E\uDDC3",
+          "description": "Tasty Drink that restores some health.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "moveTo": "Cryo-Station"
     }
   ],
-  "currentStageIndex": 0,
-  "IsComplete": false
+  "currentStageIndex": 0
 }

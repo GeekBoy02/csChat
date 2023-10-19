@@ -62,6 +62,7 @@ namespace SocketServer
                 {
                     _hp = 0;
                     IsDead = true;
+                    ActiveQuest = new Quest().DefaultQuest();
                 }
                 else if (value > MaxHp)
                 {

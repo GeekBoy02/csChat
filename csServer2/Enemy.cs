@@ -75,13 +75,34 @@ namespace SocketServer
 
             e.userObj.Speed = Game.Randomize(5 + (lvl * 2));
             e.userObj.Intellect = Game.Randomize(5 + (lvl * 2));
-            e.userObj.Luck = 10;
+            e.userObj.Luck = 20;
             e.userObj.Credits = Game.Randomize(lvl * 2);
 
             e.userObj.Class = "Boss";
-            e.userObj.AddItemToInventory(new Item().Boots());
-            e.userObj.AddItemToInventory(new Item().Glasses());
-            e.userObj.AddItemToInventory(new Item().Scanner());
+            e.userObj.Inventory = new List<Item>()
+            {
+                new Item().Boots(),
+                new Item().Glasses(),
+                new Item().Scanner()
+            };
+            return e;
+        }
+        public Enemy DroneMotherStatic(int lvl)
+        {
+            Enemy e = new Enemy("Rouge Drone Mother", lvl);
+
+            e.userObj.Speed = 5 + (lvl * 2);
+            e.userObj.Intellect = 5 + (lvl * 2);
+            e.userObj.Luck = 20;
+            e.userObj.Credits = lvl * 2;
+
+            e.userObj.Class = "Boss";
+            e.userObj.Inventory = new List<Item>()
+            {
+                new Item().Boots(),
+                new Item().Glasses(),
+                new Item().Scanner()
+            };
             return e;
         }
         public Enemy RougeDrone(int lvl)
@@ -94,9 +115,28 @@ namespace SocketServer
             e.userObj.Credits = Game.Randomize(lvl * 2);
 
             e.userObj.FreeAP = 0;
-            e.userObj.AddItemToInventory(new Item().Bandage());
-            e.userObj.AddItemToInventory(new Item().Drink());
-            e.userObj.AddItemToInventory(new Item().Scanner());
+            e.userObj.Inventory = new List<Item>()
+            {
+                new Item().Bandage(),
+                new Item().Scanner()
+            };
+            return e;
+        }
+        public Enemy RougeDroneStatic(int lvl)  // used in quests
+        {
+            Enemy e = new Enemy("Rouge Drone", lvl);
+
+            e.userObj.Speed = 5 + (lvl * 2);
+            e.userObj.Intellect = 5 + (lvl * 2);
+            e.userObj.Luck = 10;
+            e.userObj.Credits = lvl * 2;
+
+            e.userObj.FreeAP = 0;
+            e.userObj.Inventory = new List<Item>()
+            {
+                new Item().Bandage(),
+                new Item().Scanner()
+            };
             return e;
         }
     }

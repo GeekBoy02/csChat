@@ -17,7 +17,8 @@ namespace SocketServer
         public List<QuestStep> Steps { get; set; }
         [JsonPropertyName("currentStageIndex")]
         public int CurrentStepIndex { get; set; }
-        [JsonPropertyName("IsComplete")]
+        //[JsonPropertyName("IsComplete")]
+        [JsonIgnore]
         public bool IsComplete => CurrentStepIndex >= Steps.Count;
 
         [JsonConstructor]
@@ -25,6 +26,19 @@ namespace SocketServer
         {
 
         }
+        public Quest Clone()
+        {
+            return new Quest
+            {
+                Name = Name,
+                Level = Level,
+                Description = Description,
+                XP_reward = XP_reward,
+                Steps = Steps,
+                CurrentStepIndex = 0
+            };
+        }
+
         public Quest DefaultQuest()
         {
             Name = "No Quest";
@@ -34,8 +48,12 @@ namespace SocketServer
             Steps = new List<QuestStep>()
             {
                 new QuestStep() { Text = "You have no Quest" },
-                new QuestStep() { Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDrone(1) } },
-                new QuestStep() { MoveTo = new Location("","").CryoStation() }
+                new QuestStep() { Text = "You have no Quest" },
+                new QuestStep() { Text = "You have no Quest" },
+                new QuestStep() { Text = "You have no Quest" },
+                new QuestStep() { Text = "You have no Quest" }
+                //new QuestStep() { Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDroneStatic(1) } },
+                //new QuestStep() { MoveTo = new Location().CryoStation().Name }
             };
             return this;
         }
@@ -53,8 +71,9 @@ namespace SocketServer
                 new QuestStep() { Text = "You notice Instructions on the Wall: \n1) Take tools from the Locker \n2) Grab a Speed-Suit from the wardrobe \n3) Head to the Control Room and activate the Fabricator" },
                 new QuestStep() { Text = "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator." },
                 new QuestStep() { Text = "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you." },
-                new QuestStep() { Text = "You grab your D-D and charge to attack.", Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDrone(1) } },
-                new QuestStep() { MoveTo = new Location("","").CryoStation() }
+                new QuestStep() { Text = "You grab your D-D and charge to attack.", Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDroneStatic(1) } },
+                new QuestStep() { Items = new List<Item>(){ new Item().Drink()} },
+                new QuestStep() { MoveTo = new Location().CryoStation().Name }
             };
             return this;
         }
@@ -65,9 +84,9 @@ namespace SocketServer
 
 
 
-        public static void CreateJsonFile(Quest quest)
+        public static void CreateJsonFile(string location, Quest quest)
         {
-            if (File.Exists("quests/" + quest.Name + ".json"))
+            if (File.Exists("locations/" + location + "/quests/" + quest.Name + ".json"))
             {
                 return;
             }
@@ -80,10 +99,10 @@ namespace SocketServer
             // Serialize the user object to json format using the options
             string json = JsonSerializer.Serialize(quest, options);
             // Write the json string to a file with the username as the file name
-            Directory.CreateDirectory("quests");
-            File.WriteAllText("quests/" + quest.Name + ".json", json);
+            Directory.CreateDirectory("locations/" + location + "/quests");
+            File.WriteAllText("locations/" + location + "/quests/" + quest.Name + ".json", json);
         }
-        public void SaveToJsonFile(Quest quest)
+        public void SaveToJsonFile(string location, Quest quest)
         {
             // Create a json serializer options object with some settings
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -94,16 +113,33 @@ namespace SocketServer
             // Serialize the user object to json format using the options
             string json = JsonSerializer.Serialize(quest, options);
             // Write the json string to a file with the username as the file name
-            Directory.CreateDirectory("quests");
-            File.WriteAllText("quests/" + quest.Name + ".json", json);
+            Directory.CreateDirectory("locations/" + location + "/quests");
+            File.WriteAllText("locations/" + location + "/quests/" + quest.Name + ".json", json);
         }
         public Quest LoadFromJsonFile(string location, string name)
         {
-            if (File.Exists("quests/" + name + ".json"))
+            if (File.Exists("locations/" + location + "/quests/" + name + ".json"))
             {
-                return JsonSerializer.Deserialize<Quest>(File.ReadAllText(location + "7quests/" + name + ".json"));
+                return JsonSerializer.Deserialize<Quest>(File.ReadAllText("locations/" + location + "/quests/" + name + ".json"));
             }
             return new Quest() { Name = "Quest not loaded" };
+        }
+        public static List<Quest> LoadAllFromFolder(string location)
+        {
+            List<Quest> ql = new List<Quest>();
+            string[] files = Directory.GetFiles("locations/" + location + "/quests");
+            foreach (string file in files)
+            {
+                string jsonFile = Path.GetFileName(file);
+                string path = Path.GetFullPath(file);
+                Console.WriteLine(Path.GetFileName(file));
+
+                if (File.Exists(path))
+                {
+                    ql.Add(JsonSerializer.Deserialize<Quest>(File.ReadAllText(path)));
+                }
+            }
+            return ql;
         }
     }
 }

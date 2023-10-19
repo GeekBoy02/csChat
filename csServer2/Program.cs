@@ -18,22 +18,25 @@ namespace SocketServer
 
         public static List<Location> world = new List<Location>()
         {
-            new Location("","").CryoStation(),
-            new Location("","").LandingBay()
+            //new Location().CryoStation()
+            //new Location().LandingBay()
         };
-        public static Location FindLocation(List<Location> loc, string loc_name)
+        public static Location FindLocation(List<Location> loc, string loc_name)    // used to find a Location in the Location-List by name
         {
             return loc.Find(location => location.Name == loc_name);
         }
 
         public static List<User> onlineUserList = new List<User>();
-        public static User FindOnlineUser(List<User> userList, string userName)
+        public static User FindOnlineUser(List<User> userList, string userName)    // used to find a User in the User-List by name
         {
             return userList.Find(user => user.Name == userName);
         }
 
         static void Main(string[] args)
         {
+            // load world
+            LoadWorld();
+            //___________
             Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("Starting server...");
             TcpListener listener = new TcpListener(IPAddress.Any, port);
@@ -206,14 +209,55 @@ namespace SocketServer
                             }
                         }
                     }
-                    else if (message.StartsWith("!quest") || message.StartsWith("!q")) // move to location
+                    else if (message.StartsWith("!quest") || message.StartsWith("!q")) // get/abandon/progress quest
                     {
                         // Quest q = user.ActiveQuest.CurrentQuest;
                         //user.ActiveQuest.StartQuest(new Quest("", "", 1).Introduction(), client, user);
 
                         QuestManager qm = new QuestManager();
 
-                        if (user.ActiveQuest == null)
+                        if (message.StartsWith("!qg"))      // quest get
+                        {
+                            string[] parts = message.Split(' ', 2);
+                            StringBuilder sb = new StringBuilder();
+
+                            if (parts.Length < 2)
+                            {
+                                SendMessage(client, "Local Quests:");
+                                foreach (Quest q in FindLocation(world, user.CurrentLocation).Quests)
+                                {
+                                    SendMessage(client, " <" + q.Name + "> " + q.Description + " | LVL: " + q.Level + " | XP: " + q.XP_reward);
+                                }
+                            }
+                            else
+                            {
+                                Location l = FindLocation(world, user.CurrentLocation);
+                                string qName = message.Split()[1];
+                                Quest q = Location.FindQuestInLocation(l.Quests, qName);
+                                if (q != null)
+                                {
+                                    user.ActiveQuest = q;
+                                    SendMessage(client, "You accepted the " + user.ActiveQuest.Name + " Quest");
+                                }
+                                else
+                                {
+                                    SendMessage(client, "There is no Quest with that name here");
+                                }
+                            }
+                        }
+                        else if (message.StartsWith("!quest completed") || message.StartsWith("!qc"))
+                        {
+                            SendMessage(client, "Quest you completed: ");
+                            foreach (string s in user.completedQuests)
+                            {
+                                SendMessage(client, " " + s);
+                            }
+                        }
+                        else if (message.StartsWith("!quest abandon") || message.StartsWith("!qa"))
+                        {
+                            user.ActiveQuest = new Quest().DefaultQuest();
+                        }
+                        else if (user.ActiveQuest == null)
                         {
                             Quest q = new Quest().Introduction();
                             user.ActiveQuest = q;
@@ -560,6 +604,17 @@ namespace SocketServer
                 if (name == username) return true;
             }
             return false;
+        }
+        public static void LoadWorld()
+        {
+            string[] folders = Directory.GetDirectories("locations");
+            foreach (string folder in folders)
+            {
+                string name = Path.GetFileName(folder);
+                Console.WriteLine(name);
+                Location l = Location.LoadFromJsonFile(name);
+                world.Add(l);
+            }
         }
     }
 }

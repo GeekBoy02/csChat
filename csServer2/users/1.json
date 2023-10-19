@@ -3,44 +3,66 @@
   "name": "1",
   "Name_Enclosed": "\u003C 1 \u003E",
   "Name_Icon": "1 \uD83D\uDC64",
-  "address": "127.0.0.1:4771",
-  "connection_count": 2,
+  "address": "127.0.0.1:4292",
+  "connection_count": 6,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 1,
-  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
-  "xp": 52,
-  "Xp_Icon": "52 \u2B50",
+  "level": 2,
+  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
+  "xp": 50,
+  "Xp_Icon": "50 \u2B50",
   "max_hp": 100,
-  "Hp": 100,
-  "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 5000,
-  "Credits_Icon": "5000 \uD83D\uDCC0",
+  "Hp": 69,
+  "Hp_Icon": "69 \u2764\uFE0F",
+  "Credits": 14,
+  "Credits_Icon": "14 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 15,
-  "Speed_Icon": "15 \u26A1",
+  "speed": 16,
+  "Speed_Icon": "16 \u26A1",
   "intellect": 7,
   "Intellect_Icon": "7 \uD83E\uDDE0",
   "luck": 10,
   "Luck_Icon": "10 \uD83C\uDF40",
   "EquippedItem": {
-    "Value": 0
+    "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 5,
-  "FreeAP_Icon": "5 \u2795",
-  "inventory": [],
-  "current_location": "Cryo-Station",
+  "freeAP": 8,
+  "FreeAP_Icon": "8 \u2795",
+  "inventory": [
+    {
+      "name": "Bandage",
+      "icon": "\uD83E\uDE79",
+      "description": "Restores some health.",
+      "value": 1
+    },
+    {
+      "name": "Drink",
+      "icon": "\uD83E\uDDC3",
+      "description": "Tasty Drink that restores some health.",
+      "value": 2
+    },
+    {
+      "name": "Bandage",
+      "icon": "\uD83E\uDE79",
+      "description": "Restores some health.",
+      "value": 1
+    },
+    {
+      "name": "Bandage",
+      "icon": "\uD83E\uDE79",
+      "description": "Restores some health.",
+      "value": 1
+    }
+  ],
+  "current_location": "Landing-Bay",
   "active_quest": {
-    "name": "No Quest",
-    "level": 1,
-    "description": "You have no Quest",
-    "xp_reward": 0,
+    "name": "Drone-Slaughter",
+    "level": 2,
+    "description": "You need to kill 10 Rouge Drones",
+    "xp_reward": 24,
     "steps": [
-      {
-        "text": "You have no Quest"
-      },
       {
         "enemies": [
           {
@@ -78,17 +100,476 @@
               "luck": 10,
               "Luck_Icon": "10 \uD83C\uDF40",
               "EquippedItem": {
-                "Value": 0
+                "value": 0
               },
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
               "inventory": [
                 {
-                  "Name": "Bandage",
-                  "Icon": "\uD83E\uDE79",
-                  "Description": "Restores some health.",
-                  "Value": 1
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          },
+          {
+            "name": "Rouge Drone",
+            "Level": 2,
+            "hp": 100,
+            "speed": 9,
+            "int": 9,
+            "luck": 10,
+            "credits": 4,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 2,
+              "Level_Icon": "2 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 4,
+              "Credits_Icon": "4 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 9,
+              "Speed_Icon": "9 \u26A1",
+              "intellect": 9,
+              "Intellect_Icon": "9 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
                 }
               ],
               "completed_quests": []
@@ -97,132 +578,17 @@
         ]
       },
       {
-        "moveTo": {
-          "name": "Cryo-Station",
-          "level": 1,
-          "description": "The start of your Adventure.",
-          "welcomeMsg": "Welcome to Cryo-Station",
-          "quests": [],
-          "enemies": [
-            {
-              "name": "Rouge Drone",
-              "Level": 4,
-              "hp": 100,
-              "speed": 13,
-              "int": 13,
-              "luck": 10,
-              "credits": 8,
-              "userObj": {
-                "isDead": false,
-                "name": "Rouge Drone",
-                "Name_Enclosed": "\u003C Rouge Drone \u003E",
-                "Name_Icon": "Rouge Drone \uD83D\uDC64",
-                "address": "",
-                "connection_count": 0,
-                "message_count": 0,
-                "class": "Mob",
-                "Class_Icon": "Mob \uD83E\uDEAA",
-                "level": 4,
-                "Level_Icon": "4 \uD83C\uDF96\uFE0F",
-                "xp": 0,
-                "Xp_Icon": "0 \u2B50",
-                "max_hp": 100,
-                "Hp": 100,
-                "Hp_Icon": "100 \u2764\uFE0F",
-                "Credits": 8,
-                "Credits_Icon": "8 \uD83D\uDCC0",
-                "Credits_Icon_Only": "\uD83D\uDCC0",
-                "speed": 13,
-                "Speed_Icon": "13 \u26A1",
-                "intellect": 13,
-                "Intellect_Icon": "13 \uD83E\uDDE0",
-                "luck": 10,
-                "Luck_Icon": "10 \uD83C\uDF40",
-                "EquippedItem": {
-                  "Value": 0
-                },
-                "EquippedItem_Icon": " ",
-                "freeAP": 5,
-                "FreeAP_Icon": "5 \u2795",
-                "inventory": [
-                  {
-                    "Name": "Bandage",
-                    "Icon": "\uD83E\uDE79",
-                    "Description": "Restores some health.",
-                    "Value": 1
-                  }
-                ],
-                "completed_quests": []
-              }
-            },
-            {
-              "name": "Rouge Drone Mother",
-              "Level": 17,
-              "hp": 100,
-              "speed": 39,
-              "int": 39,
-              "luck": 10,
-              "credits": 34,
-              "userObj": {
-                "isDead": false,
-                "name": "Rouge Drone Mother",
-                "Name_Enclosed": "\u003C Rouge Drone Mother \u003E",
-                "Name_Icon": "Rouge Drone Mother \uD83D\uDC64",
-                "address": "",
-                "connection_count": 0,
-                "message_count": 0,
-                "class": "Mob",
-                "Class_Icon": "Mob \uD83E\uDEAA",
-                "level": 17,
-                "Level_Icon": "17 \uD83C\uDF96\uFE0F",
-                "xp": 0,
-                "Xp_Icon": "0 \u2B50",
-                "max_hp": 100,
-                "Hp": 100,
-                "Hp_Icon": "100 \u2764\uFE0F",
-                "Credits": 34,
-                "Credits_Icon": "34 \uD83D\uDCC0",
-                "Credits_Icon_Only": "\uD83D\uDCC0",
-                "speed": 39,
-                "Speed_Icon": "39 \u26A1",
-                "intellect": 39,
-                "Intellect_Icon": "39 \uD83E\uDDE0",
-                "luck": 10,
-                "Luck_Icon": "10 \uD83C\uDF40",
-                "EquippedItem": {
-                  "Value": 0
-                },
-                "EquippedItem_Icon": " ",
-                "freeAP": 5,
-                "FreeAP_Icon": "5 \u2795",
-                "inventory": [
-                  {
-                    "Name": "Bandage",
-                    "Icon": "\uD83E\uDE79",
-                    "Description": "Restores some health.",
-                    "Value": 1
-                  }
-                ],
-                "completed_quests": []
-              }
-            }
-          ],
-          "shop": [
-            {
-              "Name": "Drink",
-              "Icon": "\uD83E\uDDC3",
-              "Description": "Tasty Drink that restores some health.",
-              "Value": 2
-            }
-          ],
-          "x": 0,
-          "y": 0,
-          "Visitors": []
-        }
+        "items": [
+          {
+            "name": "Drink",
+            "icon": "\uD83E\uDDC3",
+            "description": "Tasty Drink that restores some health.",
+            "value": 2
+          }
+        ]
       }
     ],
-    "currentStageIndex": 0,
-    "IsComplete": false
+    "currentStageIndex": 0
   },
   "completed_quests": [
     "Introduction"

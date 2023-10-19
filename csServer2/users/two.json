@@ -1,10 +1,10 @@
 {
   "isDead": false,
-  "name": "one",
-  "Name_Enclosed": "\u003C one \u003E",
-  "Name_Icon": "one \uD83D\uDC64",
-  "address": "127.0.0.1:4148",
-  "connection_count": 1,
+  "name": "two",
+  "Name_Enclosed": "\u003C two \u003E",
+  "Name_Icon": "two \uD83D\uDC64",
+  "address": "127.0.0.1:4181",
+  "connection_count": 0,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
@@ -38,7 +38,6 @@
       "value": 1
     }
   ],
-  "current_location": "Cryo-Station",
   "active_quest": {
     "name": "Introduction",
     "level": 1,

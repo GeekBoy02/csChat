@@ -1,0 +1,206 @@
+{
+  "name": "Cryo-Station",
+  "level": 1,
+  "description": "The start of your Adventure.",
+  "welcomeMsg": "Welcome to Cryo-Station",
+  "quests": [
+    {
+      "name": "Introduction",
+      "level": 1,
+      "description": "The first Quest",
+      "xp_reward": 12,
+      "steps": [
+        {
+          "text": "You wake up from a long Sleep and find yourself in a Cryo-Pod."
+        },
+        {
+          "text": "You remember that you are on a Colony Ship that is supposed to colonize a Planet called MATIO."
+        },
+        {
+          "text": "You realize that while asleep, your Body has been tamperd with and modified \nyou can move faster than you remember, and a lot more precise."
+        },
+        {
+          "text": "You notice Instructions on the Wall: \n1) Take tools from the Locker \n2) Grab a Speed-Suit from the wardrobe \n3) Head to the Control Room and activate the Fabricator"
+        },
+        {
+          "text": "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator."
+        },
+        {
+          "text": "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you."
+        },
+        {
+          "text": "You grab your D-D and charge to attack.",
+          "enemies": [
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "name": "Drink",
+              "icon": "\uD83E\uDDC3",
+              "description": "Tasty Drink that restores some health.",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "moveTo": "Cryo-Station"
+        }
+      ],
+      "currentStageIndex": 0
+    },
+    {
+      "name": "Drone-Slaughter",
+      "level": 2,
+      "description": "You need to kill 10 Rouge Drones",
+      "xp_reward": 24,
+      "steps": [
+        {
+          "enemies": [
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 1,
+              "hp": 100,
+              "speed": 7,
+              "int": 7,
+              "luck": 10,
+              "credits": 2
+            },
+            {
+              "name": "Rouge Drone",
+              "Level": 2,
+              "hp": 100,
+              "speed": 9,
+              "int": 9,
+              "luck": 10,
+              "credits": 4
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "name": "Drink",
+              "icon": "\uD83E\uDDC3",
+              "description": "Tasty Drink that restores some health.",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "currentStageIndex": 0
+    }
+  ],
+  "enemies": [
+    {
+      "name": "Rouge Drone",
+      "Level": 1,
+      "hp": 100,
+      "speed": 7,
+      "int": 7,
+      "luck": 10,
+      "credits": 2
+    },
+    {
+      "name": "Rouge Drone Mother",
+      "Level": 11,
+      "hp": 100,
+      "speed": 27,
+      "int": 27,
+      "luck": 10,
+      "credits": 22
+    }
+  ],
+  "shop": [
+    {
+      "name": "Drink",
+      "icon": "\uD83E\uDDC3",
+      "description": "Tasty Drink that restores some health.",
+      "value": 2
+    }
+  ],
+  "x": 0,
+  "y": 0,
+  "Visitors": []
+}

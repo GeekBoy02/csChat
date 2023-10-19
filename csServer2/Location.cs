@@ -22,6 +22,10 @@ namespace SocketServer
 
         [JsonPropertyName("quests")]
         public List<Quest> Quests { get; set; }
+        public static Quest FindQuestInLocation(List<Quest> quests, string questName)   // return new Instance of Quest
+        {
+            return quests.Find(quest => quest.Name == questName)?.Clone();
+        }
 
         [JsonPropertyName("enemies")]
         public List<Enemy> Enemies { get; set; }
@@ -41,10 +45,11 @@ namespace SocketServer
 
         public List<User> Visitors { get; set; }
 
-        public Location(string name, string description)
+        [JsonConstructor]
+        public Location()
         {
-            Name = name;
-            Description = description;
+            Name = "Location name";
+            Description = "description";
             WelcomeMessage = $"Welcome to {Name}";
             Quests = new List<Quest>();
             Enemies = new List<Enemy>();
@@ -58,8 +63,8 @@ namespace SocketServer
             WelcomeMessage = $"Welcome to {Name}";
             Enemies = new List<Enemy>
             {
-                new Enemy("", 1).RougeDrone(Game.Randomize(1, 0, 10)),
-                new Enemy("", 1).DroneMother(Game.Randomize(10, 0, 1))
+                new Enemy("", 1).RougeDroneStatic(Level),
+                new Enemy("", 1).DroneMotherStatic(Level + 10)
             };
             Shop = new List<Item>
             {
@@ -67,9 +72,11 @@ namespace SocketServer
             };
             Quests = new List<Quest>()
             {
-                //new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
-                //new Quest("","",0).Introduction()
+                //new Quest().LoadFromJsonFile(Name, "Introduction"),
+                //new Quest().LoadFromJsonFile(Name, "Drone-Slaughter")
+                //new Quest().Introduction()
             };
+            Quests = Quest.LoadAllFromFolder(Name);
             return this;
         }
         public Location LandingBay()
@@ -80,17 +87,16 @@ namespace SocketServer
             WelcomeMessage = $"Welcome to {Name}";
             Enemies = new List<Enemy>
             {
-                new Enemy("", 1).RougeDrone(Game.Randomize(1, 0, 10)),
-                new Enemy("", 1).DroneMother(Game.Randomize(10, 0, 1))
+                new Enemy("", 1).RougeDrone(Level),
+                new Enemy("", 1).DroneMother(Level + 10)
             };
             Shop = new List<Item>
             {
-                new Item().Drink()
+                new Item().Glasses(),
+                new Item().Scanner(),
+                new Item().Boots()
             };
-            Quests = new List<Quest>()
-            {
-                //new Quest("", "", 1).LoadFromJsonFile(Name, "Introduction")
-            };
+            Quests = Quest.LoadAllFromFolder("Landing-Bay");
             return this;
         }
 
@@ -159,7 +165,7 @@ namespace SocketServer
         }
         public static void CreateJsonFile(Location location)
         {
-            if (File.Exists("locations/" + location.Name + ".json"))
+            if (File.Exists($"locations/{location.Name}/{location.Name}.json"))
             {
                 return;
             }
@@ -172,8 +178,8 @@ namespace SocketServer
             // Serialize the user object to json format using the options
             string json = JsonSerializer.Serialize(location, options);
             // Write the json string to a file with the username as the file name
-            Directory.CreateDirectory("locations");
-            File.WriteAllText("locations/" + location.Name + ".json", json);
+            Directory.CreateDirectory($"locations/{location.Name}");
+            File.WriteAllText($"locations/{location.Name}/{location.Name}.json", json);
         }
         public void SaveToJsonFile(Location location)
         {
@@ -186,16 +192,16 @@ namespace SocketServer
             // Serialize the user object to json format using the options
             string json = JsonSerializer.Serialize(location, options);
             // Write the json string to a file with the username as the file name
-            Directory.CreateDirectory("locations");
-            File.WriteAllText("locations/" + location.Name + ".json", json);
+            Directory.CreateDirectory($"locations/{location.Name}");
+            File.WriteAllText($"locations/{location.Name}/{location.Name}.json", json);
         }
         public static Location LoadFromJsonFile(string name)
         {
-            if (File.Exists("locations/" + name + ".json"))
+            if (File.Exists($"locations/{name}/{name}.json"))
             {
-                return JsonSerializer.Deserialize<Location>(File.ReadAllText("locations/" + name + ".json"));
+                return JsonSerializer.Deserialize<Location>(File.ReadAllText($"locations/{name}/{name}.json"));
             }
-            return new Location("UserNotLoaded", "");
+            return new Location() { Name = "Location not Loaded" };
         }
     }
 }
