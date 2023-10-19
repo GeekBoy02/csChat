@@ -68,6 +68,9 @@
     "level": 1,
     "description": "You have no Quest",
     "xp_reward": 0,
+    "credit_reward": 0,
+    "prerequisite_LVL": 0,
+    "prerequisite_INT": 0,
     "steps": [
       {
         "text": "You have no Quest"

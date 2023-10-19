@@ -1,25 +1,25 @@
 {
   "isDead": false,
-  "name": "4442234",
-  "Name_Enclosed": "\u003C 4442234 \u003E",
-  "Name_Icon": "4442234 \uD83D\uDC64",
-  "address": "127.0.0.1:5093",
+  "name": "11",
+  "Name_Enclosed": "\u003C 11 \u003E",
+  "Name_Icon": "11 \uD83D\uDC64",
+  "address": "127.0.0.1:14672",
   "connection_count": 1,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 1,
-  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
-  "xp": 22,
-  "Xp_Icon": "22 \u2B50",
+  "level": 2,
+  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
+  "xp": 54,
+  "Xp_Icon": "54 \u2B50",
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 1,
-  "Credits_Icon": "1 \uD83D\uDCC0",
+  "Credits": 12,
+  "Credits_Icon": "12 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 15,
-  "Speed_Icon": "15 \u26A1",
+  "speed": 21,
+  "Speed_Icon": "21 \u26A1",
   "intellect": 7,
   "Intellect_Icon": "7 \uD83E\uDDE0",
   "luck": 10,
@@ -28,8 +28,8 @@
     "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 5,
-  "FreeAP_Icon": "5 \u2795",
+  "freeAP": 3,
+  "FreeAP_Icon": "3 \u2795",
   "inventory": [
     {
       "name": "Bandage",
@@ -42,9 +42,15 @@
       "icon": "\uD83E\uDDC3",
       "description": "Tasty Drink that restores some health.",
       "value": 2
+    },
+    {
+      "name": "Drink",
+      "icon": "\uD83E\uDDC3",
+      "description": "Tasty Drink that restores some health.",
+      "value": 2
     }
   ],
-  "current_location": "Landing-Bay",
+  "current_location": "Cryo-Station",
   "active_quest": {
     "name": "No Quest",
     "level": 1,
@@ -73,6 +79,7 @@
     "currentStageIndex": 0
   },
   "completed_quests": [
-    "Introduction"
+    "Introduction",
+    "Drone-Slaughter"
   ]
 }

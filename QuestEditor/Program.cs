@@ -15,10 +15,15 @@ namespace QuestEditor
                 Name = "Drone-Slaughter",
                 Level = 2,
                 XP_reward = 24,
-                Description = "You need to kill 10 Rouge Drones",
+                Credit_reward = 20,
+                Prerequisite_lvl = q.Level,
+                Prerequisite_int = 10,
+                Description = "You need to kill 9 Rouge Drones and their Mother Drone",
                 Steps = new List<QuestStep>()
                 {
-                    new QuestStep() { Enemies = new List<Enemy>()
+                    new QuestStep()
+                    {
+                        Enemies = new List<Enemy>()
                         {
                             new Enemy("placeholder",1).RougeDroneStatic(1),
                             new Enemy("placeholder",1).RougeDroneStatic(1),
@@ -28,9 +33,16 @@ namespace QuestEditor
                             new Enemy("placeholder",1).RougeDroneStatic(1),
                             new Enemy("placeholder",1).RougeDroneStatic(1),
                             new Enemy("placeholder",1).RougeDroneStatic(1),
-                            new Enemy("placeholder",1).RougeDroneStatic(1),
-                            new Enemy("placeholder",1).RougeDroneStatic(q.Level)
-                        } },
+                            new Enemy("placeholder",1).RougeDroneStatic(1)
+                        }
+                    },
+                    new QuestStep()
+                    {
+                        Enemies = new List<Enemy>()
+                        {
+                            new Enemy("placeholder",1).DroneMotherStatic(6)
+                        }
+                    },
                     new QuestStep() { Items = new List<Item>(){ new Item().Drink()} }
                 }
             };
@@ -64,4 +76,3 @@ namespace QuestEditor
         }
     }
 }
-

@@ -2,13 +2,15 @@
   "name": "Landing-Bay",
   "level": 2,
   "description": "Ships park here.",
-  "welcomeMsg": "Welcome to Landing-Bay",
+  "welcomeMsg": "Welcome to Location name",
   "quests": [
     {
       "name": "Drone-Slaughter",
       "level": 2,
-      "description": "You need to kill 10 Rouge Drones",
+      "description": "You need to kill 9 Rouge Drones and their Mother",
       "xp_reward": 24,
+      "prerequisite_LVL": 0,
+      "prerequisite_INT": 0,
       "steps": [
         {
           "enemies": [
@@ -92,9 +94,13 @@
               "int": 7,
               "luck": 10,
               "credits": 2
-            },
+            }
+          ]
+        },
+        {
+          "enemies": [
             {
-              "name": "Rouge Drone",
+              "name": "Rouge Drone Mother",
               "Level": 2,
               "hp": 100,
               "speed": 9,
@@ -130,12 +136,12 @@
     },
     {
       "name": "Rouge Drone Mother",
-      "Level": 12,
+      "Level": 2,
       "hp": 100,
-      "speed": 29,
-      "int": 29,
+      "speed": 9,
+      "int": 9,
       "luck": 10,
-      "credits": 24
+      "credits": 4
     }
   ],
   "shop": [

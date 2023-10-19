@@ -13,8 +13,8 @@
   "xp": 0,
   "Xp_Icon": "0 \u2B50",
   "max_hp": 100,
-  "Hp": 90,
-  "Hp_Icon": "90 \u2764\uFE0F",
+  "Hp": 100,
+  "Hp_Icon": "100 \u2764\uFE0F",
   "Credits": 1,
   "Credits_Icon": "1 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
@@ -28,20 +28,14 @@
     "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 0,
-  "FreeAP_Icon": "0 \u2795",
+  "freeAP": 5,
+  "FreeAP_Icon": "5 \u2795",
   "inventory": [
     {
       "name": "Bandage",
       "icon": "\uD83E\uDE79",
       "description": "Restores some health.",
       "value": 1
-    },
-    {
-      "name": "Scanner",
-      "icon": "\uD83D\uDCE1",
-      "description": "Increases your LUCK by 10% in a Fight",
-      "value": 10
     }
   ],
   "active_quest": {
@@ -49,6 +43,9 @@
     "level": 1,
     "description": "You have no Quest",
     "xp_reward": 0,
+    "credit_reward": 0,
+    "prerequisite_LVL": 1,
+    "prerequisite_INT": 1,
     "steps": [
       {
         "text": "You have no Quest"

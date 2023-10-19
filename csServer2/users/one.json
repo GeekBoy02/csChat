@@ -44,6 +44,9 @@
     "level": 1,
     "description": "The first Quest",
     "xp_reward": 12,
+    "credit_reward": 0,
+    "prerequisite_LVL": 0,
+    "prerequisite_INT": 0,
     "steps": [
       {
         "text": "You wake up from a long Sleep and find yourself in a Cryo-Pod."

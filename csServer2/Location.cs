@@ -79,32 +79,14 @@ namespace SocketServer
             Quests = Quest.LoadAllFromFolder(Name);
             return this;
         }
-        public Location LandingBay()
-        {
-            Name = "Landing-Bay";
-            Level = 2;
-            Description = "Ships park here.";
-            WelcomeMessage = $"Welcome to {Name}";
-            Enemies = new List<Enemy>
-            {
-                new Enemy("", 1).RougeDrone(Level),
-                new Enemy("", 1).DroneMother(Level + 10)
-            };
-            Shop = new List<Item>
-            {
-                new Item().Glasses(),
-                new Item().Scanner(),
-                new Item().Boots()
-            };
-            Quests = Quest.LoadAllFromFolder("Landing-Bay");
-            return this;
-        }
 
 
 
 
 
 
+
+        
         public static void AddVisitors(List<User> userOnline, List<Location> world)
         {
             foreach (var l in world)

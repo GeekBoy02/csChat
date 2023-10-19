@@ -226,7 +226,10 @@ namespace SocketServer
                                 SendMessage(client, "Local Quests:");
                                 foreach (Quest q in FindLocation(world, user.CurrentLocation).Quests)
                                 {
-                                    SendMessage(client, " <" + q.Name + "> " + q.Description + " | LVL: " + q.Level + " | XP: " + q.XP_reward);
+                                    if (user.Intellect >= q.Prerequisite_int)       // user only sees quests if Intellect is high enough
+                                    {
+                                        SendMessage(client, " <" + q.Name + "> " + q.Description + " | LVL: " + q.Level + " | XP: " + q.XP_reward);
+                                    }
                                 }
                             }
                             else
@@ -236,8 +239,15 @@ namespace SocketServer
                                 Quest q = Location.FindQuestInLocation(l.Quests, qName);
                                 if (q != null)
                                 {
-                                    user.ActiveQuest = q;
-                                    SendMessage(client, "You accepted the " + user.ActiveQuest.Name + " Quest");
+                                    if (user.Level >= q.Prerequisite_lvl && user.Intellect >= q.Prerequisite_int)
+                                    {
+                                        user.ActiveQuest = q;
+                                        SendMessage(client, "You accepted the " + user.ActiveQuest.Name + " Quest");
+                                    }
+                                    else
+                                    {
+                                        SendMessage(client, "Your Level or Intellect is too low for this Quest ");
+                                    }
                                 }
                                 else
                                 {

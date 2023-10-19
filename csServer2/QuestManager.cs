@@ -20,12 +20,14 @@ namespace SocketServer
         public void FinishQuest(TcpClient client, User user)
         {
             user.Xp += user.ActiveQuest.XP_reward;
+            user.Credits += user.ActiveQuest.Credit_reward;
             user.ActiveQuest.CurrentStepIndex = 0;
             if (!user.completedQuests.Contains(user.ActiveQuest.Name))
             {
                 user.completedQuests.Add(user.ActiveQuest.Name);
             }
-            Program.SendMessage(client, "You completed the <" + user.ActiveQuest.Name + "> Quest and gained " + user.ActiveQuest.XP_reward + " XP ");
+            Program.SendMessage(client, "You completed the <" + user.ActiveQuest.Name + "> Quest");
+            Program.SendMessage(client, "You gained " + user.ActiveQuest.XP_reward + " XP and " + user.ActiveQuest.Credit_reward + " CREDITS");
             user.ActiveQuest = new Quest().DefaultQuest();
             User.SaveToJsonFile(user);
         }
@@ -83,7 +85,7 @@ namespace SocketServer
             user.ActiveQuest.CurrentStepIndex++;
             if (autoAdvance)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 AdvanceQuestStep(client, user, true);
             }
         }

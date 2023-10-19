@@ -13,6 +13,12 @@ namespace SocketServer
         public string Description { get; set; }
         [JsonPropertyName("xp_reward")]
         public int XP_reward { get; set; }
+        [JsonPropertyName("credit_reward")]
+        public int Credit_reward { get; set; }
+        [JsonPropertyName("prerequisite_LVL")]
+        public int Prerequisite_lvl { get; set; }
+        [JsonPropertyName("prerequisite_INT")]
+        public int Prerequisite_int { get; set; }
         [JsonPropertyName("steps")]
         public List<QuestStep> Steps { get; set; }
         [JsonPropertyName("currentStageIndex")]
@@ -26,6 +32,7 @@ namespace SocketServer
         {
 
         }
+
         public Quest Clone()
         {
             return new Quest
@@ -34,6 +41,9 @@ namespace SocketServer
                 Level = Level,
                 Description = Description,
                 XP_reward = XP_reward,
+                Credit_reward = Credit_reward,
+                Prerequisite_lvl = Prerequisite_lvl,
+                Prerequisite_int = Prerequisite_int,
                 Steps = Steps,
                 CurrentStepIndex = 0
             };
@@ -44,6 +54,9 @@ namespace SocketServer
             Name = "No Quest";
             Level = 1;
             XP_reward = 0;
+            Credit_reward = 0;
+            Prerequisite_lvl = 1;
+            Prerequisite_int = 1;
             Description = "You have no Quest";
             Steps = new List<QuestStep>()
             {
@@ -62,6 +75,8 @@ namespace SocketServer
             Name = "Introduction";
             Level = 1;
             XP_reward = 12;
+            Prerequisite_lvl = 1;
+            Prerequisite_int = 1;
             Description = "The first Quest";
             Steps = new List<QuestStep>()
             {
@@ -72,6 +87,7 @@ namespace SocketServer
                 new QuestStep() { Text = "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator." },
                 new QuestStep() { Text = "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you." },
                 new QuestStep() { Text = "You grab your D-D and charge to attack.", Enemies = new List<Enemy>(){ new Enemy("placeholder",1).RougeDroneStatic(1) } },
+                new QuestStep() { Text = "You manage to kill the Drone by stabbing it really fast, the drone hit you a couple of times too and damaged your Suit and Body " },
                 new QuestStep() { Items = new List<Item>(){ new Item().Drink()} },
                 new QuestStep() { MoveTo = new Location().CryoStation().Name }
             };

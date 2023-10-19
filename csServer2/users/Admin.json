@@ -1,35 +1,35 @@
 {
   "isDead": false,
-  "name": "1",
-  "Name_Enclosed": "\u003C 1 \u003E",
-  "Name_Icon": "1 \uD83D\uDC64",
-  "address": "127.0.0.1:4292",
-  "connection_count": 6,
+  "name": "Admin",
+  "Name_Enclosed": "\u003C Admin \u003E",
+  "Name_Icon": "Admin \uD83D\uDC64",
+  "address": "127.0.0.1:1786",
+  "connection_count": 2,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 2,
-  "Level_Icon": "2 \uD83C\uDF96\uFE0F",
-  "xp": 50,
-  "Xp_Icon": "50 \u2B50",
+  "level": 3,
+  "Level_Icon": "3 \uD83C\uDF96\uFE0F",
+  "xp": 20,
+  "Xp_Icon": "20 \u2B50",
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 14,
-  "Credits_Icon": "14 \uD83D\uDCC0",
+  "Credits": 20,
+  "Credits_Icon": "20 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 16,
-  "Speed_Icon": "16 \u26A1",
-  "intellect": 7,
-  "Intellect_Icon": "7 \uD83E\uDDE0",
+  "speed": 23,
+  "Speed_Icon": "23 \u26A1",
+  "intellect": 12,
+  "Intellect_Icon": "12 \uD83E\uDDE0",
   "luck": 10,
   "Luck_Icon": "10 \uD83C\uDF40",
   "EquippedItem": {
     "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 8,
-  "FreeAP_Icon": "8 \u2795",
+  "freeAP": 0,
+  "FreeAP_Icon": "0 \u2795",
   "inventory": [
     {
       "name": "Bandage",
@@ -48,23 +48,17 @@
       "icon": "\uD83E\uDE79",
       "description": "Restores some health.",
       "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
     }
   ],
-  "current_location": "Landing-Bay",
+  "current_location": "Cryo-Station",
   "active_quest": {
     "name": "Drone-Slaughter",
     "level": 2,
-    "description": "You need to kill 10 Rouge Drones",
+    "description": "You need to kill 9 Rouge Drones and their Mother",
     "xp_reward": 24,
     "credit_reward": 0,
-    "prerequisite_LVL": 0,
-    "prerequisite_INT": 0,
+    "prerequisite_LVL": 2,
+    "prerequisite_INT": 10,
     "steps": [
       {
         "enemies": [
@@ -526,9 +520,13 @@
               ],
               "completed_quests": []
             }
-          },
+          }
+        ]
+      },
+      {
+        "enemies": [
           {
-            "name": "Rouge Drone",
+            "name": "Rouge Drone Mother",
             "Level": 2,
             "hp": 100,
             "speed": 9,
@@ -537,9 +535,9 @@
             "credits": 4,
             "userObj": {
               "isDead": false,
-              "name": "Rouge Drone",
-              "Name_Enclosed": "\u003C Rouge Drone \u003E",
-              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "name": "Rouge Drone Mother",
+              "Name_Enclosed": "\u003C Rouge Drone Mother \u003E",
+              "Name_Icon": "Rouge Drone Mother \uD83D\uDC64",
               "address": "",
               "connection_count": 0,
               "message_count": 0,
@@ -591,9 +589,10 @@
         ]
       }
     ],
-    "currentStageIndex": 0
+    "currentStageIndex": 2
   },
   "completed_quests": [
-    "Introduction"
+    "Introduction",
+    "Drone-Slaughter"
   ]
 }
