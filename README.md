@@ -43,7 +43,6 @@
     - Location Generator
     - reload Quests from Json file at request
     - fight Local Enemies 
-    - fix using multiple items with !i and !use
 
 ## Attributes
 - Speed:        decides who strikes first, is the "attack value"

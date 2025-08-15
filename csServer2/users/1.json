@@ -4,8 +4,8 @@
   "Name_Enclosed": "\u003C 1 \u003E",
   "Name_Icon": "1 \uD83D\uDC64",
   "address": "127.0.0.1:4292",
-  "connection_count": 17,
-  "message_count": 2,
+  "connection_count": 20,
+  "message_count": 3,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
   "level": 115,
@@ -15,8 +15,8 @@
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 701,
-  "Credits_Icon": "701 \uD83D\uDCC0",
+  "Credits": 703,
+  "Credits_Icon": "703 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
   "speed": 229,
   "Speed_Icon": "229 \u26A1",
@@ -25,83 +25,20 @@
   "luck": 100,
   "Luck_Icon": "100 \uD83C\uDF40",
   "EquippedItem": {
-    "value": 0
+    "name": "Scanner",
+    "icon": "\uD83D\uDCE1",
+    "description": "Increases your LUCK by 10% in a Fight",
+    "value": 10
   },
-  "EquippedItem_Icon": " ",
+  "EquippedItem_Icon": "Scanner \uD83D\uDCE1",
   "freeAP": 47,
   "FreeAP_Icon": "47 \u2795",
   "inventory": [
     {
-      "name": "Drink",
-      "icon": "\uD83E\uDDC3",
-      "description": "Tasty Drink that restores some health.",
-      "value": 2
-    },
-    {
-      "name": "Drink",
-      "icon": "\uD83E\uDDC3",
-      "description": "Tasty Drink that restores some health.",
-      "value": 2
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
       "name": "Scanner",
       "icon": "\uD83D\uDCE1",
       "description": "Increases your LUCK by 10% in a Fight",
       "value": 10
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
     },
     {
       "name": "Scanner",
@@ -116,244 +53,10 @@
       "value": 10
     },
     {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
       "name": "Scanner",
       "icon": "\uD83D\uDCE1",
       "description": "Increases your LUCK by 10% in a Fight",
       "value": 10
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Scanner",
-      "icon": "\uD83D\uDCE1",
-      "description": "Increases your LUCK by 10% in a Fight",
-      "value": 10
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Scanner",
-      "icon": "\uD83D\uDCE1",
-      "description": "Increases your LUCK by 10% in a Fight",
-      "value": 10
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Scanner",
-      "icon": "\uD83D\uDCE1",
-      "description": "Increases your LUCK by 10% in a Fight",
-      "value": 10
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
     },
     {
       "name": "Drink",
@@ -528,6 +231,21 @@
       "icon": "\uD83E\uDE79",
       "description": "Restores some health.",
       "value": 1
+    },
+    {
+      "value": 0
+    },
+    {
+      "name": "Scanner",
+      "icon": "\uD83D\uDCE1",
+      "description": "Increases your LUCK by 10% in a Fight",
+      "value": 10
+    },
+    {
+      "name": "Scanner",
+      "icon": "\uD83D\uDCE1",
+      "description": "Increases your LUCK by 10% in a Fight",
+      "value": 10
     }
   ],
   "current_location": "Landing-Bay",
@@ -551,7 +269,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -565,10 +283,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -582,34 +300,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -622,7 +320,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -636,10 +334,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -653,34 +351,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -693,7 +371,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -707,10 +385,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -724,34 +402,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -764,7 +422,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -778,10 +436,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -795,34 +453,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -835,7 +473,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -849,10 +487,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -866,34 +504,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -906,7 +524,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -920,10 +538,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -937,34 +555,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -977,7 +575,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -991,10 +589,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -1008,34 +606,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -1048,7 +626,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -1062,10 +640,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -1079,34 +657,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           },
@@ -1119,7 +677,7 @@
             "luck": 10,
             "credits": 2,
             "userObj": {
-              "isDead": true,
+              "isDead": false,
               "name": "Rouge Drone",
               "Name_Enclosed": "\u003C Rouge Drone \u003E",
               "Name_Icon": "Rouge Drone \uD83D\uDC64",
@@ -1133,10 +691,10 @@
               "xp": 0,
               "Xp_Icon": "0 \u2B50",
               "max_hp": 100,
-              "Hp": 0,
-              "Hp_Icon": "0 \u2764\uFE0F",
-              "Credits": 1,
-              "Credits_Icon": "1 \uD83D\uDCC0",
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
               "Credits_Icon_Only": "\uD83D\uDCC0",
               "speed": 7,
               "Speed_Icon": "7 \u26A1",
@@ -1150,34 +708,14 @@
               "EquippedItem_Icon": " ",
               "freeAP": 5,
               "FreeAP_Icon": "5 \u2795",
-              "inventory": [],
-              "active_quest": {
-                "name": "No Quest",
-                "level": 1,
-                "description": "You have no Quest",
-                "xp_reward": 0,
-                "credit_reward": 0,
-                "prerequisite_LVL": 1,
-                "prerequisite_INT": 1,
-                "steps": [
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  },
-                  {
-                    "text": "You have no Quest"
-                  }
-                ],
-                "currentStageIndex": 0
-              },
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
               "completed_quests": []
             }
           }

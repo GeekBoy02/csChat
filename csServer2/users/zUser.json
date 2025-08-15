@@ -1,35 +1,35 @@
 {
   "isDead": false,
-  "name": "Admin",
-  "Name_Enclosed": "\u003C Admin \u003E",
-  "Name_Icon": "Admin \uD83D\uDC64",
-  "address": "127.0.0.1:1786",
-  "connection_count": 20,
-  "message_count": 4,
+  "name": "zUser",
+  "Name_Enclosed": "\u003C zUser \u003E",
+  "Name_Icon": "zUser \uD83D\uDC64",
+  "address": "127.0.0.1:7390",
+  "connection_count": 2,
+  "message_count": 1,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 5,
-  "Level_Icon": "5 \uD83C\uDF96\uFE0F",
-  "xp": 264,
-  "Xp_Icon": "264 \u2B50",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 62,
+  "Xp_Icon": "62 \u2B50",
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 84,
-  "Credits_Icon": "84 \uD83D\uDCC0",
+  "Credits": 5,
+  "Credits_Icon": "5 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 25,
-  "Speed_Icon": "25 \u26A1",
-  "intellect": 12,
-  "Intellect_Icon": "12 \uD83E\uDDE0",
+  "speed": 15,
+  "Speed_Icon": "15 \u26A1",
+  "intellect": 7,
+  "Intellect_Icon": "7 \uD83E\uDDE0",
   "luck": 10,
   "Luck_Icon": "10 \uD83C\uDF40",
   "EquippedItem": {
     "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 6,
-  "FreeAP_Icon": "6 \u2795",
+  "freeAP": 5,
+  "FreeAP_Icon": "5 \u2795",
   "inventory": [
     {
       "name": "Bandage",
@@ -70,10 +70,9 @@
         "text": "You have no Quest"
       }
     ],
-    "currentStageIndex": 0
+    "currentStageIndex": 2
   },
   "completed_quests": [
-    "Introduction",
-    "Drone-Slaughter"
+    "Introduction"
   ]
 }

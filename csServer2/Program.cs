@@ -136,8 +136,8 @@ namespace SocketServer
                         string help_message = "Available commands:\n" +
                             "!class [class_name] - Sets the user's class to [class_name], which must be one of: Soldier, Engineer, Explorer\n" +
                             "!quest - Advance in you active quest\n" +
-                            "!quest completed - Shows all quest you completed" +
-                            "!quest abandon - Abandon your active quest" +
+                            "!quest completed - Shows all quest you completed\n" +
+                            "!quest abandon - Abandon your active quest\n!q" +
                             "!qg [Questname] - (!quest get [Questname]) - Display/Accept a local Quest\n" +
                             "!inventory - Displays your Inventory\n" +
                             "!use [item name] - Use item from your inventory\n" +

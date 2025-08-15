@@ -66,13 +66,18 @@ namespace SocketServer
 
         public static void UseItem(TcpClient client, User user, Item item, bool sendMsg, int amount)
         {
-            if (!user.Inventory.Contains(item))
+            if (item == null)
             {
                 Program.SendMessage(client, "Item not found in Inventory.");
                 return;
             }
 
-            //int maxItemCount = user.Inventory.Count(n => n == item);     // check if you have less items than you want to use
+            if (!user.Inventory.Any(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                Program.SendMessage(client, "Item not found in Inventory.");
+                return;
+            }
+
             int maxItemCount = user.Inventory.Count(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase));     // count items by name (case-insensitive)
             if (maxItemCount < amount)
             {
@@ -80,38 +85,48 @@ namespace SocketServer
                 return;
             }
 
+            int usedCount = 0;
+            bool endLoop = false;
             for (int i = 0; i < amount; i++)
             {
-                switch (item.Name)
+                // Find the next matching item in the inventory each iteration (by name)
+                Item? current = user.Inventory.Find(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase));
+                if (current == null) break; // nothing left to remove
+
+                switch (current.Name)
                 {
                     case "Bandage":
-                        if (sendMsg) Program.SendMessage(client, "You used a Bandage.");
-                        user.Hp += item.Value * 5;
-                        user.RemoveItemFromInventory(item);
+                        //if (sendMsg) Program.SendMessage(client, "You used a Bandage.");
+                        user.Hp += current.Value * 5;
+                        if (user.Inventory.Remove(current)) usedCount++;
                         break;
 
                     case "Drink":
-                        if (sendMsg) Program.SendMessage(client, "You drank a Drink.");
-                        user.Hp += item.Value * 5;
-                        user.RemoveItemFromInventory(item);
+                        //if (sendMsg) Program.SendMessage(client, "You drank a Drink.");
+                        user.Hp += current.Value * 5;
+                        if (user.Inventory.Remove(current)) usedCount++;
                         break;
 
                     case "Boots":
                         if (sendMsg) Program.SendMessage(client, "You equipped some Boots.");
-                        user.EquippedItem = item;
-                        user.RemoveItemFromInventory(item);
+                        user.EquippedItem = current;
+                        // remove the specific instance that was equipped
+                        user.Inventory.Remove(current);
+                        endLoop = true; // Exit loop after equipping boots
                         break;
 
                     case "Glasses":
                         if (sendMsg) Program.SendMessage(client, "You equipped Glasses.");
-                        user.EquippedItem = item;
-                        user.RemoveItemFromInventory(item);
+                        user.EquippedItem = current;
+                        user.Inventory.Remove(current);
+                        endLoop = true; // Exit loop after equipping glasses
                         break;
 
                     case "Scanner":
                         if (sendMsg) Program.SendMessage(client, "You equipped a Scanner.");
-                        user.EquippedItem = item;
-                        user.RemoveItemFromInventory(item);
+                        user.EquippedItem = current;
+                        user.Inventory.Remove(current);
+                        endLoop = true; // Exit loop after equipping scanner
                         break;
 
                     // Add more cases for other items as needed
@@ -120,6 +135,12 @@ namespace SocketServer
                         Program.SendMessage(client, "Unknown item.");
                         break;
                 }
+                if (endLoop) break; // Exit the loop if an item was equipped
+            }
+
+            if (sendMsg && usedCount > 0)
+            {
+                Program.SendMessage(client, $"You used {usedCount} {item.Name}(s).");
             }
         }
 
