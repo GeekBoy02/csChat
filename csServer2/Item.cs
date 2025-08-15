@@ -72,10 +72,11 @@ namespace SocketServer
                 return;
             }
 
-            int iii = user.Inventory.Count(n => n == item);     // check if you have less items than you want to use
-            if (iii < amount)
+            //int maxItemCount = user.Inventory.Count(n => n == item);     // check if you have less items than you want to use
+            int maxItemCount = user.Inventory.Count(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase));     // count items by name (case-insensitive)
+            if (maxItemCount < amount)
             {
-                Program.SendMessage(client, "Enter correct amount, you only have " + iii + " amount of " + item.Name);
+                Program.SendMessage(client, "Enter correct amount, you only have " + maxItemCount + " amount of " + item.Name);
                 return;
             }
 

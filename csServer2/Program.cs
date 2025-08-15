@@ -286,6 +286,7 @@ namespace SocketServer
                         }
                         else if (message.StartsWith("!quest abandon") || message.StartsWith("!qa"))
                         {
+                            SendMessage(client, Environment.NewLine + "You abandoned your active quest " + user.ActiveQuest.Name);
                             user.ActiveQuest = new Quest().DefaultQuest();
                         }
                         else if (user.ActiveQuest == null)
@@ -396,98 +397,93 @@ namespace SocketServer
                             }
                         }
                     }
-                    else if (message.StartsWith("!i")) // display and use inventory
+                    else if (message.StartsWith("!i"))
                     {
-                        string[] parts = message.Split(' ', 3);
                         StringBuilder sb = new StringBuilder();
+
+                        // Full argument string without the "!i" or "!inventory"
+                        string args = message.StartsWith("!inventory") ? "" : message.Substring(2).Trim();
+
                         if (message.StartsWith("!inventory"))
                         {
+                            // Show full inventory list
                             foreach (Item i in user.Inventory)
                             {
                                 sb.Append(i.Icon + "-" + i.Name);
                                 sb.Append(", ");
                             }
+                            SendMessage(client, sb.ToString().TrimEnd(',', ' '));
                         }
-                        else if (message.StartsWith("!ir"))
+                        else if (message.StartsWith("!ir")) // remove item
                         {
-                            if (parts.Length > 1)
-                            {
-                                string itemName = message.Split()[1];
-                                Item i = user.FindItemInInventory(itemName);
-                                if (i != null) user.RemoveItemFromInventory(client, i);
-                            }
+                            string itemName = args.Substring(1).Trim(); // remove 'r' from '!ir'
+                            Item i = user.FindItemInInventory(itemName);
+                            if (i != null) user.RemoveItemFromInventory(client, i);
+                            else SendMessage(client, $"Item '{itemName}' not found.");
                         }
-                        else if (message.StartsWith("!ii"))
+                        else if (message.StartsWith("!ii")) // inspect item
                         {
-                            if (parts.Length > 1)
-                            {
-                                string itemName = message.Split()[1];
-                                user.InspectItem(client, itemName);
-                            }
+                            string itemName = args.Substring(1).Trim();
+                            user.InspectItem(client, itemName);
                         }
-                        else if (message.StartsWith("!isa"))
+                        else if (message.StartsWith("!isa")) // sell all of item
                         {
-                            if (parts.Length > 1)
-                            {
-                                string itemName = message.Split()[1];
-                                user.SellAllofItem(client, itemName);
-                            }
+                            string itemName = args.Substring(2).Trim();
+                            user.SellAllofItem(client, itemName);
                         }
-                        else if (message.StartsWith("!is"))
+                        else if (message.StartsWith("!is")) // sell one item
                         {
-                            if (parts.Length > 1)
-                            {
-                                string itemName = message.Split()[1];
-                                user.SellItem(client, itemName, true);
-                            }
+                            string itemName = args.Substring(1).Trim();
+                            user.SellItem(client, itemName, true);
                         }
-                        else
+                        else // use item (with optional amount)
                         {
-                            if (parts.Length > 2)
+                            if (string.IsNullOrWhiteSpace(args))
                             {
-                                if (user.IsDead)
-                                {
-                                    SendMessage(client, "You cannot use your inventory while dead  ");
-                                }
-                                else if (int.TryParse(parts[2], out int _))
-                                {
-                                    string itemName = parts[1];
-                                    int amount = int.Parse(parts[2]);
-                                    Item i = user.FindItemInInventory(itemName);
-                                    Item.UseItem(client, user, i, true, amount);
-                                }
-                                else
-                                {
-                                    SendMessage(client, "Input a valid amount, for example: !i Drink 3");
-                                }
-                            }
-                            else if (parts.Length > 1)
-                            {
-                                if (user.IsDead)
-                                {
-                                    SendMessage(client, "You cannot use your inventory while dead  ");
-                                }
-                                else
-                                {
-                                    string itemName = message.Split()[1];
-                                    Item i = user.FindItemInInventory(itemName);
-                                    Item.UseItem(client, user, i, true, 1);
-                                }
-                            }
-                            else
-                            {
+                                // Just show icons if no arguments
                                 foreach (Item i in user.Inventory)
                                 {
                                     sb.Append(i.Icon);
                                     sb.Append(",");
                                 }
                                 sb.Append(" ");
+                                SendMessage(client, sb.ToString());
                             }
+                            else
+                            {
+                                string[] argParts = args.Split(' ');
+                                int amount = 1;
+                                string itemName;
 
+                                // If last argument is a number, treat it as amount
+                                if (int.TryParse(argParts.Last(), out int parsedAmount))
+                                {
+                                    amount = parsedAmount;
+                                    itemName = string.Join(" ", argParts.Take(argParts.Length - 1));
+                                }
+                                else
+                                {
+                                    itemName = string.Join(" ", argParts);
+                                }
+
+                                if (user.IsDead)
+                                {
+                                    SendMessage(client, "You cannot use your inventory while dead.");
+                                }
+                                else
+                                {
+                                    Item i = user.FindItemInInventory(itemName);
+                                    if (i != null)
+                                    {
+                                        Item.UseItem(client, user, i, true, amount);
+                                    }
+                                    else
+                                    {
+                                        SendMessage(client, $"Item '{itemName}' not found in inventory.");
+                                    }
+                                }
+                            }
                         }
-
-                        string itemList = sb.ToString().TrimEnd().TrimEnd();
-                        SendMessage(client, itemList);
                     }
                     else if (message.StartsWith("!class")) // duel another user
                     {
