@@ -1,0 +1,144 @@
+{
+  "isDead": false,
+  "name": "Amin",
+  "Name_Enclosed": "\u003C Amin \u003E",
+  "Name_Icon": "Amin \uD83D\uDC64",
+  "address": "127.0.0.1:2677",
+  "connection_count": 0,
+  "message_count": 0,
+  "class": "Soldier",
+  "Class_Icon": "Soldier \uD83E\uDEAA",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 10,
+  "Xp_Icon": "10 \u2B50",
+  "max_hp": 100,
+  "Hp": 100,
+  "Hp_Icon": "100 \u2764\uFE0F",
+  "Credits": 1,
+  "Credits_Icon": "1 \uD83D\uDCC0",
+  "Credits_Icon_Only": "\uD83D\uDCC0",
+  "speed": 15,
+  "Speed_Icon": "15 \u26A1",
+  "intellect": 7,
+  "Intellect_Icon": "7 \uD83E\uDDE0",
+  "luck": 10,
+  "Luck_Icon": "10 \uD83C\uDF40",
+  "EquippedItem": {
+    "value": 0
+  },
+  "EquippedItem_Icon": " ",
+  "freeAP": 5,
+  "FreeAP_Icon": "5 \u2795",
+  "inventory": [
+    {
+      "name": "Bandage",
+      "icon": "\uD83E\uDE79",
+      "description": "Restores some health.",
+      "value": 1
+    }
+  ],
+  "active_quest": {
+    "name": "Introduction",
+    "level": 1,
+    "description": "The first Quest",
+    "xp_reward": 12,
+    "credit_reward": 0,
+    "prerequisite_LVL": 1,
+    "prerequisite_INT": 1,
+    "steps": [
+      {
+        "text": "You wake up from a long Sleep and find yourself in a Cryo-Pod."
+      },
+      {
+        "text": "You remember that you are on a Colony Ship that is supposed to colonize a Planet called MATIO."
+      },
+      {
+        "text": "You realize that while asleep, your Body has been tamperd with and modified \nyou can move faster than you remember, and a lot more precise."
+      },
+      {
+        "text": "You notice Instructions on the Wall: \n1) Take tools from the Locker \n2) Grab a Speed-Suit from the wardrobe \n3) Head to the Control Room and activate the Fabricator"
+      },
+      {
+        "text": "You open the locker and find a DATA-DAGGER, you take it, grab the Speed-Suit, and head to the Control room via an elevator."
+      },
+      {
+        "text": "As the elevator door opens you see a Worker-Drone, it turn hostile the moment it sees you."
+      },
+      {
+        "text": "You grab your D-D and charge to attack.",
+        "enemies": [
+          {
+            "name": "Rouge Drone",
+            "Level": 1,
+            "hp": 100,
+            "speed": 7,
+            "int": 7,
+            "luck": 10,
+            "credits": 2,
+            "userObj": {
+              "isDead": false,
+              "name": "Rouge Drone",
+              "Name_Enclosed": "\u003C Rouge Drone \u003E",
+              "Name_Icon": "Rouge Drone \uD83D\uDC64",
+              "address": "",
+              "connection_count": 0,
+              "message_count": 0,
+              "class": "Mob",
+              "Class_Icon": "Mob \uD83E\uDEAA",
+              "level": 1,
+              "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+              "xp": 0,
+              "Xp_Icon": "0 \u2B50",
+              "max_hp": 100,
+              "Hp": 100,
+              "Hp_Icon": "100 \u2764\uFE0F",
+              "Credits": 2,
+              "Credits_Icon": "2 \uD83D\uDCC0",
+              "Credits_Icon_Only": "\uD83D\uDCC0",
+              "speed": 7,
+              "Speed_Icon": "7 \u26A1",
+              "intellect": 7,
+              "Intellect_Icon": "7 \uD83E\uDDE0",
+              "luck": 10,
+              "Luck_Icon": "10 \uD83C\uDF40",
+              "EquippedItem": {
+                "value": 0
+              },
+              "EquippedItem_Icon": " ",
+              "freeAP": 5,
+              "FreeAP_Icon": "5 \u2795",
+              "inventory": [
+                {
+                  "name": "Bandage",
+                  "icon": "\uD83E\uDE79",
+                  "description": "Restores some health.",
+                  "value": 1
+                }
+              ],
+              "completed_quests": []
+            }
+          }
+        ]
+      },
+      {
+        "text": "You manage to kill the Drone by stabbing it really fast, the drone hit you a couple of times too and damaged your Suit and Body "
+      },
+      {
+        "items": [
+          {
+            "name": "Drink",
+            "icon": "\uD83E\uDDC3",
+            "description": "Tasty Drink that restores some health.",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "moveTo": "Cryo-Station"
+      }
+    ],
+    "currentStageIndex": 6
+  },
+  "completed_quests": []
+}

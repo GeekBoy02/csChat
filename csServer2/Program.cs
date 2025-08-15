@@ -92,7 +92,24 @@ namespace SocketServer
                 {
                     if (string.IsNullOrWhiteSpace(username)) // the first message is the clients username
                     {
-                        username = message.Trim();
+                        //chatGPT change here
+                        string attemptedName = message.Trim();
+
+                        // Check if username is already online in either list
+                        bool nameInClients = clients.Values.Contains(attemptedName, StringComparer.OrdinalIgnoreCase);
+                        bool nameInOnlineUsers = onlineUserList.Any(u =>
+                            string.Equals(u.Name, attemptedName, StringComparison.OrdinalIgnoreCase));
+
+                        if (nameInClients || nameInOnlineUsers)
+                        {
+                            SendMessage(client, "Username already in use. Connection denied.");
+                            client.Close();
+                            return; // Stop processing this client
+                        }
+
+                        username = attemptedName;
+                        //chatGPT change end
+                        //username = message.Trim();
                         clients.Add(client, username);
                         Console.WriteLine("{0} has joined the chat", username);
                         user = new User(username, client.Client.RemoteEndPoint.ToString());
@@ -118,8 +135,12 @@ namespace SocketServer
                     {
                         string help_message = "Available commands:\n" +
                             "!class [class_name] - Sets the user's class to [class_name], which must be one of: Soldier, Engineer, Explorer\n" +
-                            "!quest - Advance in you active quest\n" +      // -------------   wip   ----------------------
+                            "!quest - Advance in you active quest\n" +
+                            "!quest completed - Shows all quest you completed" +
+                            "!quest abandon - Abandon your active quest" +
+                            "!qg [Questname] - (!quest get [Questname]) - Display/Accept a local Quest\n" +
                             "!inventory - Displays your Inventory\n" +
+                            "!use [item name] - Use item from your inventory\n" +
                             "!i [item name] - Use item from your inventory\n" +
                             "!i [item name] [amount] - Use [amount] of [item name] from your inventory\n" +
                             "!ir [item name] - Remove item from your inventory\n" +
@@ -162,7 +183,7 @@ namespace SocketServer
 
                         SendMessage(client, userlist);
                     }
-                    else if (message.StartsWith("!look around") || message.StartsWith("!la")) // look around
+                    else if (message.StartsWith("!look around") || message.StartsWith("!la")) // !
                     {
                         if (FindLocation(world, user.CurrentLocation) != null)
                         {
@@ -257,7 +278,7 @@ namespace SocketServer
                         }
                         else if (message.StartsWith("!quest completed") || message.StartsWith("!qc"))
                         {
-                            SendMessage(client, "Quest you completed: ");
+                            SendMessage(client, Environment.NewLine + "Quest you completed: ");
                             foreach (string s in user.completedQuests)
                             {
                                 SendMessage(client, " " + s);
@@ -337,6 +358,42 @@ namespace SocketServer
                         else
                         {
                             SendMessage(client, "You can only be revevied when you are DEAD ");
+                        }
+                    }
+                    else if (message.StartsWith("!use")) // use item from inventory like when typing !i + item name
+                    {
+                        string[] parts = message.Split(' ', 3);
+                        StringBuilder sb = new StringBuilder();
+                        if (parts.Length > 2)
+                        {
+                            if (user.IsDead)
+                            {
+                                SendMessage(client, "You cannot use your inventory while dead  ");
+                            }
+                            else if (int.TryParse(parts[2], out int _))
+                            {
+                                string itemName = parts[1];
+                                int amount = int.Parse(parts[2]);
+                                Item i = user.FindItemInInventory(itemName);
+                                Item.UseItem(client, user, i, true, amount);
+                            }
+                            else
+                            {
+                                SendMessage(client, "Input a valid amount, for example: !i Drink 3");
+                            }
+                        }
+                        else if (parts.Length > 1)
+                        {
+                            if (user.IsDead)
+                            {
+                                SendMessage(client, "You cannot use your inventory while dead  ");
+                            }
+                            else
+                            {
+                                string itemName = message.Split()[1];
+                                Item i = user.FindItemInInventory(itemName);
+                                Item.UseItem(client, user, i, true, 1);
+                            }
                         }
                     }
                     else if (message.StartsWith("!i")) // display and use inventory
@@ -490,8 +547,8 @@ namespace SocketServer
                         }
                         else
                         {
-                            int enemy_lvl = user.Level;
-                            Enemy e = new Enemy("", 1).RougeDrone(enemy_lvl);
+                            Enemy e = FindLocation(world, user.CurrentLocation).Enemies[0].Clone();     // get "first" Enemy from users current Location
+                            e = Enemy.RandomizeStats(e, false, true);
                             SendMessage(client, "Your Opponent: ");
                             Game.DisplayProfile(client, e.userObj);
                             User.Fight(client, user, e.userObj);
@@ -602,8 +659,12 @@ namespace SocketServer
 
             foreach (TcpClient c in clients.Keys)
             {
-                NetworkStream stream = c.GetStream();
-                stream.Write(msg, 0, msg.Length);
+                try
+                {
+                    NetworkStream stream = c.GetStream();
+                    stream.Write(msg, 0, msg.Length);
+                }
+                catch { Console.WriteLine("error, message not send"); }
             }
             Thread.Sleep(100);
         }

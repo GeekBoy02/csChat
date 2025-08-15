@@ -69,6 +69,36 @@ namespace SocketServer
                 Credits = Credits
             };
         }
+        public Enemy Clone()
+        {
+            string n = Name;
+            int l = Level;
+            return new Enemy(n, l)
+            {
+                HP = HP,
+                Credits = Credits,
+
+                Speed = Speed,
+                Intellect = Intellect,
+                Luck = Luck
+            };
+        }
+        public static Enemy RandomizeStats(Enemy enemy, bool randLuck, bool randCredits)
+        {
+            Enemy e = enemy;
+
+            // e.Speed = Game.Randomize(enemy.Speed);
+            // e.Intellect = Game.Randomize(enemy.Intellect);
+            // if (randLuck) e.Luck = Game.Randomize(enemy.Luck);
+            // if (randCredits) e.Credits = Game.Randomize(enemy.Credits);
+
+            e.userObj.Speed = Game.Randomize(e.userObj.Speed);
+            e.userObj.Intellect = Game.Randomize(e.userObj.Intellect);
+            if (randLuck) e.userObj.Luck = Game.Randomize(enemy.userObj.Luck);
+            if (randCredits) e.userObj.Credits = Game.Randomize(e.userObj.Credits);
+
+            return e;
+        }
         public Enemy DroneMother(int lvl)
         {
             Enemy e = new Enemy("Rouge Drone Mother", lvl);

@@ -1,8 +1,9 @@
 {
   "name": "Drone-Slaughter",
   "level": 2,
-  "description": "You need to kill 9 Rouge Drones and their Mother",
+  "description": "You need to kill 9 Rouge Drones and their Mother Drone",
   "xp_reward": 24,
+  "credit_reward": 20,
   "prerequisite_LVL": 2,
   "prerequisite_INT": 10,
   "steps": [
@@ -95,12 +96,12 @@
       "enemies": [
         {
           "name": "Rouge Drone Mother",
-          "Level": 2,
+          "Level": 6,
           "hp": 100,
-          "speed": 9,
-          "int": 9,
+          "speed": 17,
+          "int": 17,
           "luck": 10,
-          "credits": 4
+          "credits": 12
         }
       ]
     },

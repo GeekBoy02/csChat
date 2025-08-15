@@ -3,6 +3,7 @@
   "level": 1,
   "description": "The first Quest",
   "xp_reward": 12,
+  "credit_reward": 0,
   "prerequisite_LVL": 1,
   "prerequisite_INT": 1,
   "steps": [
@@ -37,6 +38,9 @@
           "credits": 2
         }
       ]
+    },
+    {
+      "text": "You manage to kill the Drone by stabbing it really fast, the drone hit you a couple of times too and damaged your Suit and Body "
     },
     {
       "items": [

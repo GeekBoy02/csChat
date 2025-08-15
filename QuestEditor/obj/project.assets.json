@@ -17,8 +17,8 @@
   "libraries": {
     "csServer2/1.0.0": {
       "type": "project",
-      "path": "../csServer2/csServer2.csProj",
-      "msbuildProject": "../csServer2/csServer2.csProj"
+      "path": "../csServer2/csServer2.csproj",
+      "msbuildProject": "../csServer2/csServer2.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -53,8 +53,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Admin\\Documents\\csChat\\csServer2\\csServer2.csProj": {
-              "projectPath": "C:\\Users\\Admin\\Documents\\csChat\\csServer2\\csServer2.csProj"
+            "C:\\Users\\Admin\\Documents\\csChat\\csServer2\\csServer2.csproj": {
+              "projectPath": "C:\\Users\\Admin\\Documents\\csChat\\csServer2\\csServer2.csproj"
             }
           }
         }

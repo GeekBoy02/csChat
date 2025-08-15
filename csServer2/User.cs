@@ -411,7 +411,8 @@ namespace SocketServer
             // change attributes depending on Equipment for Attacker
             int trueSpeed = Item.Consider_Speed_Equipment(Attacker);
             int trueInt = Item.Consider_Int_Equipment(Defender);
-            int trueLuck = Item.Consider_Luck_Equipment(Attacker);
+            int trueLuckATK = Item.Consider_Luck_Equipment(Attacker);
+            int trueLuckDEF = Item.Consider_Luck_Equipment(Defender);
 
             string icon = "⚔️  ";
             int attackValue = Game.Randomize(trueSpeed);
@@ -421,7 +422,7 @@ namespace SocketServer
 
             if (damage > 0)
             {
-                if (CritStrike(trueLuck))
+                if (CritStrike(trueLuckATK, trueLuckDEF))
                 {
                     damage *= 2;
                     icon = "🎯 ";
@@ -446,14 +447,28 @@ namespace SocketServer
                             "⭐ " + Attacker.Name + " gained " + xpgain + " XP " + Environment.NewLine +
                             $"📀 {Attacker.Name} looted {creditDrop} CREDITS from {Defender.Name}";
                 Program.SendMessage(client, msg);
-                Game.LootDrop(client, Attacker, Attacker.Luck, Defender);
+                Game.LootDrop(client, Attacker, Defender);
             }
         }
-        static bool CritStrike(int luck)
+        static bool CritStrike(int attackerLuck, int defenderLuck)
         {
             Random rand = new Random();
-            int criticalHitChance = luck;
-            if (rand.Next(1, 101) <= criticalHitChance)
+            // Base critical hit chance with diminishing returns for attacker's luck
+            double baseCriticalHitChance = 100 * (1 - Math.Exp(-attackerLuck / 100.0));
+
+            // Calculate the luck difference
+            int luckDifference = attackerLuck - defenderLuck;
+
+            // Apply diminishing returns to luck difference adjustment
+            double luckAdjustment = 1 + (1 - Math.Exp(-Math.Abs(luckDifference) / 100.0)) * (luckDifference > 0 ? 1 : -1);
+
+            // Adjust critical hit chance based on luck difference
+            double adjustedCriticalHitChance = baseCriticalHitChance * luckAdjustment;
+
+            // Ensure the critical hit chance does not exceed 100%
+            adjustedCriticalHitChance = Math.Min(adjustedCriticalHitChance, 100);
+
+            if (rand.NextDouble() * 100 <= adjustedCriticalHitChance)
             {
                 return true;
             }
@@ -490,10 +505,6 @@ namespace SocketServer
             Intellect = 7;
             Luck = 10;
             FreeAP = 3;
-            Inventory = new List<Item>
-            {
-                new Item().Bandage()
-            };
         }
         public void ChangeTo_Engineer()
         {
@@ -506,10 +517,6 @@ namespace SocketServer
             Intellect = 20;
             Luck = 5;
             FreeAP = 3;
-            Inventory = new List<Item>
-            {
-                new Item().Drink()
-            };
         }
         public void ChangeTo_Explorer()
         {
@@ -522,10 +529,6 @@ namespace SocketServer
             Intellect = 5;
             Luck = 15;
             FreeAP = 5;
-            Inventory = new List<Item>
-            {
-                new Item().Drink()
-            };
         }
         public void HealUser(TcpClient client, int healAmount, bool sendMsg)
         {

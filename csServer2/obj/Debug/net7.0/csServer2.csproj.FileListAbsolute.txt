@@ -12,3 +12,17 @@ C:\Users\Admin\Documents\csChat\csServer2\obj\Debug\net7.0\refint\csServer2.dll
 C:\Users\Admin\Documents\csChat\csServer2\obj\Debug\net7.0\csServer2.pdb
 C:\Users\Admin\Documents\csChat\csServer2\obj\Debug\net7.0\csServer2.genruntimeconfig.cache
 C:\Users\Admin\Documents\csChat\csServer2\obj\Debug\net7.0\ref\csServer2.dll
+C:\Users\Admin\Documents\csChat_wip\csServer2\bin\Debug\net7.0\csServer2.exe
+C:\Users\Admin\Documents\csChat_wip\csServer2\bin\Debug\net7.0\csServer2.deps.json
+C:\Users\Admin\Documents\csChat_wip\csServer2\bin\Debug\net7.0\csServer2.runtimeconfig.json
+C:\Users\Admin\Documents\csChat_wip\csServer2\bin\Debug\net7.0\csServer2.dll
+C:\Users\Admin\Documents\csChat_wip\csServer2\bin\Debug\net7.0\csServer2.pdb
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.AssemblyInfo.cs
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.dll
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\refint\csServer2.dll
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.pdb
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\csServer2.genruntimeconfig.cache
+C:\Users\Admin\Documents\csChat_wip\csServer2\obj\Debug\net7.0\ref\csServer2.dll

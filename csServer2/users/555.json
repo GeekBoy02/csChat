@@ -1,35 +1,35 @@
 {
   "isDead": false,
-  "name": "2",
-  "Name_Enclosed": "\u003C 2 \u003E",
-  "Name_Icon": "2 \uD83D\uDC64",
-  "address": "127.0.0.1:4299",
-  "connection_count": 6,
+  "name": "555",
+  "Name_Enclosed": "\u003C 555 \u003E",
+  "Name_Icon": "555 \uD83D\uDC64",
+  "address": "127.0.0.1:13890",
+  "connection_count": 0,
   "message_count": 0,
   "class": "Soldier",
   "Class_Icon": "Soldier \uD83E\uDEAA",
-  "level": 15,
-  "Level_Icon": "15 \uD83C\uDF96\uFE0F",
-  "xp": 120,
-  "Xp_Icon": "120 \u2B50",
+  "level": 1,
+  "Level_Icon": "1 \uD83C\uDF96\uFE0F",
+  "xp": 22,
+  "Xp_Icon": "22 \u2B50",
   "max_hp": 100,
   "Hp": 100,
   "Hp_Icon": "100 \u2764\uFE0F",
-  "Credits": 18,
-  "Credits_Icon": "18 \uD83D\uDCC0",
+  "Credits": 1,
+  "Credits_Icon": "1 \uD83D\uDCC0",
   "Credits_Icon_Only": "\uD83D\uDCC0",
-  "speed": 39,
-  "Speed_Icon": "39 \u26A1",
-  "intellect": 17,
-  "Intellect_Icon": "17 \uD83E\uDDE0",
-  "luck": 37,
-  "Luck_Icon": "37 \uD83C\uDF40",
+  "speed": 15,
+  "Speed_Icon": "15 \u26A1",
+  "intellect": 7,
+  "Intellect_Icon": "7 \uD83E\uDDE0",
+  "luck": 10,
+  "Luck_Icon": "10 \uD83C\uDF40",
   "EquippedItem": {
     "value": 0
   },
   "EquippedItem_Icon": " ",
-  "freeAP": 0,
-  "FreeAP_Icon": "0 \u2795",
+  "freeAP": 5,
+  "FreeAP_Icon": "5 \u2795",
   "inventory": [
     {
       "name": "Bandage",
@@ -42,27 +42,9 @@
       "icon": "\uD83E\uDDC3",
       "description": "Tasty Drink that restores some health.",
       "value": 2
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
-    },
-    {
-      "name": "Bandage",
-      "icon": "\uD83E\uDE79",
-      "description": "Restores some health.",
-      "value": 1
     }
   ],
-  "current_location": "Landing-Bay",
+  "current_location": "Cryo-Station",
   "active_quest": {
     "name": "No Quest",
     "level": 1,

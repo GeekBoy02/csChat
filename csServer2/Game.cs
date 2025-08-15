@@ -93,5 +93,30 @@ namespace SocketServer
                 Program.SendMessage(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
             }
         }
+        public static void LootDrop(TcpClient client, User attacker, User defender)
+        {
+            Random rand = new Random();
+            // Base critical hit chance with diminishing returns for attacker's luck
+            double baseCriticalHitChance = 100 * (1 - Math.Exp(-attacker.Luck / 100.0));
+
+            // Calculate the luck difference
+            int luckDifference = attacker.Luck - defender.Luck;
+
+            // Apply diminishing returns to luck difference adjustment
+            double luckAdjustment = 1 + (1 - Math.Exp(-Math.Abs(luckDifference) / 100.0)) * (luckDifference > 0 ? 1 : -1);
+
+            // Adjust critical hit chance based on luck difference
+            double adjustedCriticalHitChance = baseCriticalHitChance * luckAdjustment;
+
+            // Ensure the critical hit chance does not exceed 100%
+            adjustedCriticalHitChance = Math.Min(adjustedCriticalHitChance, 100);
+
+            if (rand.NextDouble() * 100 <= adjustedCriticalHitChance)
+            {
+                Item i = defender.DropRandomItemOnDeath();
+                attacker.AddItemToInventory(client, i, false);
+                Program.SendMessage(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
+            }
+        }
     }
 }

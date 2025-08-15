@@ -4,6 +4,7 @@
 - `!class [class_name]`: Sets the user's class to the specified class name. Valid class names are: Soldier, Engineer, Explorer.
 
 - `!inventory`: Displays your inventory, showing all the items you currently possess.
+  `!use [item name]`: Use an item from your inventory by specifying its name.   
 - `!i [item name]`: Use an item from your inventory by specifying its name.
 - `!ir [item name]`: Remove an item from your inventory by specifying its name.
 - `!ii [item name]`: Inspect an item in your inventory to get more information about it.
@@ -41,3 +42,12 @@
     - Quest generator
     - Location Generator
     - reload Quests from Json file at request
+    - fight Local Enemies 
+    - fix using multiple items with !i and !use
+
+## Attributes
+- Speed:        decides who strikes first, is the "attack value"
+- Intellect:    is the "defend value", is the prerequisite to finding quests
+- Luck:         is the "crit chance", if a crit occurs the damage is multiplied by 2, influeces the probability of a loot drop
+                the crit probability and loot drop probability depends on the players luck attribute and the enemys luck attribute if both values are equal base chance applies.
+                the probability scales logarithmic (500 luck = 99% crit chance, 10 luck = 9,52% crit chance) and the enemy luck value needs to be approximately 69.3 higher than the player's luck to halve the critical hit chance
