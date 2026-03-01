@@ -15,11 +15,13 @@ csServer/bin*
 csServer2/bin*
 QuestEditor/bin*
 WorldEditor/bin*
+ServerManager/bin*
 csClient/obj*
 csServer/obj*
 csServer2/obj/*
 QuestEditor/obj*
 WorldEditor/obj*
+ServerManager/obj*
 csServer2/world*
 csServer2/users
 csClient/.vscode*
@@ -27,3 +29,4 @@ csServer/.vscode*
 csServer2/.vscode*
 QuestEditor/.vscode*
 WorldEditor/.vscode*
+ServerManager/.vscode*

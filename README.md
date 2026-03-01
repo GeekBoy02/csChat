@@ -11,18 +11,16 @@ for commands when connected.
       solution: saving received messages in Queue and have it emptied by IOHandler.Run().
 
 ## Issues
-    -
+    - level up mechanic missing when completing a quest
 
 ## To-Do
-    - Quest generator
-    - Location Generator
+    - Quest generator (low prio)
+    - Location Generator (low prio)
     - reload Quests from Json file at request
     - fight Local Enemies
     - implement new itemDB compatible with WorldEditor
-    - test new custom World
     - add quest items
     - add a location selection feature to the "move" command in the world editor when editing or creating a quest, right now you have to manually type the location name
-    - level up mechanic missing when completing a quest
     - Create "Server Manager" project that allows to create, edit, and delete users
     - Add the feature to blacklist and disconnect users to the "server2" project
 

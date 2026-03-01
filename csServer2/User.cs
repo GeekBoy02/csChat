@@ -474,7 +474,11 @@ namespace SocketServer
             }
             return false;
         }
-
+        /// <summary>
+        /// Checks if the user has enough XP to level up, if so it increases the users level by 1, gives him 3 free AP to spend on his attributes and increases his HP by 100, when leveling up the user also gets a message with his new level, if the user has more XP than needed for another level up the process repeats until the user has less XP than needed for the next level up, when the user levels up his XP is reset to 0
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
         static void LevelUp(TcpClient client, User user)
         {
             bool playerDidLvlUp = false;
@@ -494,6 +498,9 @@ namespace SocketServer
                 user.Xp = 0;
             }
         }
+        /// <summary>
+        /// changes user attributes to match the Soldier class, when changing class all other attributes except name, address, connection count and message count are reset to default values for the chosen class
+        /// </summary>
         public void ChangeTo_Soldier()
         {
             this.Class = "Soldier";
@@ -506,6 +513,9 @@ namespace SocketServer
             Luck = 10;
             FreeAP = 3;
         }
+        /// <summary>
+        /// changes user attributes to match the Engineer class, when changing class all other attributes except name, address, connection count and message count are reset to default values for the chosen class
+        /// </summary>
         public void ChangeTo_Engineer()
         {
             this.Class = "Engineer";
@@ -518,6 +528,9 @@ namespace SocketServer
             Luck = 5;
             FreeAP = 3;
         }
+        /// <summary>
+        /// changes user attributes to match the Explorer class, when changing class all other attributes except name, address, connection count and message count are reset to default values for the chosen class
+        /// </summary>
         public void ChangeTo_Explorer()
         {
             this.Class = "Explorer";
@@ -530,11 +543,24 @@ namespace SocketServer
             Luck = 15;
             FreeAP = 5;
         }
+        /// <summary>
+        /// heals the user for a specified amount and sends him a message with the heal amount and his new hp, when [sendMsg] is set to false no message will be send to the user, this can be used for example when healing offline users
+        /// </summary>
+        /// <param name="client">the tcp client of the user to heal</param>
+        /// <param name="healAmount">the amount of HP to heal the user by</param>
+        /// <param name="sendMsg">whether to send a message to the user about the healing</param>
         public void HealUser(TcpClient client, int healAmount, bool sendMsg)
         {
             Hp += healAmount;
             if (sendMsg) Program.SendMessage(client, "🩹 " + Name + " heals for " + healAmount + " HP and is now at " + Hp + " HP ");
         }
+        /// <summary>
+        /// heals the user for a specified amount and sends him a message with the heal amount and his new hp, when [sendMsg] is set to false no message will be send to the user, this can be used for example when healing offline users
+        /// </summary>
+        /// <param name="client">the tcp client of the user to heal</param>
+        /// <param name="user">the user to heal</param>
+        /// <param name="healAmount">the amount of HP to heal the user by</param>
+        /// <param name="sendMsg">whether to send a message to the user about the healing</param>
         public static void HealUser(TcpClient client, User user, int healAmount, bool sendMsg)
         {
             user.Hp += healAmount;
@@ -563,6 +589,12 @@ namespace SocketServer
                 }
             }
         }
+        /// <summary>
+        /// moves the user to a new location and sends him a message with the new location name and welcome message
+        /// </summary>
+        /// <param name="client">the tcp client of the user to move</param>
+        /// <param name="locationName">the name of the location to move the user to</param>
+        /// <param name="world">the list of all locations in the world</param>
         public void Move(TcpClient client, string locationName, List<Location> world)
         {
             if (!string.IsNullOrEmpty(CurrentLocation))
