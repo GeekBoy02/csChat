@@ -12,6 +12,7 @@ for commands when connected.
 
 ## Issues
     - level up mechanic missing when completing a quest
+    - Private message does not work anymore pls fix !!!
 
 ## To-Do
     - Quest generator (low prio)
@@ -23,6 +24,7 @@ for commands when connected.
     - add a location selection feature to the "move" command in the world editor when editing or creating a quest, right now you have to manually type the location name
     - Create "Server Manager" project that allows to create, edit, and delete users
     - Add the feature to blacklist and disconnect users to the "server2" project
+    - Update world editor to use the "csShared" library classes, currently the worldeditor uses the classes from the Models.cs file
 
 ## Attributes
 - Speed:        decides who strikes first, is the "attack value".

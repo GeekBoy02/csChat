@@ -43,7 +43,7 @@ class Program
             }
             if (line.Equals("create", StringComparison.OrdinalIgnoreCase))
             {
-                SocketServer.User newUser = new SocketServer.User("placeholder", "placeholder");
+                User newUser = new User("placeholder", "placeholder");
                 newUser.Name = Prompt("Enter username: ", "defaultuser");
 
                 var filename = Path.Combine(userDir, newUser.Name + ".json");

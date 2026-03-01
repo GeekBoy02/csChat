@@ -221,7 +221,7 @@ namespace SocketServer
             if (newItem != null)
             {
                 Inventory.Add(newItem);
-                if (sendMsg) Program.SendMessage(client, "📦 " + Name + " recived " + newItem.Name + " \n");
+                if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "📦 " + Name + " recived " + newItem.Name + " \n");
             }
         }
         public void AddItemToInventory(Item newItem)
@@ -233,7 +233,7 @@ namespace SocketServer
         }
         public void RemoveItemFromInventory(TcpClient client, Item Item)
         {
-            Program.SendMessage(client, "Remove " + Item.Name + " from Inventory. ");
+            ServerCallbacks.SendMessage?.Invoke(client, "Remove " + Item.Name + " from Inventory. ");
             Inventory.Remove(Item);
         }
         public void RemoveItemFromInventory(Item Item)
@@ -259,15 +259,15 @@ namespace SocketServer
             Item i = FindItemInInventory(itemName);
             if (Inventory.Contains(i))
             {
-                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
+                ServerCallbacks.SendMessage?.Invoke(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
             }
             else if (EquippedItem == i)
             {
-                Program.SendMessage(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
+                ServerCallbacks.SendMessage?.Invoke(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
             }
             else
             {
-                Program.SendMessage(client, "Input valid Item ");
+                ServerCallbacks.SendMessage?.Invoke(client, "Input valid Item ");
             }
         }
         public void SellItem(TcpClient client, string itemName, bool displayMsg)
@@ -275,13 +275,13 @@ namespace SocketServer
             Item i = FindItemInInventory(itemName);
             if (Inventory.Contains(i))
             {
-                if (displayMsg) Program.SendMessage(client, $" {i.Icon} {i.Name} sold for {i.Value}📀 ");
+                if (displayMsg) ServerCallbacks.SendMessage?.Invoke(client, $" {i.Icon} {i.Name} sold for {i.Value}📀 ");
                 Credits += i.Value;
                 RemoveItemFromInventory(i);
             }
             else
             {
-                if (displayMsg) Program.SendMessage(client, "Input valid Item ");
+                if (displayMsg) ServerCallbacks.SendMessage?.Invoke(client, "Input valid Item ");
             }
         }
         public void SellAllofItem(TcpClient client, string itemName)
@@ -295,7 +295,7 @@ namespace SocketServer
                 cGain += i.Value;
                 amountSold++;
             }
-            Program.SendMessage(client, $"{amountSold} {itemName} sold for {cGain}📀 ");
+            ServerCallbacks.SendMessage?.Invoke(client, $"{amountSold} {itemName} sold for {cGain}📀 ");
         }
         public static void CreateJsonFile(User user)
         {
@@ -376,7 +376,7 @@ namespace SocketServer
         {
             if (p1.IsDead || p2.IsDead)
             {
-                Program.SendMessage(client, "Both parties must be alive");
+                ServerCallbacks.SendMessage?.Invoke(client, "Both parties must be alive");
                 return;
             }
 
@@ -434,7 +434,7 @@ namespace SocketServer
             }
 
             Defender.Hp -= damage; // deal damage
-            Program.SendMessage(client, $"{icon} {Attacker.Name} hits {Defender.Name} for {damage} DMG ");
+            ServerCallbacks.SendMessage?.Invoke(client, $"{icon} {Attacker.Name} hits {Defender.Name} for {damage} DMG ");
 
             if (Defender.Hp <= 0)
             {
@@ -446,7 +446,7 @@ namespace SocketServer
                 string msg = "\n🥇 " + Attacker.Name + " defeated 💀 " + Defender.Name + " with " + Attacker.Hp + "HP remaining! " + Environment.NewLine +
                             "⭐ " + Attacker.Name + " gained " + xpgain + " XP " + Environment.NewLine +
                             $"📀 {Attacker.Name} looted {creditDrop} CREDITS from {Defender.Name}";
-                Program.SendMessage(client, msg);
+                ServerCallbacks.SendMessage?.Invoke(client, msg);
                 Game.LootDrop(client, Attacker, Defender);
             }
         }
@@ -491,7 +491,7 @@ namespace SocketServer
                 if (user.Class == "Soldier") user.Speed++;
                 else if (user.Class == "Engineer") user.Intellect++;
                 else if (user.Class == "Explorer") user.Luck++;
-                Program.SendMessage(client, "🆙 " + user.Name + " leveld up to Level " + user.Level + " ");
+                ServerCallbacks.SendMessage?.Invoke(client, "🆙 " + user.Name + " leveld up to Level " + user.Level + " ");
             }
             if (playerDidLvlUp)
             {
@@ -552,7 +552,7 @@ namespace SocketServer
         public void HealUser(TcpClient client, int healAmount, bool sendMsg)
         {
             Hp += healAmount;
-            if (sendMsg) Program.SendMessage(client, "🩹 " + Name + " heals for " + healAmount + " HP and is now at " + Hp + " HP ");
+            if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "🩹 " + Name + " heals for " + healAmount + " HP and is now at " + Hp + " HP ");
         }
         /// <summary>
         /// heals the user for a specified amount and sends him a message with the heal amount and his new hp, when [sendMsg] is set to false no message will be send to the user, this can be used for example when healing offline users
@@ -564,7 +564,7 @@ namespace SocketServer
         public static void HealUser(TcpClient client, User user, int healAmount, bool sendMsg)
         {
             user.Hp += healAmount;
-            if (sendMsg) Program.SendMessage(client, "🩹 " + user.Name + " heals for " + healAmount + " HP and is now at " + user.Hp + " HP");
+            if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "🩹 " + user.Name + " heals for " + healAmount + " HP and is now at " + user.Hp + " HP");
         }
         public static void HealOfflineUsers(object state)
         {
@@ -579,7 +579,7 @@ namespace SocketServer
 
             foreach (string file in fileNames)
             {
-                User u = Program.FindOnlineUser(file);
+                User u = ServerCallbacks.FindOnlineUser?.Invoke(file);
                 if (u == null)
                 {
                     Console.WriteLine("🩹 healing " + file);
@@ -599,7 +599,7 @@ namespace SocketServer
         {
             if (!string.IsNullOrEmpty(CurrentLocation))
             {
-                Location oldLoc = Program.FindLocation(CurrentLocation);
+                Location oldLoc = ServerCallbacks.FindLocation?.Invoke(CurrentLocation);
                 try
                 {
                     oldLoc.Visitors.Remove(this); // remove user from old location visitors
@@ -610,16 +610,16 @@ namespace SocketServer
                 }
                 //oldLoc.Visitors.Remove(this);
             }
-            Location loc = Program.FindLocation(locationName);
+            Location loc = ServerCallbacks.FindLocation?.Invoke(locationName);
             loc.Visitors.Add(this);   // add user to location visitors
             CurrentLocation = locationName;
-            Program.SendMessage(client, $"You arrive at {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
+            ServerCallbacks.SendMessage?.Invoke(client, $"You arrive at {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
             SaveToJsonFile(this);
             //loc.SaveToJsonFile(loc);
         }
         public void BuyItem(TcpClient client, string itemName, List<Location> world)
         {
-            List<Item> shop = Program.FindLocation(CurrentLocation).Shop;
+            List<Item> shop = ServerCallbacks.FindLocation?.Invoke(CurrentLocation)?.Shop;
             if (!string.IsNullOrEmpty(itemName) && shop.Contains(Location.FindItemInShop(shop, itemName)))
             {
                 Item i = Location.FindItemInShop(shop, itemName);
@@ -627,17 +627,17 @@ namespace SocketServer
                 {
                     AddItemToInventory(i);
                     Credits -= i.Value;
-                    Program.SendMessage(client, $"You bought {i.Name} for {i.Value} {Credits_Icon_Only} ");
+                    ServerCallbacks.SendMessage?.Invoke(client, $"You bought {i.Name} for {i.Value} {Credits_Icon_Only} ");
                 }
                 else
                 {
-                    Program.SendMessage(client, "You bought don't have enough CREDITS ");
+                    ServerCallbacks.SendMessage?.Invoke(client, "You bought don't have enough CREDITS ");
                 }
             }
         }
         public void BuyItem(TcpClient client, string itemName, List<Location> world, int amount)
         {
-            List<Item> shop = Program.FindLocation(CurrentLocation).Shop;
+            List<Item> shop = ServerCallbacks.FindLocation?.Invoke(CurrentLocation)?.Shop;
             if (!string.IsNullOrEmpty(itemName) && shop.Contains(Location.FindItemInShop(shop, itemName)))
             {
                 Item item = Location.FindItemInShop(shop, itemName);
@@ -649,11 +649,11 @@ namespace SocketServer
                         AddItemToInventory(item);
                         Credits -= item.Value;
                     }
-                    Program.SendMessage(client, $"You bought {amount} {item.Name} for {item.Value * amount} {Credits_Icon_Only} ");
+                    ServerCallbacks.SendMessage?.Invoke(client, $"You bought {amount} {item.Name} for {item.Value * amount} {Credits_Icon_Only} ");
                 }
                 else
                 {
-                    Program.SendMessage(client, "You don't have enough CREDITS ");
+                    ServerCallbacks.SendMessage?.Invoke(client, "You don't have enough CREDITS ");
                 }
             }
         }

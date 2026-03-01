@@ -32,6 +32,12 @@ namespace SocketServer
             LoadWorld();
             //___________
             Console.OutputEncoding = Encoding.UTF8;
+            // configure shared-library callbacks so that User and Game classes
+            // can call back into the server implementation for operations such as
+            // sending a message or looking up users/locations.
+            ServerCallbacks.SendMessage = SendMessage;
+            ServerCallbacks.FindOnlineUser = FindOnlineUser;
+            ServerCallbacks.FindLocation = FindLocation;
             Console.WriteLine("Starting server...");
             TcpListener listener = new TcpListener(IPAddress.Any, port);
             listener.Start();

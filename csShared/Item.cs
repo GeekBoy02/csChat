@@ -72,20 +72,20 @@ namespace SocketServer
         {
             if (item == null)
             {
-                Program.SendMessage(client, "Item not found in Inventory.");
+                ServerCallbacks.SendMessage?.Invoke(client, "Item not found in Inventory.");
                 return;
             }
 
             if (!user.Inventory.Any(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase)))
             {
-                Program.SendMessage(client, "Item not found in Inventory.");
+                ServerCallbacks.SendMessage?.Invoke(client, "Item not found in Inventory.");
                 return;
             }
 
             int maxItemCount = user.Inventory.Count(n => string.Equals(n?.Name, item?.Name, StringComparison.OrdinalIgnoreCase));     // count items by name (case-insensitive)
             if (maxItemCount < amount)
             {
-                Program.SendMessage(client, "Enter correct amount, you only have " + maxItemCount + " amount of " + item.Name);
+                ServerCallbacks.SendMessage?.Invoke(client, "Enter correct amount, you only have " + maxItemCount + " amount of " + item.Name);
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace SocketServer
                         break;
 
                     case "Boots":
-                        if (sendMsg) Program.SendMessage(client, "You equipped some Boots.");
+                        if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "You equipped some Boots.");
                         user.EquippedItem = current;
                         // remove the specific instance that was equipped
                         user.Inventory.Remove(current);
@@ -120,14 +120,14 @@ namespace SocketServer
                         break;
 
                     case "Glasses":
-                        if (sendMsg) Program.SendMessage(client, "You equipped Glasses.");
+                        if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "You equipped Glasses.");
                         user.EquippedItem = current;
                         user.Inventory.Remove(current);
                         endLoop = true; // Exit loop after equipping glasses
                         break;
 
                     case "Scanner":
-                        if (sendMsg) Program.SendMessage(client, "You equipped a Scanner.");
+                        if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "You equipped a Scanner.");
                         user.EquippedItem = current;
                         user.Inventory.Remove(current);
                         endLoop = true; // Exit loop after equipping scanner
@@ -136,7 +136,7 @@ namespace SocketServer
                     // Add more cases for other items as needed
 
                     default:
-                        Program.SendMessage(client, "Unknown item.");
+                        ServerCallbacks.SendMessage?.Invoke(client, "Unknown item.");
                         break;
                 }
                 if (endLoop) break; // Exit the loop if an item was equipped
@@ -144,7 +144,7 @@ namespace SocketServer
 
             if (sendMsg && usedCount > 0)
             {
-                Program.SendMessage(client, $"You used {usedCount} {item.Name}(s).");
+                 ServerCallbacks.SendMessage?.Invoke(client, $"You used {usedCount} {item.Name}(s).");
             }
         }
 

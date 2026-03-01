@@ -9,7 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace SocketServer
 {
-    class Game
+    public class Game
     {
         public static int Randomize(int value) // returns an int that ranges from -20% up to +20% of [value]
         {
@@ -33,11 +33,11 @@ namespace SocketServer
                 user.Intellect += ip;
                 user.Luck += lp;
                 user.FreeAP -= sp + ip + lp;
-                Program.SendMessage(client, user.Name_Enclosed + " allocated " + sp + " points to SPEED, " + ip + " points to INTELLECT, and " + lp + " points to LUCK.");
+                ServerCallbacks.SendMessage?.Invoke(client, user.Name_Enclosed + " allocated " + sp + " points to SPEED, " + ip + " points to INTELLECT, and " + lp + " points to LUCK.");
             }
             else
             {
-                Program.SendMessage(client, "Input a valid number of free AP you want to use, for example with: !aa 4 2 1, you will increase speed by 4, intellect by 2, and luck by 1");
+                ServerCallbacks.SendMessage?.Invoke(client, "Input a valid number of free AP you want to use, for example with: !aa 4 2 1, you will increase speed by 4, intellect by 2, and luck by 1");
             }
         }
         public static void DisplayProfile(TcpClient client, User user)
@@ -72,7 +72,7 @@ namespace SocketServer
             $"║ Free AP: {freeAP} \n" +
             $"╚═══\n";
 
-            Program.SendMessage(client, UserAttributes);
+            ServerCallbacks.SendMessage?.Invoke(client, UserAttributes);
         }
 
         public static void ItemDrop(TcpClient client, User user, int probability, Item item)
@@ -90,7 +90,7 @@ namespace SocketServer
             {
                 Item i = defender.DropRandomItemOnDeath();
                 attacker.AddItemToInventory(client, i, false);
-                Program.SendMessage(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
+                ServerCallbacks.SendMessage?.Invoke(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
             }
         }
         public static void LootDrop(TcpClient client, User attacker, User defender)
@@ -115,7 +115,7 @@ namespace SocketServer
             {
                 Item i = defender.DropRandomItemOnDeath();
                 attacker.AddItemToInventory(client, i, false);
-                Program.SendMessage(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
+                ServerCallbacks.SendMessage?.Invoke(client, "📦 " + attacker.Name + " recived " + i.Name + " from " + defender.Name + " ");
             }
         }
     }
