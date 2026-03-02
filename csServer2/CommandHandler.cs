@@ -189,16 +189,17 @@ namespace SocketServer
             {
                 if (args.Length == 0)
                 {
-                    if (user.ActiveQuest == null)
-                    {
-                        Quest q = new Quest().Introduction();
-                        user.ActiveQuest = q;
-                        new QuestManager().StartIntroQuest(q, client, user);
-                    }
-                    else
-                    {
+                    // if (user.ActiveQuest == null)
+                    // {
+                    //     // Quest q = new Quest().Introduction();
+                    //     // Quest q = new Quest().DefaultQuest();
+                    //     // user.ActiveQuest = q;
+                    //     // new QuestManager().StartIntroQuest(q, client, user);
+                    // }
+                    // else
+                    // {
                         new QuestManager().AdvanceQuestStep(client, user, false);
-                    }
+                    // }
                     return;
                 }
 

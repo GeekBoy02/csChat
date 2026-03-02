@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldEditor", "WorldEditor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csShared", "csShared\csShared.csproj", "{0B9C5F5D-EBF6-4D66-B77B-05CB9C78CB42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerManager", "ServerManager\ServerManager.csproj", "{0B9C5F5D-EBF6-4D66-B77B-05CB9C78CB42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

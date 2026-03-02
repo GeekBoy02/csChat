@@ -124,11 +124,14 @@ namespace SocketServer
                     else
                     {
                         User.CreateJsonFile(user);   // create user if non existent
-                        // assignt first quest to user
-                        QuestManager qm = new QuestManager();
-                        Quest q = new Quest().Introduction();
-                        //user.ActiveQuest = q;
-                        qm.StartIntroQuest(q, client, user);
+                        QuestManager qm = new QuestManager(); // assignt first quest to user and start it if it exists, else it defaluts to a placeholder quest that does nothing
+                        Quest q = new Quest().DefaultQuest();
+                        if (File.Exists("world/intro.json"))
+                        {
+                            q = q.LoadFromJsonFile("world/intro.json");
+                            qm.StartIntroQuest(q, client, user);
+                        }
+                        user.ActiveQuest = q;
                     }
                     user.ConnectionCount++;
                     onlineUserList.Add(user);
@@ -171,8 +174,8 @@ namespace SocketServer
                     //User.UpdateUserMessageCount(user);
                     user.MessageCount++;
                     //byte[] msg = Encoding.ASCII.GetBytes(string.Format("{0}: {1}", username, message));
-                    byte [] msg = Encoding.ASCII.GetBytes($"{username}: {message} ");
-                                        
+                    byte[] msg = Encoding.ASCII.GetBytes($"{username}: {message} ");
+
                     foreach (TcpClient c in clients.Keys)
                     {
                         if (c != client)
@@ -262,6 +265,12 @@ namespace SocketServer
 
         public static void LoadWorld()
         {
+            if (!Directory.Exists("world"))
+            {
+                Console.WriteLine("World folder not found. Creating new world folder.");
+                Directory.CreateDirectory("world");
+                return;
+            }
             string[] folders = Directory.GetDirectories("world");
             foreach (string folder in folders)
             {
