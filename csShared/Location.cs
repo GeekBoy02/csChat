@@ -53,6 +53,7 @@ namespace SocketServer
             WelcomeMessage = $"Welcome to {Name}";
             Quests = new List<Quest>();
             Enemies = new List<Enemy>();
+            Shop = new List<Item>();
             Visitors = new List<User>();
         }
         public Location CryoStation()
@@ -86,7 +87,7 @@ namespace SocketServer
 
 
 
-        
+
         public static void AddVisitors(List<User> userOnline, List<Location> world)
         {
             foreach (var l in world)

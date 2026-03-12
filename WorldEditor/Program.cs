@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
+using SocketServer;
+using System.Net.Http.Headers;
 
 namespace WorldEditor
 {
@@ -157,13 +159,13 @@ namespace WorldEditor
                     {
                         var it = new Item
                         {
-                            name = Prompt("item name", "Item"),
-                            icon = Prompt("icon", ""),
-                            description = Prompt("description", ""),
-                            value = PromptInt("value", 0),
+                            Name = Prompt("item name", "Item"),
+                            Icon = Prompt("icon", ""),
+                            Description = Prompt("description", ""),
+                            Value = PromptInt("value", 0),
                         };
-                        var existsIndex = items.FindIndex(x => string.Equals(x.name, it.name, StringComparison.OrdinalIgnoreCase));
-                        if (existsIndex >= 0) Console.WriteLine($"Item '{it.name}' already exists in ItemDB at index {existsIndex}. Use 'edit {existsIndex}' to modify it. Skipping add.");
+                        var existsIndex = items.FindIndex(x => string.Equals(x.Name, it.Name, StringComparison.OrdinalIgnoreCase));
+                        if (existsIndex >= 0) Console.WriteLine($"Item '{it.Name}' already exists in ItemDB at index {existsIndex}. Use 'edit {existsIndex}' to modify it. Skipping add.");
                         else { items.Add(it); SaveItemDb(dbPath, items); }
                     }
                     while (Confirm("Add another item? (y/N): "));
@@ -172,16 +174,16 @@ namespace WorldEditor
                 {
                     var defaults = new List<Item>
                 {
-                    new Item { name = "Bandage", icon = "🩹", description = "Restores some health.", value = 1 },
-                    new Item { name = "Drink", icon = "🧃", description = "Tasty Drink that restores some health.", value = 2 },
-                    new Item { name = "Boots", icon = "👢", description = "Increases your SPEED in a Fight", value = 10 },
-                    new Item { name = "Glasses", icon = "👓", description = "Increases your INTELLECT in a Fight", value = 10 },
-                    new Item { name = "Scanner", icon = "📡", description = "Increases your LUCK in a Fight", value = 10 }
+                    new Item { Name = "Bandage", Icon = "🩹", Description = "Restores some health.", Value = 1 },
+                    new Item { Name = "Drink", Icon = "🧃", Description = "Tasty Drink that restores some health.", Value = 2 },
+                    new Item { Name = "Boots", Icon = "👢", Description = "Increases your SPEED in a Fight", Value = 10 },
+                    new Item { Name = "Glasses", Icon = "👓", Description = "Increases your INTELLECT in a Fight", Value = 10 },
+                    new Item { Name = "Scanner", Icon = "📡", Description = "Increases your LUCK in a Fight", Value = 10 }
                 };
                     var added = 0;
                     foreach (var d in defaults)
                     {
-                        if (!items.Exists(x => string.Equals(x.name, d.name, StringComparison.OrdinalIgnoreCase)))
+                        if (!items.Exists(x => string.Equals(x.Name, d.Name, StringComparison.OrdinalIgnoreCase)))
                         {
                             items.Add(d);
                             added++;
@@ -198,10 +200,10 @@ namespace WorldEditor
                 else if (action == "edit" && parts.Length > 1 && int.TryParse(parts[1], out var eidx) && eidx >= 0 && eidx < items.Count)
                 {
                     var it = items[eidx];
-                    it.name = Prompt("new name (enter to keep)", it.name);
-                    it.icon = Prompt("new icon (enter to keep)", it.icon);
-                    it.description = Prompt("new description (enter to keep)", it.description);
-                    it.value = PromptInt("new value (enter to keep)", it.value);
+                    it.Name = Prompt("new name (enter to keep)", it.Name);
+                    it.Icon = Prompt("new icon (enter to keep)", it.Icon);
+                    it.Description = Prompt("new description (enter to keep)", it.Description);
+                    it.Value = PromptInt("new value (enter to keep)", it.Value);
                     items[eidx] = it; SaveItemDb(dbPath, items);
                 }
                 else
@@ -218,7 +220,7 @@ namespace WorldEditor
             Console.Write("description: "); var desc = Console.ReadLine() ?? "";
             Console.Write("welcomeMsg: "); var welcome = Console.ReadLine() ?? "";
 
-            var loc = new Location { name = name, level = level, description = desc, welcomeMsg = welcome, x = 0, y = 0 };
+            var loc = new Location { Name = name, Level = level, Description = desc, WelcomeMessage = welcome, x = 0, y = 0 };
 
             // create a folder per location and write the JSON inside it
             var locationDir = Path.Combine(worldDir, name);
@@ -233,21 +235,21 @@ namespace WorldEditor
         {
             var text = File.ReadAllText(path);
             var loc = JsonSerializer.Deserialize<Location>(text) ?? new Location();
-            Console.WriteLine("current name: " + loc.name);
-            Console.Write("new name (enter to keep): "); var name = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(name)) loc.name = name;
-            Console.WriteLine("current level: " + loc.level);
-            Console.Write("new level (enter to keep): "); var lvl = Console.ReadLine(); if (int.TryParse(lvl, out var nl)) loc.level = nl;
-            Console.WriteLine("current description: " + loc.description);
-            Console.Write("new description (enter to keep): "); var desc = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(desc)) loc.description = desc;
-            Console.WriteLine("current welcomeMsg: " + loc.welcomeMsg);
-            Console.Write("new welcomeMsg (enter to keep): "); var wm = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(wm)) loc.welcomeMsg = wm;
+            Console.WriteLine("current name: " + loc.Name);
+            Console.Write("new name (enter to keep): "); var name = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(name)) loc.Name = name;
+            Console.WriteLine("current level: " + loc.Level);
+            Console.Write("new level (enter to keep): "); var lvl = Console.ReadLine(); if (int.TryParse(lvl, out var nl)) loc.Level = nl;
+            Console.WriteLine("current description: " + loc.Description);
+            Console.Write("new description (enter to keep): "); var desc = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(desc)) loc.Description = desc;
+            Console.WriteLine("current welcomeMsg: " + loc.WelcomeMessage);
+            Console.Write("new welcomeMsg (enter to keep): "); var wm = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(wm)) loc.WelcomeMessage = wm;
             // allow editing enemies (show loot counts)
-            Console.WriteLine($"Enemies ({loc.enemies.Count}):");
-            for (int i = 0; i < loc.enemies.Count; i++)
+            Console.WriteLine($"Enemies ({loc.Enemies.Count}):");
+            for (int i = 0; i < loc.Enemies.Count; i++)
             {
-                var e = loc.enemies[i];
-                var lootCount = e.loot?.Count ?? 0;
-                Console.WriteLine($"  [{i}] {e.name} Lv{e.Level} (loot: {lootCount})");
+                var e = loc.Enemies[i];
+                var lootCount = e.userObj.Inventory?.Count ?? 0;
+                Console.WriteLine($"  [{i}] {e.Name} Lv{e.Level} (loot: {lootCount})");
             }
             Console.WriteLine("Commands for enemies: add | remove <index> | loot <index> | skip (type 'help' for details)");
             Console.Write("enemies> "); var ecmd = Console.ReadLine();
@@ -263,36 +265,35 @@ namespace WorldEditor
                 {
                     while (true)
                     {
-                        var en = new Enemy();
-                        Console.Write("enemy name: "); en.name = Console.ReadLine() ?? "Enemy";
+                        var en = new Enemy(Prompt("enemy name", "Enemy"), 1);
                         Console.Write("Level: "); if (int.TryParse(Console.ReadLine(), out var tmpLevel)) en.Level = tmpLevel;
-                        Console.Write("hp: "); if (int.TryParse(Console.ReadLine(), out var tmpHp)) en.hp = tmpHp;
-                        Console.Write("speed: "); if (int.TryParse(Console.ReadLine(), out var tmpSpeed)) en.speed = tmpSpeed;
-                        Console.Write("int: "); if (int.TryParse(Console.ReadLine(), out var tmpInt)) en.intellect = tmpInt;
-                        Console.Write("luck: "); if (int.TryParse(Console.ReadLine(), out var tmpLuck)) en.luck = tmpLuck;
-                        Console.Write("credits: "); if (int.TryParse(Console.ReadLine(), out var tmpCredits)) en.credits = tmpCredits;
-                        loc.enemies.Add(en);
+                        Console.Write("hp: "); if (int.TryParse(Console.ReadLine(), out var tmpHp)) en.HP = tmpHp;
+                        Console.Write("speed: "); if (int.TryParse(Console.ReadLine(), out var tmpSpeed)) en.Speed = tmpSpeed;
+                        Console.Write("int: "); if (int.TryParse(Console.ReadLine(), out var tmpInt)) en.Intellect = tmpInt;
+                        Console.Write("luck: "); if (int.TryParse(Console.ReadLine(), out var tmpLuck)) en.Luck = tmpLuck;
+                        Console.Write("credits: "); if (int.TryParse(Console.ReadLine(), out var tmpCredits)) en.Credits = tmpCredits;
+                        loc.Enemies.Add(en);
                         Console.Write("Add another enemy? (y/N): "); var more = Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(more) || !more.Trim().Equals("y", StringComparison.OrdinalIgnoreCase)) break;
                     }
                 }
-                else if (ep[0] == "remove" && ep.Length > 1 && int.TryParse(ep[1], out var ridx) && ridx >= 0 && ridx < loc.enemies.Count)
+                else if (ep[0] == "remove" && ep.Length > 1 && int.TryParse(ep[1], out var ridx) && ridx >= 0 && ridx < loc.Enemies.Count)
                 {
-                    loc.enemies.RemoveAt(ridx);
+                    loc.Enemies.RemoveAt(ridx);
                 }
-                else if (ep[0] == "loot" && ep.Length > 1 && int.TryParse(ep[1], out var lidx) && lidx >= 0 && lidx < loc.enemies.Count)
+                else if (ep[0] == "loot" && ep.Length > 1 && int.TryParse(ep[1], out var lidx) && lidx >= 0 && lidx < loc.Enemies.Count)
                 {
                     // manage loot for a specific enemy
-                    var enemy = loc.enemies[lidx];
-                    Console.WriteLine($"Loot for {enemy.name} (count: {enemy.loot?.Count ?? 0}):");
-                    for (int li = 0; li < (enemy.loot?.Count ?? 0); li++) Console.WriteLine($"  [{li}] {enemy.loot[li].name} ({enemy.loot[li].value})");
+                    var enemy = loc.Enemies[lidx];
+                    Console.WriteLine($"Loot for {enemy.Name} (count: {enemy.userObj.Inventory?.Count ?? 0}):");
+                    for (int li = 0; li < (enemy.userObj.Inventory?.Count ?? 0); li++) Console.WriteLine($"  [{li}] {enemy.userObj.Inventory[li].Name} ({enemy.userObj.Inventory[li].Value})");
                     Console.WriteLine("Commands: add | remove <index> | skip (type 'help' for details)");
                     Console.Write($"loot[{lidx}]> "); var lcmd = Console.ReadLine();
                     if (!string.IsNullOrWhiteSpace(lcmd))
                     {
                         if (lcmd.Trim().Equals("help", StringComparison.OrdinalIgnoreCase) || lcmd.Trim().Equals("?", StringComparison.OrdinalIgnoreCase))
                         {
-                            PrintHelpLoot(worldDir, enemy.name);
+                            PrintHelpLoot(worldDir, enemy.Name);
                             lcmd = null;
                         }
                         var lp = lcmd.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
@@ -306,30 +307,33 @@ namespace WorldEditor
                             {
                                 while (true)
                                 {
-                                    for (int di = 0; di < db.Count; di++) Console.WriteLine($"  [{di}] {db[di].name} ({db[di].value})");
+                                    for (int di = 0; di < db.Count; di++) Console.WriteLine($"  [{di}] {db[di].Name} ({db[di].Value})");
                                     Console.Write("pick item index to add (or blank to cancel): "); var pick = Console.ReadLine();
                                     if (string.IsNullOrWhiteSpace(pick)) break;
                                     if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
-                                    enemy.loot ??= new List<Item>();
+                                    enemy.userObj.Inventory ??= new List<Item>();
                                     // clone selected item
                                     var chosen = db[pidx];
-                                    enemy.loot.Add(new Item { name = chosen.name, icon = chosen.icon, description = chosen.description, value = chosen.value });
+                                    enemy.userObj.Inventory.Add(new Item { Name = chosen.Name, Icon = chosen.Icon, Description = chosen.Description, Value = chosen.Value });
                                     Console.Write("Add another loot item? (y/N): "); var moreI = Console.ReadLine();
                                     if (string.IsNullOrWhiteSpace(moreI) || !moreI.Trim().Equals("y", StringComparison.OrdinalIgnoreCase)) break;
                                 }
                             }
                         }
-                        else if (lp[0] == "remove" && lp.Length > 1 && int.TryParse(lp[1], out var rli) && rli >= 0 && rli < (enemy.loot?.Count ?? 0))
+                        else if (lp[0] == "remove" && lp.Length > 1 && int.TryParse(lp[1], out var rli) && rli >= 0 && rli < (enemy.userObj.Inventory?.Count ?? 0))
                         {
-                            enemy.loot.RemoveAt(rli);
+                            enemy.userObj.Inventory.RemoveAt(rli);
                         }
                     }
                 }
             }
 
             // allow editing shop items
-            Console.WriteLine($"Shop ({loc.shop.Count} items):");
-            for (int i = 0; i < loc.shop.Count; i++) Console.WriteLine($"  [{i}] {loc.shop[i].name} ({loc.shop[i].value})");
+            // if (loc.Shop != null)
+            // {
+            Console.WriteLine($"Shop ({loc.Shop.Count} items):");
+            for (int i = 0; i < loc.Shop.Count; i++) Console.WriteLine($"  [{i}] {loc.Shop[i].Name} ({loc.Shop[i].Value})");
+            // }
             Console.WriteLine("Commands for shop: add | remove <index> | skip (type 'help' for details)");
             Console.Write("shop> "); var scmd = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(scmd))
@@ -350,26 +354,26 @@ namespace WorldEditor
                     {
                         while (true)
                         {
-                            for (int di = 0; di < db.Count; di++) Console.WriteLine($"  [{di}] {db[di].name} ({db[di].value})");
+                            for (int di = 0; di < db.Count; di++) Console.WriteLine($"  [{di}] {db[di].Name} ({db[di].Value})");
                             Console.Write("pick item index to add (or blank to cancel): "); var pick = Console.ReadLine();
                             if (string.IsNullOrWhiteSpace(pick)) break;
                             if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
                             var chosen = db[pidx];
-                            loc.shop.Add(new Item { name = chosen.name, icon = chosen.icon, description = chosen.description, value = chosen.value });
+                            loc.Shop.Add(new Item { Name = chosen.Name, Icon = chosen.Icon, Description = chosen.Description, Value = chosen.Value });
                             Console.Write("Add another item? (y/N): "); var moreI = Console.ReadLine();
                             if (string.IsNullOrWhiteSpace(moreI) || !moreI.Trim().Equals("y", StringComparison.OrdinalIgnoreCase)) break;
                         }
                     }
                 }
-                else if (sp[0] == "remove" && sp.Length > 1 && int.TryParse(sp[1], out var ridx2) && ridx2 >= 0 && ridx2 < loc.shop.Count)
+                else if (sp[0] == "remove" && sp.Length > 1 && int.TryParse(sp[1], out var ridx2) && ridx2 >= 0 && ridx2 < loc.Shop.Count)
                 {
-                    loc.shop.RemoveAt(ridx2);
+                    loc.Shop.RemoveAt(ridx2);
                 }
             }
 
             // simple name validation and move file if name changed
             var oldPath = path;
-            var newName = loc.name;
+            var newName = loc.Name;
             if (!ValidateName(newName))
             {
                 Console.WriteLine("Invalid name after edit (contains invalid path characters). Save aborted.");
@@ -444,7 +448,7 @@ namespace WorldEditor
         static void PrintItemDb(List<Item> items)
         {
             if (items.Count == 0) { Console.WriteLine("ItemDB empty"); return; }
-            for (int i = 0; i < items.Count; i++) Console.WriteLine($"[{i}] {items[i].name} ({items[i].value})");
+            for (int i = 0; i < items.Count; i++) Console.WriteLine($"[{i}] {items[i].Name} ({items[i].Value})");
         }
 
         static string Prompt(string label, string @default)
@@ -582,12 +586,12 @@ namespace WorldEditor
                     {
                         var locText = File.ReadAllText(locationFile);
                         var loc = JsonSerializer.Deserialize<Location>(locText) ?? new Location();
-                        if (loc.quests == null || loc.quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
+                        if (loc.Quests == null || loc.Quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
                         Console.WriteLine($"Quests in {files[idx].display}:");
-                        for (int qi = 0; qi < loc.quests.Count; qi++)
+                        for (int qi = 0; qi < loc.Quests.Count; qi++)
                         {
-                            var qq = loc.quests[qi];
-                            Console.WriteLine($"  [{qi}] {qq.name} (Lv{qq.level}) xp={qq.xp_reward} credits={qq.credit_reward}");
+                            var qq = loc.Quests[qi];
+                            Console.WriteLine($"  [{qi}] {qq.Name} (Lv{qq.Level}) xp={qq.XP_reward} credits={qq.Credit_reward}");
                         }
                     }
                     catch (Exception ex)
@@ -612,37 +616,37 @@ namespace WorldEditor
                     {
                         var locText = File.ReadAllText(locationFile);
                         var loc = JsonSerializer.Deserialize<Location>(locText) ?? new Location();
-                        if (loc.quests == null || loc.quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
+                        if (loc.Quests == null || loc.Quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
                         Console.WriteLine("Select a quest to edit:");
-                        for (int qi = 0; qi < loc.quests.Count; qi++) Console.WriteLine($"  [{qi}] {loc.quests[qi].name}");
+                        for (int qi = 0; qi < loc.Quests.Count; qi++) Console.WriteLine($"  [{qi}] {loc.Quests[qi].Name}");
                         Console.Write("> ");
                         var qsel = Console.ReadLine();
-                        if (!int.TryParse(qsel, out var qidx) || qidx < 0 || qidx >= loc.quests.Count) { Console.WriteLine("Invalid selection"); continue; }
-                        var q = loc.quests[qidx];
-                        Console.WriteLine("current name: " + q.name);
-                        var newName = Prompt("new name (enter to keep)", q.name);
-                        if (!string.Equals(newName, q.name, StringComparison.OrdinalIgnoreCase))
+                        if (!int.TryParse(qsel, out var qidx) || qidx < 0 || qidx >= loc.Quests.Count) { Console.WriteLine("Invalid selection"); continue; }
+                        var q = loc.Quests[qidx];
+                        Console.WriteLine("current name: " + q.Name);
+                        var newName = Prompt("new name (enter to keep)", q.Name);
+                        if (!string.Equals(newName, q.Name, StringComparison.OrdinalIgnoreCase))
                         {
                             // check duplicates
-                            if (loc.quests.Exists(x => string.Equals(x.name, newName, StringComparison.OrdinalIgnoreCase)))
+                            if (loc.Quests.Exists(x => string.Equals(x.Name, newName, StringComparison.OrdinalIgnoreCase)))
                             {
                                 Console.WriteLine($"A quest named '{newName}' already exists in this location. Edit aborted.");
                                 continue;
                             }
-                            q.name = newName;
+                            q.Name = newName;
                         }
-                        q.level = PromptInt("level (enter to keep)", q.level);
-                        q.description = Prompt("description (enter to keep)", q.description);
-                        q.xp_reward = PromptInt("xp_reward (enter to keep)", q.xp_reward);
-                        q.credit_reward = PromptInt("credit_reward (enter to keep)", q.credit_reward);
-                        q.prerequisite_LVL = PromptInt("prerequisite_LVL (enter to keep)", q.prerequisite_LVL);
-                        q.prerequisite_INT = PromptInt("prerequisite_INT (enter to keep)", q.prerequisite_INT);
+                        q.Level = PromptInt("level (enter to keep)", q.Level);
+                        q.Description = Prompt("description (enter to keep)", q.Description);
+                        q.XP_reward = PromptInt("xp_reward (enter to keep)", q.XP_reward);
+                        q.Credit_reward = PromptInt("credit_reward (enter to keep)", q.Credit_reward);
+                        q.Prerequisite_lvl = PromptInt("prerequisite_LVL (enter to keep)", q.Prerequisite_lvl);
+                        q.Prerequisite_int = PromptInt("prerequisite_INT (enter to keep)", q.Prerequisite_int);
 
                         // edit steps
-                        Console.WriteLine($"This quest has {q.steps?.Count ?? 0} steps.");
+                        Console.WriteLine($"This quest has {q.Steps?.Count ?? 0} steps.");
                         if (Confirm("Rebuild steps? (y/N): "))
                         {
-                            var newSteps = new List<JsonElement>();
+                            //var newSteps = new List<JsonElement>();
                             while (true)
                             {
                                 Console.WriteLine("Add a step type: text | move | items | enemies | done");
@@ -652,16 +656,15 @@ namespace WorldEditor
                                 if (st == "text")
                                 {
                                     var t = Prompt("text", "");
-                                    var obj = new { text = t };
-                                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                                    newSteps.Add(el);
+                                    //var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                                    q.Steps.Add(new QuestStep { Text = t }); // test this
                                 }
                                 else if (st == "move")
                                 {
                                     var mv = Prompt("moveTo (location name)", "");
                                     var obj = new { moveTo = mv };
-                                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                                    newSteps.Add(el);
+                                    //var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                                    q.Steps.Add(new QuestStep { MoveTo = mv }); // test this
                                 }
                                 else if (st == "items")
                                 {
@@ -676,42 +679,40 @@ namespace WorldEditor
                                         if (string.IsNullOrWhiteSpace(pick)) break;
                                         if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
                                         var c = db[pidx];
-                                        chosenItems.Add(new Item { name = c.name, icon = c.icon, description = c.description, value = c.value });
+                                        chosenItems.Add(new Item { Name = c.Name, Icon = c.Icon, Description = c.Description, Value = c.Value });
                                     }
                                     var obj = new { items = chosenItems };
                                     var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                                    newSteps.Add(el);
+                                    q.Steps.Add(new QuestStep { Items = chosenItems }); // test this
                                 }
                                 else if (st == "enemies")
                                 {
                                     var enemies = new List<Enemy>();
                                     while (true)
                                     {
-                                        var en = new Enemy();
-                                        en.name = Prompt("enemy name", "Enemy");
-                                        en.Level = PromptInt("Level", 1);
-                                        en.hp = PromptInt("hp", 1);
-                                        en.speed = PromptInt("speed", 1);
-                                        en.intellect = PromptInt("int", 1);
-                                        en.luck = PromptInt("luck", 1);
-                                        en.credits = PromptInt("credits", 0);
+                                        var en = new Enemy(Prompt("enemy name", "Enemy"), PromptInt("Level", 1));
+                                        en.HP = PromptInt("hp", 1);
+                                        en.Speed = PromptInt("speed", 1);
+                                        en.Intellect = PromptInt("int", 1);
+                                        en.Luck = PromptInt("luck", 1);
+                                        en.Credits = PromptInt("credits", 0);
                                         enemies.Add(en);
                                         if (!Confirm("Add another enemy? (y/N): ")) break;
                                     }
                                     var obj = new { enemies = enemies };
                                     var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                                    newSteps.Add(el);
+                                    q.Steps.Add(new QuestStep { Enemies = enemies }); // test this
                                 }
                                 else
                                 {
                                     Console.WriteLine("Unknown step type");
                                 }
                             }
-                            q.steps = newSteps;
+                            //q.Steps = newSteps;
                         }
 
                         // save back
-                        loc.quests[qidx] = q;
+                        loc.Quests[qidx] = q;
                         File.WriteAllText(locationFile, JsonSerializer.Serialize(loc, jopts));
                         Console.WriteLine("Quest updated in location file.");
                     }
@@ -737,14 +738,14 @@ namespace WorldEditor
                     {
                         var locText = File.ReadAllText(locationFile);
                         var loc = JsonSerializer.Deserialize<Location>(locText) ?? new Location();
-                        if (loc.quests == null || loc.quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
+                        if (loc.Quests == null || loc.Quests.Count == 0) { Console.WriteLine("No quests in this location."); continue; }
                         Console.WriteLine("Select a quest to remove:");
-                        for (int qi = 0; qi < loc.quests.Count; qi++) Console.WriteLine($"  [{qi}] {loc.quests[qi].name}");
+                        for (int qi = 0; qi < loc.Quests.Count; qi++) Console.WriteLine($"  [{qi}] {loc.Quests[qi].Name}");
                         Console.Write("> ");
                         var qsel = Console.ReadLine();
-                        if (!int.TryParse(qsel, out var qidx) || qidx < 0 || qidx >= loc.quests.Count) { Console.WriteLine("Invalid selection"); continue; }
-                        if (!Confirm($"Delete quest '{loc.quests[qidx].name}'? (y/N): ")) { Console.WriteLine("Aborted"); continue; }
-                        loc.quests.RemoveAt(qidx);
+                        if (!int.TryParse(qsel, out var qidx) || qidx < 0 || qidx >= loc.Quests.Count) { Console.WriteLine("Invalid selection"); continue; }
+                        if (!Confirm($"Delete quest '{loc.Quests[qidx].Name}'? (y/N): ")) { Console.WriteLine("Aborted"); continue; }
+                        loc.Quests.RemoveAt(qidx);
                         File.WriteAllText(locationFile, JsonSerializer.Serialize(loc, jopts));
                         Console.WriteLine("Quest removed.");
                     }
@@ -774,14 +775,15 @@ namespace WorldEditor
 
                     // basic quest metadata
                     var q = new Quest();
-                    q.name = Prompt("quest name", "New Quest");
-                    q.level = PromptInt("level", 1);
-                    q.description = Prompt("description", "");
-                    q.xp_reward = PromptInt("xp_reward", 0);
-                    q.credit_reward = PromptInt("credit_reward", 0);
-                    q.prerequisite_LVL = PromptInt("prerequisite_LVL", 1);
-                    q.prerequisite_INT = PromptInt("prerequisite_INT", 1);
-                    var steps = new List<JsonElement>();
+                    q.Name = Prompt("quest name", "New Quest");
+                    q.Level = PromptInt("level", 1);
+                    q.Description = Prompt("description", "");
+                    q.XP_reward = PromptInt("xp_reward", 0);
+                    q.Credit_reward = PromptInt("credit_reward", 0);
+                    q.Prerequisite_lvl = PromptInt("prerequisite_LVL", 1);
+                    q.Prerequisite_int = PromptInt("prerequisite_INT", 1);
+                    q.Steps = new List<QuestStep>();
+                    //var steps = new List<JsonElement>();
 
                     // build steps
                     while (true)
@@ -794,15 +796,19 @@ namespace WorldEditor
                         {
                             var t = Prompt("text", "");
                             var obj = new { text = t };
-                            var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                            steps.Add(el);
+                            //var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                            QuestStep step = new QuestStep();
+                            step.Text = t;
+                            q.Steps.Add(step); // test this
+                            //steps.Add(el);
                         }
                         else if (st == "move")
                         {
                             var mv = Prompt("moveTo (location name)", "");
                             var obj = new { moveTo = mv };
-                            var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                            steps.Add(el);
+                            // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                            // steps.Add(el);
+                            q.Steps.Add(new QuestStep { MoveTo = mv }); // test this
                         }
                         else if (st == "items")
                         {
@@ -817,31 +823,33 @@ namespace WorldEditor
                                 if (string.IsNullOrWhiteSpace(pick)) break;
                                 if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
                                 var c = db[pidx];
-                                chosenItems.Add(new Item { name = c.name, icon = c.icon, description = c.description, value = c.value });
+                                chosenItems.Add(new Item { Name = c.Name, Icon = c.Icon, Description = c.Description, Value = c.Value });
                             }
-                            var obj = new { items = chosenItems };
-                            var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                            steps.Add(el);
+                            // var obj = new { items = chosenItems };
+                            // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                            //steps.Add(el);
+                            q.Steps.Add(new QuestStep { Items = chosenItems });
                         }
                         else if (st == "enemies")
                         {
                             var enemies = new List<Enemy>();
                             while (true)
                             {
-                                var en = new Enemy();
-                                en.name = Prompt("enemy name", "Enemy");
+                                var en = new Enemy("Default", 1);
+                                en.Name = Prompt("enemy name", "Enemy");
                                 en.Level = PromptInt("Level", 1);
-                                en.hp = PromptInt("hp", 1);
-                                en.speed = PromptInt("speed", 1);
-                                en.intellect = PromptInt("int", 1);
-                                en.luck = PromptInt("luck", 1);
-                                en.credits = PromptInt("credits", 0);
+                                en.HP = PromptInt("hp", 1);
+                                en.Speed = PromptInt("speed", 1);
+                                en.Intellect = PromptInt("int", 1);
+                                en.Luck = PromptInt("luck", 1);
+                                en.Credits = PromptInt("credits", 0);
                                 enemies.Add(en);
                                 if (!Confirm("Add another enemy? (y/N): ")) break;
                             }
-                            var obj = new { enemies = enemies };
-                            var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                            steps.Add(el);
+                            // var obj = new { enemies = enemies };
+                            // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                            //steps.Add(el);
+                            q.Steps.Add(new QuestStep { Enemies = enemies }); // test this
                         }
                         else
                         {
@@ -849,23 +857,23 @@ namespace WorldEditor
                         }
                     }
 
-                    q.steps = steps;
-                    q.currentStageIndex = 0;
+                    //q.steps = steps;
+                    //q.currentStageIndex = 0;
 
                     // append the new quest to the location's quests array and save the location file
                     try
                     {
                         var locText = File.ReadAllText(locationFile);
                         var locObj = JsonSerializer.Deserialize<Location>(locText) ?? new Location();
-                        locObj.quests ??= new List<Quest>();
+                        locObj.Quests ??= new List<Quest>();
                         // prevent duplicate quest names (case-insensitive)
-                        if (locObj.quests.Exists(x => string.Equals(x.name, q.name, StringComparison.OrdinalIgnoreCase)))
+                        if (locObj.Quests.Exists(x => string.Equals(x.Name, q.Name, StringComparison.OrdinalIgnoreCase)))
                         {
-                            Console.WriteLine($"A quest named '{q.name}' already exists in this location. Creation aborted.");
+                            Console.WriteLine($"A quest named '{q.Name}' already exists in this location. Creation aborted.");
                         }
                         else
                         {
-                            locObj.quests.Add(q);
+                            locObj.Quests.Add(q);
                             File.WriteAllText(locationFile, JsonSerializer.Serialize(locObj, jopts));
                             Console.WriteLine("Quest added to location file: " + locationFile);
                         }
@@ -911,16 +919,16 @@ namespace WorldEditor
                     }
                     var introQuest = new Quest
                     {
-                        name = "Introduction",
-                        description = "This is the introduction quest for the world.",
-                        level = 1,
-                        xp_reward = 0,
-                        credit_reward = 0,
-                        prerequisite_LVL = 1,
-                        prerequisite_INT = 1,
-                        steps = new List<JsonElement>
+                        Name = "Introduction",
+                        Description = "This is the introduction quest for the world.",
+                        Level = 1,
+                        XP_reward = 0,
+                        Credit_reward = 0,
+                        Prerequisite_lvl = 1,
+                        Prerequisite_int = 1,
+                        Steps = new List<QuestStep>
                     {
-                        JsonDocument.Parse(JsonSerializer.Serialize(new { text = "Welcome to the world! This is your introduction quest." }, jopts)).RootElement.Clone()
+                        new QuestStep { Text = "Welcome to the world! This is your introduction quest." }
                     }
                     };
 
@@ -956,17 +964,18 @@ namespace WorldEditor
         {
             var introText = File.ReadAllText(introPath);
             var introQuest = JsonSerializer.Deserialize<Quest>(introText) ?? new Quest();
-            Console.WriteLine("Editing introduction quest: " + introQuest.name);
+            Console.WriteLine("Editing introduction quest: " + introQuest.Name);
             // basic quest metadata
             var q = new Quest();
-            q.name = Prompt("quest name", "New Quest");
-            q.level = PromptInt("level", 1);
-            q.description = Prompt("description", "");
-            q.xp_reward = PromptInt("xp_reward", 0);
-            q.credit_reward = PromptInt("credit_reward", 0);
-            q.prerequisite_LVL = PromptInt("prerequisite_LVL", 1);
-            q.prerequisite_INT = PromptInt("prerequisite_INT", 1);
-            var steps = new List<JsonElement>();
+            q.Name = Prompt("quest name", "New Quest");
+            q.Level = PromptInt("level", 1);
+            q.Description = Prompt("description", "");
+            q.XP_reward = PromptInt("xp_reward", 0);
+            q.Credit_reward = PromptInt("credit_reward", 0);
+            q.Prerequisite_lvl = PromptInt("prerequisite_lvl", 1);
+            q.Prerequisite_int = PromptInt("prerequisite_int", 1);
+            q.Steps = new List<QuestStep>();
+            //var steps = new List<JsonElement>();
 
             // build steps
             while (true)
@@ -979,15 +988,17 @@ namespace WorldEditor
                 {
                     var t = Prompt("text", "");
                     var obj = new { text = t };
-                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                    steps.Add(el);
+                    // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                    // steps.Add(el);
+                    q.Steps.Add(new QuestStep { Text = t }); // test this
                 }
                 else if (st == "move")
                 {
                     var mv = Prompt("moveTo (location name)", "");
                     var obj = new { moveTo = mv };
-                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                    steps.Add(el);
+                    // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                    // steps.Add(el);
+                    q.Steps.Add(new QuestStep { MoveTo = mv }); // test this
                 }
                 else if (st == "items")
                 {
@@ -1002,31 +1013,33 @@ namespace WorldEditor
                         if (string.IsNullOrWhiteSpace(pick)) break;
                         if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
                         var c = db[pidx];
-                        chosenItems.Add(new Item { name = c.name, icon = c.icon, description = c.description, value = c.value });
+                        chosenItems.Add(new Item { Name = c.Name, Icon = c.Icon, Description = c.Description, Value = c.Value });
                     }
                     var obj = new { items = chosenItems };
-                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                    steps.Add(el);
+                    // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                    // steps.Add(el);
+                    q.Steps.Add(new QuestStep { Items = chosenItems }); // test this
                 }
                 else if (st == "enemies")
                 {
                     var enemies = new List<Enemy>();
                     while (true)
                     {
-                        var en = new Enemy();
-                        en.name = Prompt("enemy name", "Enemy");
+                        var en = new Enemy("Default", 1);
+                        en.Name = Prompt("enemy name", "Enemy");
                         en.Level = PromptInt("Level", 1);
-                        en.hp = PromptInt("hp", 1);
-                        en.speed = PromptInt("speed", 1);
-                        en.intellect = PromptInt("int", 1);
-                        en.luck = PromptInt("luck", 1);
-                        en.credits = PromptInt("credits", 0);
+                        en.HP = PromptInt("hp", 1);
+                        en.Speed = PromptInt("speed", 1);
+                        en.Intellect = PromptInt("int", 1);
+                        en.Luck = PromptInt("luck", 1);
+                        en.Credits = PromptInt("credits", 0);
                         enemies.Add(en);
                         if (!Confirm("Add another enemy? (y/N): ")) break;
                     }
-                    var obj = new { enemies = enemies };
-                    var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
-                    steps.Add(el);
+                    // var obj = new { enemies = enemies };
+                    // var el = JsonDocument.Parse(JsonSerializer.Serialize(obj, jopts)).RootElement.Clone();
+                    // steps.Add(el);
+                    q.Steps.Add(new QuestStep { Enemies = enemies }); // test this
                 }
                 else
                 {
@@ -1034,8 +1047,8 @@ namespace WorldEditor
                 }
             }
 
-            q.steps = steps;
-            q.currentStageIndex = 0;
+            // q.steps = steps;
+            // q.currentStageIndex = 0;
 
             File.WriteAllText(introPath, JsonSerializer.Serialize(q, jopts));
         }
