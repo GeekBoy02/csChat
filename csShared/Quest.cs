@@ -42,6 +42,10 @@ namespace SocketServer
             return copy ?? new Quest().DefaultQuest();
         }
 
+        /// <summary>
+        /// Creates a default quest with placeholder values indicating no active quest.
+        /// </summary>
+        /// <returns>A default Quest object with placeholder steps.</returns>
         public Quest DefaultQuest()
         {
             Name = "No Quest";
@@ -63,6 +67,10 @@ namespace SocketServer
             };
             return this;
         }
+        /// <summary>
+        /// Loads the introduction quest from a JSON file. This is the first quest players encounter in the game.
+        /// </summary>
+        /// <returns>The loaded Introduction Quest, or a default quest if the file is not found.</returns>
         public Quest Introduction()
         {
             // Name = "Introduction";
@@ -96,6 +104,11 @@ namespace SocketServer
         }
 
         // to be changed or deleted
+        /// <summary>
+        /// Creates and saves a quest to a JSON file in a specified location. Only creates the file if it doesn't already exist.
+        /// </summary>
+        /// <param name="location">The location folder where the quest should be saved.</param>
+        /// <param name="quest">The quest to save.</param>
         public static void CreateJsonFile(string location, Quest quest)
         {
             if (File.Exists("world/" + location + "/quests/" + quest.Name + ".json"))
@@ -116,6 +129,11 @@ namespace SocketServer
         }
 
         // to be changed or deleted
+        /// <summary>
+        /// Saves a quest to a JSON file in a specified location.
+        /// </summary>
+        /// <param name="location">The location folder where the quest should be saved.</param>
+        /// <param name="quest">The quest to save.</param>
         public void SaveToJsonFile(string location, Quest quest)
         {
             // Create a json serializer options object with some settings
@@ -132,6 +150,12 @@ namespace SocketServer
         }
 
         // to be changed or deleted
+        /// <summary>
+        /// Loads a quest from a JSON file by name from a specified location.
+        /// </summary>
+        /// <param name="location">The location folder containing the quest.</param>
+        /// <param name="name">The name of the quest file to load.</param>
+        /// <returns>A Quest object deserialized from the JSON file, or a default quest if not found.</returns>
         public Quest LoadFromJsonFile(string location, string name)
         {
             if (File.Exists("world/" + location + "/quests/" + name + ".json"))
@@ -155,6 +179,11 @@ namespace SocketServer
         }
 
         // to be changed or deleted
+        /// <summary>
+        /// Loads all quests from a folder in a specified location.
+        /// </summary>
+        /// <param name="location">The location folder containing quests.</param>
+        /// <returns>A list of all Quest objects found in the folder.</returns>
         public static List<Quest> LoadAllFromFolder(string location)
         {
             List<Quest> ql = new List<Quest>();

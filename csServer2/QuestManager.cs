@@ -11,12 +11,27 @@ namespace SocketServer
         //public Quest CurrentQuest { get; set; }
         //public User user { get; set; }
 
+        /// <summary>
+        /// StartIntroQuest is a method that initializes a quest for a user, sets it as the user's active quest, and then advances the quest steps automatically. 
+        /// It takes in a Quest object, a TcpClient for communication, and a User object representing the player. The method assigns the provided quest to the user's
+        /// ActiveQuest property and then calls AdvanceQuestStep to progress through the quest steps, passing in the client, user, and a boolean indicating that the 
+        /// steps should advance automatically.
+        /// </summary>
+        /// <param name="quest"></param>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
         public void StartIntroQuest(Quest quest, TcpClient client, User user)
         {
             user.ActiveQuest = quest;
             //CurrentQuest = user.ActiveQuest;
             AdvanceQuestStep(client, user, true);
         }
+        /// <summary>
+        /// FinishQuest is a method that handles the completion of a quest for a user. It awards the user with experience points (XP) and credits based on the rewards defined in 
+        /// the active quest.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
         public void FinishQuest(TcpClient client, User user)
         {
             user.Xp += user.ActiveQuest.XP_reward;
@@ -31,7 +46,13 @@ namespace SocketServer
             user.ActiveQuest = new Quest().DefaultQuest();
             User.SaveToJsonFile(user);
         }
-
+        /// <summary>
+        /// AdvanceQuestStep is a method that progresses the user's active quest by one step. It checks if the current step is complete, if the user is alive, 
+        /// and then processes the current step's
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
+        /// <param name="autoAdvance"></param>
         public void AdvanceQuestStep(TcpClient client, User user, bool autoAdvance)
         {
             if (user.ActiveQuest.IsComplete)

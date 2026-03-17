@@ -58,7 +58,14 @@ namespace SocketServer
                 t.Start(client);
             }
         }
-
+        /// <summary>
+        /// HandleClient is a method that runs in a separate thread for each connected client. It manages the client's connection, handles incoming messages, and processes commands. 
+        /// It first prompts the client for a username and checks if it's already in use. If the username is valid, it adds the client to the list of connected clients and loads or 
+        /// creates a user profile. The method then enters a loop to read messages from the client, distinguishing between chat messages and commands (prefixed with "!"). Chat messages 
+        /// are broadcasted to all other clients, while commands are processed through a command handler. If the client disconnects, it removes the client from the list and broadcasts a 
+        /// message about the disconnection.
+        /// </summary>
+        /// <param name="obj"></param>
         static void HandleClient(object obj)
         {
             TcpClient client = (TcpClient)obj;
@@ -205,6 +212,12 @@ namespace SocketServer
         }
 
         //Functions
+
+        /// <summary>
+        /// SendMessage is a method that takes in a TcpClient and a message string, converts the message to a byte array, and sends it to the client through the network stream.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="message"></param>
         public static void SendMessage(TcpClient client, string message)
         {
             message += " ";
@@ -225,7 +238,10 @@ namespace SocketServer
             }
             Thread.Sleep(100);
         }
-
+        /// <summary>
+        /// BroadcastMessage is a method that takes in a message string, converts it to a byte array, and sends it to all connected clients through their respective network streams.
+        /// </summary>
+        /// <param name="message"></param>
         public static void BroadcastMessage(string message)
         {
             message += " ";
@@ -242,7 +258,12 @@ namespace SocketServer
             }
             Thread.Sleep(100);
         }
-
+        /// <summary>
+        /// IsUserOnline is a method that checks if a user with a given username is currently online by iterating through the list of connected clients and comparing their 
+        /// associated usernames to the provided username. If a match is found, it returns true, indicating that the user is online; otherwise, it returns false.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static bool IsUserOnline(string username)
         {
             foreach (string name in clients.Values)
@@ -251,7 +272,15 @@ namespace SocketServer
             }
             return false;
         }
-
+        /// <summary>
+        /// SendPrivateMessage is a method that allows a user to send a private message to another user. It takes in the sender's TcpClient, the sender's username, 
+        /// the recipient's username, and the message to be sent. The method iterates through the list of connected clients to find the recipient's TcpClient based on the 
+        /// provided username. If the recipient is found, it sends the private message to that client in a specific format indicating that it's a private message from the sender.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="fromUser"></param>
+        /// <param name="toUser"></param>
+        /// <param name="message"></param>
         public static void SendPrivateMessage(TcpClient sender, string fromUser, string toUser, string message)
         {
             foreach (var pair in clients)
@@ -265,7 +294,11 @@ namespace SocketServer
                 }
             }
         }
-
+        /// <summary>
+        /// LoadWorld is a method that checks for the existence of a "world" directory, creates it if it doesn't exist, and then loads all location files from 
+        /// the directory into the world list. Each location file is expected to be in JSON format, and the method uses the Location class's LoadFromJsonFile 
+        /// method to create Location objects from the files. The names of the loaded locations are printed to the console.
+        /// </summary>
         public static void LoadWorld()
         {
             if (!Directory.Exists("world"))
@@ -283,12 +316,22 @@ namespace SocketServer
                 world.Add(l);
             }
         }
-
+        /// <summary>
+        /// FindLocation is a method that takes in a location name as a string and searches through the world list to find a Location object with a matching name. 
+        /// If a matching Location is found, it is returned; otherwise, the method returns null. This method
+        /// </summary>
+        /// <param name="locName"></param>
+        /// <returns></returns>
         public static Location FindLocation(string locName) // used to find a Location in the Location-List by name
         {
             return world.Find(location => location.Name == locName);
         }
-
+        /// <summary>
+        /// FindOnlineUser is a method that takes in a username as a string and searches through the onlineUserList to find a User object with a matching name. 
+        /// If a matching User is found, it is returned; otherwise, the method returns null. This method is used to look up online users by their username.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public static User FindOnlineUser(string userName) // used to find a Location in the Location-List by name
         {
             return onlineUserList.Find(user => user.Name == userName);

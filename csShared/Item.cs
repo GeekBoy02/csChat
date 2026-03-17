@@ -27,6 +27,10 @@ namespace SocketServer
 
         }
 
+        /// <summary>
+        /// Initializes this item as a Bandage, a consumable that restores health.
+        /// </summary>
+        /// <returns>This Item object with Bandage properties applied.</returns>
         public Item Bandage()
         {
             Name = "Bandage";
@@ -35,6 +39,10 @@ namespace SocketServer
             Value = 1;
             return this;
         }
+        /// <summary>
+        /// Initializes this item as a Drink, a consumable that restores health.
+        /// </summary>
+        /// <returns>This Item object with Drink properties applied.</returns>
         public Item Drink()
         {
             Name = "Drink";
@@ -43,6 +51,10 @@ namespace SocketServer
             Value = 2;
             return this;
         }
+        /// <summary>
+        /// Initializes this item as Boots, an equipment that increases Speed stat in combat.
+        /// </summary>
+        /// <returns>This Item object with Boots properties applied.</returns>
         public Item Boots()
         {
             Name = "Boots";
@@ -51,6 +63,10 @@ namespace SocketServer
             Description = $"Increases your SPEED by {Value}% in a Fight";
             return this;
         }
+        /// <summary>
+        /// Initializes this item as Glasses, an equipment that increases Intellect stat in combat.
+        /// </summary>
+        /// <returns>This Item object with Glasses properties applied.</returns>
         public Item Glasses()
         {
             Name = "Glasses";
@@ -59,6 +75,10 @@ namespace SocketServer
             Description = $"Increases your INTELLECT by {Value}% in a Fight";
             return this;
         }
+        /// <summary>
+        /// Initializes this item as a Scanner, an equipment that increases Luck stat in combat.
+        /// </summary>
+        /// <returns>This Item object with Scanner properties applied.</returns>
         public Item Scanner()
         {
             Name = "Scanner";
@@ -68,6 +88,14 @@ namespace SocketServer
             return this;
         }
 
+        /// <summary>
+        /// Uses an item from a user's inventory. Handles consumables (healing) and equipment (equipping). Removes the item from inventory after use.
+        /// </summary>
+        /// <param name="client">The TCP client connection of the user.</param>
+        /// <param name="user">The user using the item.</param>
+        /// <param name="item">The item to use.</param>
+        /// <param name="sendMsg">Whether to send a message to the user confirming the item use.</param>
+        /// <param name="amount">The quantity of consumable items to use.</param>
         public static void UseItem(TcpClient client, User user, Item item, bool sendMsg, int amount)
         {
             if (item == null)
@@ -148,6 +176,11 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Calculates the effective Speed attribute considering equipped gear (e.g., Boots increase Speed).
+        /// </summary>
+        /// <param name="user">The user whose Speed is being calculated.</param>
+        /// <returns>The effective Speed value, including equipment bonuses.</returns>
         public static int Consider_Speed_Equipment(User user)
         {
             switch (user.EquippedItem.Name)
@@ -161,6 +194,11 @@ namespace SocketServer
             }
             return user.Speed;
         }
+        /// <summary>
+        /// Calculates the effective Intellect attribute considering equipped gear (e.g., Glasses increase Intellect).
+        /// </summary>
+        /// <param name="user">The user whose Intellect is being calculated.</param>
+        /// <returns>The effective Intellect value, including equipment bonuses.</returns>
         public static int Consider_Int_Equipment(User user)
         {
             switch (user.EquippedItem.Name)
@@ -174,6 +212,11 @@ namespace SocketServer
             }
             return user.Intellect;
         }
+        /// <summary>
+        /// Calculates the effective Luck attribute considering equipped gear (e.g., Scanner increases Luck).
+        /// </summary>
+        /// <param name="user">The user whose Luck is being calculated.</param>
+        /// <returns>The effective Luck value, including equipment bonuses.</returns>
         public static int Consider_Luck_Equipment(User user)
         {
             switch (user.EquippedItem.Name)

@@ -11,6 +11,10 @@ namespace WorldEditor
     {
         static JsonSerializerOptions jopts = new JsonSerializerOptions { WriteIndented = true };
 
+        /// <summary>
+        /// Entry point of the WorldEditor application. Displays the main menu and routes user input to appropriate editors 
+        /// (World, ItemDB, or Quest).
+        /// </summary>
         static void Main()
         {
             var exeDir = AppContext.BaseDirectory;
@@ -62,7 +66,11 @@ namespace WorldEditor
             }
         }
 
-        // Returns true if user requested exit the whole application
+        /// <summary>
+        /// Provides an interactive menu for editing world locations. Allows listing, creating, and editing location files, managing enemies and shops, and pushing changes to the server.
+        /// </summary>
+        /// <param name="worldDir">The directory containing world files.</param>
+        /// <returns>True if the user requested to exit the application; false to return to the main menu.</returns>
         static bool WorldMenu(string worldDir)
         {
             for (; ; )
@@ -136,7 +144,11 @@ namespace WorldEditor
             }
         }
 
-        // Returns true if user requested exit the whole application
+        /// <summary>
+        /// Provides an interactive menu for editing the global ItemDB. Allows listing, adding, removing, and editing items that can be used in shops and loot drops.
+        /// </summary>
+        /// <param name="worldDir">The directory containing the ItemDB file.</param>
+        /// <returns>True if the user requested to exit the application; false to return to the main menu.</returns>
         static bool ItemDbMenu(string worldDir)
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
@@ -219,6 +231,10 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Prompts the user to enter details for a new location and creates a location JSON file with those properties.
+        /// </summary>
+        /// <param name="worldDir">The directory where the new location file will be saved.</param>
         static void CreateNewLocation(string worldDir)
         {
             Console.Write("name: "); var name = Console.ReadLine() ?? "New-Location";
@@ -236,6 +252,10 @@ namespace WorldEditor
             File.WriteAllText(filename, json);
             Console.WriteLine("Created: " + Path.GetFullPath(filename));
         }
+        /// <summary>
+        /// Copies all world files from the editor's world directory to the csServer2/world directory, overwriting existing files. This is used to "push" changes made in the editor to the server for testing. It assumes a specific relative path from the editor to the server, so it may need to be adjusted if the project structure changes.
+        /// </summary>
+        /// <param name="worldDir"></param>
         static void PushWorld(string worldDir)
         {
             string csServer2Dir = Path.Combine(worldDir, "..", "..", "csServer2");
@@ -272,6 +292,11 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Allows editing a location file by prompting the user for new values for its properties. The user can choose to keep existing values by pressing enter. It also allows managing enemies and shop items within the location, including adding/removing enemies and their loot, as well as shop items. After editing, it saves the changes back to the JSON file and moves the file if the location name was changed.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="worldDir"></param>
         static void EditLocation(string path, string worldDir)
         {
             var text = File.ReadAllText(path);
@@ -440,12 +465,22 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Validates a location name to ensure it doesn't contain invalid file path characters and is not empty or whitespace.
+        /// </summary>
+        /// <param name="name">The name to validate.</param>
+        /// <returns>True if the name is valid; false otherwise.</returns>
         static bool ValidateName(string name)
         {
             foreach (var c in Path.GetInvalidFileNameChars()) if (name.Contains(c)) return false;
             return !string.IsNullOrWhiteSpace(name);
         }
 
+        /// <summary>
+        /// Retrieves all JSON world files from the world directory (both top-level and in subdirectories) and returns them as displayable file paths.
+        /// </summary>
+        /// <param name="worldDir">The world directory to search.</param>
+        /// <returns>A list of tuples containing displayable file paths and their actual file paths.</returns>
         static List<(string display, string path)> GetWorldFiles(string worldDir)
         {
             var result = new List<(string, string)>();
@@ -458,6 +493,11 @@ namespace WorldEditor
             return result;
         }
 
+        /// <summary>
+        /// Loads items from the ItemDB JSON file. Returns an empty list if the file doesn't exist or cannot be parsed.
+        /// </summary>
+        /// <param name="path">The path to the ItemDB JSON file.</param>
+        /// <returns>A list of Item objects from the database.</returns>
         static List<Item> LoadItemDb(string path)
         {
             try
@@ -472,6 +512,11 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Saves the item database to a JSON file. Creates the directory if it doesn't exist.
+        /// </summary>
+        /// <param name="path">The path where the ItemDB JSON file will be saved.</param>
+        /// <param name="items">The list of items to save.</param>
         static void SaveItemDb(string path, List<Item> items)
         {
             try
@@ -486,12 +531,22 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Displays all items in the ItemDB to the console in an indexed list format.
+        /// </summary>
+        /// <param name="items">The list of items to display.</param>
         static void PrintItemDb(List<Item> items)
         {
             if (items.Count == 0) { Console.WriteLine("ItemDB empty"); return; }
             for (int i = 0; i < items.Count; i++) Console.WriteLine($"[{i}] {items[i].Name} ({items[i].Value})");
         }
 
+        /// <summary>
+        /// Prompts the user for input with a label and returns the entered value or a default if empty.
+        /// </summary>
+        /// <param name="label">The prompt label to display.</param>
+        /// <param name="@default">The default value to return if the user enters nothing.</param>
+        /// <returns>The user's input or the default value.</returns>
         static string Prompt(string label, string @default)
         {
             Console.Write(label + ": ");
@@ -499,6 +554,12 @@ namespace WorldEditor
             return string.IsNullOrWhiteSpace(v) ? @default : v;
         }
 
+        /// <summary>
+        /// Prompts the user for integer input with a label and returns the entered value or a default if invalid.
+        /// </summary>
+        /// <param name="label">The prompt label to display.</param>
+        /// <param name="@default">The default value to return if the user enters an invalid integer.</param>
+        /// <returns>The parsed integer or the default value.</returns>
         static int PromptInt(string label, int @default)
         {
             Console.Write(label + ": ");
@@ -506,6 +567,11 @@ namespace WorldEditor
             return int.TryParse(v, out var r) ? r : @default;
         }
 
+        /// <summary>
+        /// Prompts the user with a yes/no question and returns true if they confirm with 'y'.
+        /// </summary>
+        /// <param name="prompt">The confirmation prompt to display.</param>
+        /// <returns>True if the user enters 'y'; false otherwise.</returns>
         static bool Confirm(string prompt)
         {
             Console.Write(prompt);
@@ -513,6 +579,10 @@ namespace WorldEditor
             return !string.IsNullOrWhiteSpace(v) && v.Trim().Equals("y", StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Displays the help menu for the main menu of the application.
+        /// </summary>
+        /// <param name="worldDir">The world directory (unused, kept for consistency).</param>
         static void PrintHelpMain(string worldDir)
         {
             Console.WriteLine("Main menu - choose where to work:");
@@ -523,6 +593,10 @@ namespace WorldEditor
             Console.WriteLine("  exit             - quit the program");
         }
 
+        /// <summary>
+        /// Displays the help menu for the world editor, showing available commands and the current ItemDB path.
+        /// </summary>
+        /// <param name="worldDir">The world directory to get ItemDB information from.</param>
         static void PrintHelpWorld(string worldDir)
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
@@ -536,6 +610,10 @@ namespace WorldEditor
             Console.WriteLine("  exit             - quit the program");
         }
 
+        /// <summary>
+        /// Displays the help menu for enemy management within location editing.
+        /// </summary>
+        /// <param name="worldDir">The world directory (unused, kept for consistency).</param>
         static void PrintHelpEnemies(string worldDir)
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
@@ -547,6 +625,11 @@ namespace WorldEditor
             Console.WriteLine("  skip             - skip enemy editing");
         }
 
+        /// <summary>
+        /// Displays the help menu for managing loot drops from enemies.
+        /// </summary>
+        /// <param name="worldDir">The world directory (unused, kept for consistency).</param>
+        /// <param name="enemyName">The name of the enemy whose loot is being managed.</param>
         static void PrintHelpLoot(string worldDir, string enemyName)
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
@@ -557,6 +640,10 @@ namespace WorldEditor
             Console.WriteLine("  skip             - return to enemy menu");
         }
 
+        /// <summary>
+        /// Displays the help menu for managing shop items within a location.
+        /// </summary>
+        /// <param name="worldDir">The world directory (unused, kept for consistency).</param>
         static void PrintHelpShop(string worldDir)
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
@@ -567,6 +654,11 @@ namespace WorldEditor
             Console.WriteLine("  skip             - skip shop editing");
         }
 
+        /// <summary>
+        /// Provides an interactive menu for creating and managing quests within locations. Allows viewing, creating, editing, and removing quests, as well as managing the introduction quest.
+        /// </summary>
+        /// <param name="worldDir">The directory containing world files and quest data.</param>
+        /// <returns>True if the user requested to exit the application; false to return to the main menu.</returns>
         static bool QuestMenu(string worldDir)
         {
             for (; ; )
@@ -928,6 +1020,11 @@ namespace WorldEditor
             }
         }
 
+        /// <summary>
+        /// Provides a menu for managing the introduction quest of the world. Allows creating or editing the intro.json file which serves as the first quest for players.
+        /// </summary>
+        /// <param name="worldDir">The directory containing the introduction quest file.</param>
+        /// <returns>False to return to the quest menu.</returns>
         static bool IntroductionQuestMenu(string worldDir)
         {
             for (; ; )
@@ -1001,6 +1098,11 @@ namespace WorldEditor
         }
         // ImportFromCsServer2 removed
 
+        /// <summary>
+        /// Allows editing an existing introduction quest by prompting for new quest properties and steps. Saves the modified quest back to the intro.json file.
+        /// </summary>
+        /// <param name="introPath">The path to the introduction quest JSON file.</param>
+        /// <param name="worldDir">The world directory for loading items and managing quest steps.</param>
         static void EditIntroQuest(string introPath, string worldDir)
         {
             var introText = File.ReadAllText(introPath);
@@ -1094,6 +1196,12 @@ namespace WorldEditor
             File.WriteAllText(introPath, JsonSerializer.Serialize(q, jopts));
         }
 
+        /// <summary>
+        /// Resolves a user-provided world file path by checking multiple locations and formats. Supports direct paths, paths without extensions, and automatic subdirectory searches.
+        /// </summary>
+        /// <param name="worldDir">The root world directory to search in.</param>
+        /// <param name="input">The user-provided file path or name.</param>
+        /// <returns>The resolved absolute file path, or null if not found.</returns>
         static string? ResolveWorldPath(string worldDir, string input)
         {
             // normalize separators

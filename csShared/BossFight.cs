@@ -18,6 +18,10 @@ namespace SocketServer
             IsActive = true;
         }
 
+        /// <summary>
+        /// Allows a user to join an active boss fight. The user is added to the active users list if the fight is still active and the user is not already participating.
+        /// </summary>
+        /// <param name="user">The user joining the boss fight.</param>
         public void JoinFight(User user)
         {
             if (IsActive && !ActiveUsers.Contains(user))
@@ -27,12 +31,22 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Removes a user from the active boss fight.
+        /// </summary>
+        /// <param name="user">The user leaving the boss fight.</param>
         public void LeaveFight(User user)
         {
             ActiveUsers.Remove(user);
             Console.WriteLine($"{user.Name} left the fight.");
         }
 
+        /// <summary>
+        /// Executes an attack by a user against the boss enemy. If the boss is defeated, the fight ends automatically.
+        /// </summary>
+        /// <param name="client">The TCP client of the attacker.</param>
+        /// <param name="attacker">The user attacking the boss.</param>
+        /// <param name="bossEnemy">The boss enemy being attacked.</param>
         public void AttackBoss(TcpClient client, User attacker, Enemy bossEnemy)
         {
             if (!IsActive)
@@ -51,6 +65,9 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Ends the boss fight and marks it as inactive. Displays victory messages to the console.
+        /// </summary>
         public void EndFight()
         {
             IsActive = false;
