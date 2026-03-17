@@ -9,8 +9,18 @@ using System.Security.Cryptography;
 
 namespace SocketServer
 {
+    // not yet used anywhere
+    public enum UserStatus
+    {
+        Idle,
+        Questing,
+        Fighting
+    }
+
     public class User
     {
+        [JsonPropertyName("status")]
+        public UserStatus Status { get; set; }
         [JsonPropertyName("isDead")]
         public bool IsDead { get; set; }
         [JsonPropertyName("name")] // Specify the name of the json property
@@ -406,6 +416,15 @@ namespace SocketServer
             SaveToJsonFile(p1);
             SaveToJsonFile(p2);
         }
+        /// <summary>
+        /// AttackEnemy is a method that takes in an attacker and a defender and calculates the damage dealt by the 
+        /// attacker to the defender based on their attributes and equipped items, the method also checks for critical hits and applies them if 
+        /// they occur, after the attack it checks if the defender is dead and if so it gives the attacker XP and credits for defeating the defender, 
+        /// it also sends messages to the client about the attack and its outcome
+        /// </summary>
+        /// <param name="client"> The TCP client associated with the user </param>
+        /// <param name="Attacker"> The user who is attacking </param>
+        /// <param name="Defender"> The user who is being attacked </param>
         public static void AttackEnemy(TcpClient client, User Attacker, User Defender)
         {
             // change attributes depending on Equipment for Attacker
@@ -479,12 +498,13 @@ namespace SocketServer
         /// </summary>
         /// <param name="client"></param>
         /// <param name="user"></param>
-        static void LevelUp(TcpClient client, User user)
+        public static void LevelUp(TcpClient client, User user)
         {
-            bool playerDidLvlUp = false;
-            while (user.Xp > (user.Level * 100))
+            //bool playerDidLvlUp = false;
+            while (user.Xp >= (user.Level * 100))
             {
-                playerDidLvlUp = true;
+                //playerDidLvlUp = true;
+                user.Xp -= user.Level * 100; // retain overflow XP for subsequent levels
                 user.Level++;
                 user.FreeAP += 3;
                 user.Hp += 100;
@@ -493,10 +513,7 @@ namespace SocketServer
                 else if (user.Class == "Explorer") user.Luck++;
                 ServerCallbacks.SendMessage?.Invoke(client, "🆙 " + user.Name + " leveld up to Level " + user.Level + " ");
             }
-            if (playerDidLvlUp)
-            {
-                user.Xp = 0;
-            }
+
         }
         /// <summary>
         /// changes user attributes to match the Soldier class, when changing class all other attributes except name, address, connection count and message count are reset to default values for the chosen class
@@ -568,7 +585,10 @@ namespace SocketServer
         }
         public static void HealOfflineUsers(object state)
         {
-            Directory.CreateDirectory("users");
+            if (!Directory.Exists("users"))
+            {
+                Directory.CreateDirectory("users");
+            }
             string[] filePaths = Directory.GetFiles(@"users", "*.json");
             string[] fileNames = new string[filePaths.Length];
 

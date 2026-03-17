@@ -19,14 +19,13 @@ for commands when connected.
     - Location Generator (low prio)
     - reload Quests from Json file at request
     - check if Quest Enemies are created correctly and work correctly in game (high prio)
-    - local Enemies (in world editor and server2)
-    - fight Local Enemies
     - implement new itemDB compatible with WorldEditor
     - add quest items
+    - add a location selection feature to the "move" command (if locations are connected, right now "ethical" moving is only possible trough quest)
     - add a location selection feature to the "move" command in the world editor when editing or creating a quest, right now you have to manually type the location name
     - Create "Server Manager" project that allows to create, edit, and delete users
     - Add the feature to blacklist and disconnect users to the "server2" project
-    - Worldeditor: check if shops are created properly
+    - Worldeditor: test if shops are created properly
     - test if creating and editing quests still works properly
 
 ## Attributes

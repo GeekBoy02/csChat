@@ -99,6 +99,58 @@ namespace SocketServer
 
             return e;
         }
+        public static void ReviveEnemy(Enemy enemy)
+        {
+            enemy.HP = 100;
+            enemy.userObj.Hp = 100;
+        }
+        public static void ReviveEnemies(List<Enemy> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                ReviveEnemy(enemy);
+            }
+        }
+        public static void ReviveEnemiesIfDead(List<Enemy> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.userObj.Hp <= 0) ReviveEnemy(enemy);
+            }
+        }
+        public static void ReviveEnemiesInWorld(List<Location> world)
+        {
+            foreach (var location in world)
+            {
+                ReviveEnemies(location.Enemies);
+            }
+        }
+        public static void ReviveDeadEnemiesInWorld(List<Location> world)
+        {
+            foreach (var location in world)
+            {
+                ReviveEnemiesIfDead(location.Enemies);
+            }
+        }
+        public static void ResetEnemyLvlUserObj(Enemy enemy)
+        {
+            enemy.userObj.Level = enemy.Level;
+            enemy.userObj.Xp = 0;
+        }
+        public static void ResetEnemyLvlUserObj(List<Enemy> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                ResetEnemyLvlUserObj(enemy);
+            }
+        }
+        public static void ResetEnemyLvlUserObjInWorld(List<Location> world)
+        {
+            foreach (var location in world)
+            {
+                ResetEnemyLvlUserObj(location.Enemies);
+            }
+        }
         public Enemy DroneMother(int lvl)
         {
             Enemy e = new Enemy("Rouge Drone Mother", lvl);
@@ -143,23 +195,6 @@ namespace SocketServer
             e.userObj.Intellect = Game.Randomize(5 + (lvl * 2));
             e.userObj.Luck = 10;
             e.userObj.Credits = Game.Randomize(lvl * 2);
-
-            e.userObj.FreeAP = 0;
-            e.userObj.Inventory = new List<Item>()
-            {
-                new Item().Bandage(),
-                new Item().Scanner()
-            };
-            return e;
-        }
-        public Enemy RougeDroneStatic(int lvl)  // used in quests
-        {
-            Enemy e = new Enemy("Rouge Drone", lvl);
-
-            e.userObj.Speed = 5 + (lvl * 2);
-            e.userObj.Intellect = 5 + (lvl * 2);
-            e.userObj.Luck = 10;
-            e.userObj.Credits = lvl * 2;
 
             e.userObj.FreeAP = 0;
             e.userObj.Inventory = new List<Item>()

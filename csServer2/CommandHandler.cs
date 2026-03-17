@@ -60,6 +60,12 @@ namespace SocketServer
             Commands["fight"] = Fight;
             Commands["f"] = Fight;
 
+            Commands["listenemies"] = Listenemies;
+            Commands["le"] = Listenemies;
+
+            Commands["attackenemy"] = AttackLocalEnemy;
+            Commands["ae"] = AttackLocalEnemy;
+
             Commands["allocate_attributes"] = AllocateAttributes;
             Commands["aa"] = AllocateAttributes;
 
@@ -92,6 +98,8 @@ namespace SocketServer
                 "!look around - Reveals info about your current location \n" +
                 "!revive - Revives you for a price\n" +
                 "!fight [enemy_level] - Initiates a battle with an enemy of the specified level\n" +
+                "!listenemies - Displays a list of available Enemies in the current location\n" +
+                "!attackenemy [enemy_index] - Attack the enemy at the specified index\n" +
                 "!duel [username] - Initiates a battle with another User if he/she is online\n" +
                 "!allocate_attributes [speed] [intellect] [luck] - Increases the user's speed, intellect, and luck attributes by the specified amounts\n" +
                 "!attributes - Displays the user's current attributes\n" +
@@ -198,7 +206,7 @@ namespace SocketServer
                     // }
                     // else
                     // {
-                        new QuestManager().AdvanceQuestStep(client, user, false);
+                    new QuestManager().AdvanceQuestStep(client, user, false);
                     // }
                     return;
                 }
@@ -509,6 +517,73 @@ namespace SocketServer
             Program.SendMessage(client, "Your Opponent:");
             Game.DisplayProfile(client, enemy.userObj);
             User.Fight(client, user, enemy.userObj);
+        }
+
+        private static void Listenemies(TcpClient client, User user, string cmd, string[] args)
+        {
+            Location loc = Program.FindLocation(user.CurrentLocation);
+            if (loc?.Enemies == null || loc.Enemies.Count == 0)
+            {
+                Program.SendMessage(client, "No enemies here.");
+                return;
+            }
+
+            StringBuilder sb = new();
+            for (int i = 0; i < loc.Enemies.Count; i++)
+            {
+                Enemy e = loc.Enemies[i];
+                sb.Append($"[{i + 1}] < {e.userObj.Name} > LVL: {e.userObj.Level} HP: {e.userObj.Hp} \n");
+            }
+            Program.SendMessage(client, sb.ToString());
+        }
+
+        private static void AttackLocalEnemy(TcpClient client, User user, string cmd, string[] args)
+        {
+            if (args.Length == 0)
+            {
+                Program.SendMessage(client, "Usage: !attackenemies [enemy_index]");
+                Listenemies(client, user, cmd, args);
+                return;
+            }
+            if (user.Hp <= 0)
+            {
+                Program.SendMessage(client, "You are incapacitated, use !revive or items to heal up.");
+                return;
+            }
+            Location loc = Program.FindLocation(user.CurrentLocation);
+            if (loc?.Enemies == null || loc.Enemies.Count == 0)
+            {
+                Program.SendMessage(client, "No enemies here.");
+                return;
+            }
+
+            if (!int.TryParse(args[0], out int index) || index < 1 || index > loc.Enemies.Count)
+            {
+                Program.SendMessage(client, "Invalid enemy index.");
+                return;
+            }
+
+            Enemy enemy = loc.Enemies[index - 1];
+            bool eDead = enemy.userObj.Hp <= 0;
+            if (eDead)
+            {
+                Program.SendMessage(client, "This enemy is already defeated.");
+                return;
+            }
+
+            //enemy = Enemy.RandomizeStats(enemy, false, true);
+            Program.SendMessage(client, "Your Opponent:");
+            Game.DisplayProfile(client, enemy.userObj);
+            User.AttackEnemy(client, user, enemy.userObj);                          // player attacks enemy
+            if (eDead)
+            {
+                User.LevelUp(client, user);                                         // check if player can lvl up after attack
+            }
+            else
+            {
+                User.AttackEnemy(client, enemy.userObj, user);                      // enemy attacks player
+                if (user.Hp <= 0) { User.LevelUp(client, enemy.userObj); }          // check if enemy can lvl up after attack (remove if enemy should not be able to lvl up)
+            }
         }
 
         private static void AllocateAttributes(TcpClient client, User user, string cmd, string[] args)

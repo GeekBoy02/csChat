@@ -56,38 +56,7 @@ namespace SocketServer
             Shop = new List<Item>();
             Visitors = new List<User>();
         }
-        public Location CryoStation()
-        {
-            Name = "Cryo-Station";
-            Level = 1;
-            Description = "The start of your Adventure.";
-            WelcomeMessage = $"Welcome to {Name}";
-            Enemies = new List<Enemy>
-            {
-                new Enemy("", 1).RougeDroneStatic(Level),
-                new Enemy("", 1).DroneMotherStatic(Level + 10)
-            };
-            Shop = new List<Item>
-            {
-                new Item().Drink()
-            };
-            Quests = new List<Quest>()
-            {
-                //new Quest().LoadFromJsonFile(Name, "Introduction"),
-                //new Quest().LoadFromJsonFile(Name, "Drone-Slaughter")
-                //new Quest().Introduction()
-            };
-            Quests = Quest.LoadAllFromFolder(Name);
-            return this;
-        }
-
-
-
-
-
-
-
-
+        
         public static void AddVisitors(List<User> userOnline, List<Location> world)
         {
             foreach (var l in world)

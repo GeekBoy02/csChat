@@ -68,7 +68,7 @@ namespace WorldEditor
             for (; ; )
             {
                 Console.WriteLine();
-                Console.WriteLine("World commands: list | new | edit <file> | itemdb | help | ? | back | exit");
+                Console.WriteLine("World commands: list | new | edit <file> | itemdb | push | help | ? | back | exit");
                 Console.Write("> ");
                 var line = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(line)) continue;
@@ -123,6 +123,12 @@ namespace WorldEditor
                 {
                     var exitRequested = ItemDbMenu(worldDir);
                     if (exitRequested) return true;
+                    continue;
+                }
+
+                if (cmd == "push")
+                {
+                    PushWorld(worldDir);
                     continue;
                 }
 
@@ -229,6 +235,41 @@ namespace WorldEditor
             var json = JsonSerializer.Serialize(loc, jopts);
             File.WriteAllText(filename, json);
             Console.WriteLine("Created: " + Path.GetFullPath(filename));
+        }
+        static void PushWorld(string worldDir)
+        {
+            string csServer2Dir = Path.Combine(worldDir, "..", "..", "csServer2");
+            if (Directory.Exists(Path.Combine(csServer2Dir, "world"))) Directory.Delete(Path.Combine(csServer2Dir, "world"), recursive: true);
+            CopyDirectory(worldDir, Path.Combine(csServer2Dir, "world"));
+        }
+        /// <summary>
+        /// Recursively copies a directory and its contents to a new location. If overwrite is true, existing files will be overwritten. (ChatGPT written)
+        /// </summary>
+        /// <param name="sourceDir">The directory to copy from.</param>
+        /// <param name="destDir">The directory to copy to.</param>
+        /// <param name="overwrite">Whether to overwrite existing files.</param>
+        /// <exception cref="DirectoryNotFoundException"></exception>
+        public static void CopyDirectory(string sourceDir, string destDir, bool overwrite = true)
+        {
+            if (!Directory.Exists(sourceDir))
+                throw new DirectoryNotFoundException($"Source not found: {sourceDir}");
+
+            // Create destination directory
+            Directory.CreateDirectory(destDir);
+
+            // Copy files
+            foreach (var file in Directory.GetFiles(sourceDir))
+            {
+                var destFile = Path.Combine(destDir, Path.GetFileName(file));
+                File.Copy(file, destFile, overwrite);
+            }
+
+            // Copy subdirectories recursively
+            foreach (var directory in Directory.GetDirectories(sourceDir))
+            {
+                var destSubDir = Path.Combine(destDir, Path.GetFileName(directory));
+                CopyDirectory(directory, destSubDir, overwrite);
+            }
         }
 
         static void EditLocation(string path, string worldDir)

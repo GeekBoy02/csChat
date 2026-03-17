@@ -43,7 +43,9 @@ namespace SocketServer
             listener.Start();
             Console.WriteLine("Server started on port " + port);
 
-            Timer HealofflineUsers_Timer = new Timer(User.HealOfflineUsers, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            Timer HealofflineUsers_Timer = new Timer(User.HealOfflineUsers, null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);
+            Timer ReviveDeadEnemies_Timer = new Timer(state => Enemy.ReviveDeadEnemiesInWorld(world), null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);         // 1min cooldown to check for dead enemies and revive them, adjust cooldown as needed
+            Timer ResetEnemiesUserObj_Timer = new Timer(state => Enemy.ResetEnemyLvlUserObjInWorld(world), null, 0, (int)TimeSpan.FromMinutes(5).TotalMilliseconds);    // 5min cooldown to reset Enemy userObj to match Enemy lvl, this is to prevent enemies from becoming too strong after multiple players are defeated by one enemy, adjust cooldown as needed
 
             while (true)
             {
@@ -120,6 +122,7 @@ namespace SocketServer
                     {
                         user = User.LoadFromJsonFile(user.Name);
                         Location.AddVisitors(user, world);          // add player to Location Visitors on login
+                        user.Status = UserStatus.Idle;              // set user status to idle on login
                     }
                     else
                     {
