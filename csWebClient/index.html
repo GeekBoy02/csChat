@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Server - Web Client</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eaeaea;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 3px solid #e94560;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #e94560;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            color: #00d4ff;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: #0f3460;
+            border: 2px solid #e94560;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .card ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #ccc;
+        }
+
+        .card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .setup-section {
+            background-color: #0f3460;
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .setup-section h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .step {
+            background-color: #1a1a2e;
+            border-left: 4px solid #e94560;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .step-number {
+            background-color: #e94560;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .step-title {
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #79c0ff;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #e94560;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #d63452;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #00d4ff;
+            color: #0f3460;
+        }
+
+        .btn-secondary:hover {
+            background-color: #00a8cc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 212, 255, 0.4);
+        }
+
+        .warning {
+            background-color: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid #e94560;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            color: #ffa500;
+        }
+
+        .warning strong {
+            color: #e94560;
+        }
+
+        .success {
+            background-color: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ Battle Arena</h1>
+            <p class="subtitle">Chat Server - Web Client Configuration</p>
+        </header>
+
+        <div class="content">
+            <div class="card">
+                <h2>📋 What You Need</h2>
+                <p>To run the web client, you'll need:</p>
+                <ul>
+                    <li><strong>Node.js</strong> - For the WebSocket proxy</li>
+                    <li><strong>csServer2</strong> - Running on port 8888</li>
+                    <li><strong>Web Browser</strong> - Chrome, Firefox, Edge, Safari</li>
+                    <li><strong>Terminal/PowerShell</strong> - To start the proxy</li>
+                </ul>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+                    If you don't have Node.js, download it from <strong>nodejs.org</strong>
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>🎮 How It Works</h2>
+                <p>The web client uses a WebSocket-to-TCP proxy:</p>
+                <ul>
+                    <li><strong>Browser</strong> → WebSocket connection</li>
+                    <li><strong>Proxy</strong> → Bridges the gap</li>
+                    <li><strong>csServer2</strong> → TCP socket server</li>
+                </ul>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+                    This allows browsers to connect to the TCP server
+                </p>
+            </div>
+        </div>
+
+        <div class="setup-section">
+            <h3>🚀 Quick Setup</h3>
+
+            <div class="step">
+                <strong><span class="step-number">1</span>Start csServer2</strong>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    Build and run csServer2 in Visual Studio or from the terminal:
+                </p>
+                <div class="code-block">dotnet run --project csServer2/csServer2.csproj</div>
+            </div>
+
+            <div class="step">
+                <strong><span class="step-number">2</span>Install Dependencies</strong>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    Open PowerShell in the <strong>csWebClient</strong> folder and run:
+                </p>
+                <div class="code-block">npm install</div>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    This installs the WebSocket library needed for the proxy.
+                </p>
+            </div>
+
+            <div class="step">
+                <strong><span class="step-number">3</span>Start the Proxy Server</strong>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    In the same PowerShell window, run:
+                </p>
+                <div class="code-block">npm start</div>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    You should see: <strong>[PROXY] Waiting for connections...</strong>
+                </p>
+                <p style="margin-top: 0.5rem; color: #999; font-size: 0.9rem;">
+                    Keep this terminal open! The proxy must be running while you use the web client.
+                </p>
+            </div>
+
+            <div class="step">
+                <strong><span class="step-number">4</span>Open the Login Page</strong>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    Open your browser and navigate to:
+                </p>
+                <div class="code-block">file:///path/to/csWebClient/Login.html</div>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    Or use Python's built-in server:
+                </p>
+                <div class="code-block">python -m http.server 8000<br>Then open: http://localhost:8000/Login.html</div>
+            </div>
+
+            <div class="step">
+                <strong><span class="step-number">5</span>Login</strong>
+                <p style="margin-top: 0.5rem; color: #ccc;">
+                    Enter your username and click Login. Enjoy the Battle Arena!
+                </p>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Important:</strong> Both csServer2 AND the proxy (npm start) must be running for the web client to work. The proxy bridges your browser (which can't connect to TCP) with the server.
+        </div>
+
+        <div class="success">
+            <strong>✓ Ready to go?</strong> Once you've completed the setup above, click the button below to start playing!
+        </div>
+
+        <div class="buttons">
+            <a href="Login.html" class="btn btn-primary">Go to Login →</a>
+            <a href="README.md" class="btn btn-secondary">📖 Read Documentation</a>
+        </div>
+
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #30363d; text-align: center; color: #666; font-size: 0.9rem;">
+            <p>Chat Server Web Client v1.0 | Compatible with csServer2</p>
+        </div>
+    </div>
+</body>
+</html>

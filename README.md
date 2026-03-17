@@ -27,6 +27,7 @@ for commands when connected.
     - Add the feature to blacklist and disconnect users to the "server2" project
     - Worldeditor: test if shops are created properly
     - test if creating and editing quests still works properly
+    - fix PM (Private Message) feature
 
 ## Attributes
 - Speed:        decides who strikes first, is the "attack value".

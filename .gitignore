@@ -33,4 +33,5 @@ csServer2/.vscode*
 QuestEditor/.vscode*
 WorldEditor/.vscode*
 ServerManager/.vscode*
+csWebClient/node_modules*
 csShared/.vscode*

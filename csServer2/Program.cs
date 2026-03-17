@@ -107,6 +107,14 @@ namespace SocketServer
                     //chatGPT change here
                     string attemptedName = message.Trim();
 
+                    // Validate username - reject if contains illegal filename characters or HTTP headers
+                    if (ContainsInvalidCharacters(attemptedName))
+                    {
+                        SendMessage(client, "Invalid username. Please use alphanumeric characters only.");
+                        client.Close();
+                        return; // Stop processing this client
+                    }
+
                     // Check if username is already online in either list
                     bool nameInClients = clients.Values.Contains(attemptedName, StringComparer.OrdinalIgnoreCase);
                     bool nameInOnlineUsers = onlineUserList.Any(u =>
@@ -212,6 +220,28 @@ namespace SocketServer
         }
 
         //Functions
+
+        /// <summary>
+        /// Validates that a username doesn't contain characters illegal in filenames or HTTP protocol indicators
+        /// </summary>
+        static bool ContainsInvalidCharacters(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return true;
+            
+            // Reject if contains illegal filename characters
+            char[] invalidChars = { '<', '>', ':', '"', '/', '\\', '|', '?', '*', '\n', '\r', '\t' };
+            if (input.IndexOfAny(invalidChars) >= 0) return true;
+            
+            // Reject if contains HTTP protocol strings (WebSocket upgrade attempts)
+            if (input.ToUpper().Contains("HTTP") || input.ToUpper().Contains("GET") || 
+                input.ToUpper().Contains("HOST") || input.Contains("Upgrade"))
+                return true;
+            
+            // Reject if too long
+            if (input.Length > 32) return true;
+            
+            return false;
+        }
 
         /// <summary>
         /// SendMessage is a method that takes in a TcpClient and a message string, converts the message to a byte array, and sends it to the client through the network stream.

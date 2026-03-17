@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>csChat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0a0a0a;
+            color: #00d4ff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Login Screen Styles */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .login-screen.hidden {
+            display: none;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background-color: #0f3460;
+            border: 3px solid #e94560;
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 3rem;
+        }
+
+        .title {
+            text-align: center;
+            color: #e94560;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #1a1a2e;
+            border: 2px solid #e94560;
+            color: #eaeaea;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+            background-color: #161b22;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder {
+            color: #666;
+        }
+
+        .input-group-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: #e94560;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background-color: #d63452;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(233, 69, 96, 0.4);
+        }
+
+        .login-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .status-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #1a1a2e;
+            border-left: 4px solid #00d4ff;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .status-section.show {
+            display: block;
+        }
+
+        .status-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .status-icon.connecting {
+            background-color: #ffa500;
+        }
+
+        .status-icon.connected {
+            background-color: #00d4ff;
+            animation: none;
+        }
+
+        .status-icon.error {
+            background-color: #e94560;
+            animation: none;
+        }
+
+        .status-text {
+            color: #eaeaea;
+            font-size: 0.9rem;
+        }
+
+        .status-message {
+            color: #00d4ff;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .status-message.error {
+            color: #e94560;
+        }
+
+        .error-box {
+            background-color: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid #e94560;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            color: #e94560;
+            display: none;
+        }
+
+        .error-box.show {
+            display: block;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 1rem;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .info-text strong {
+            color: #00d4ff;
+        }
+
+        /* Terminal Screen Styles */
+        .terminal-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .terminal-screen.hidden {
+            display: none;
+        }
+
+        .header {
+            background-color: #1a1a2e;
+            border-bottom: 2px solid #e94560;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e94560;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #00d4ff;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: #e94560;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #d63452;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            gap: 1rem;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .output-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background-color: #0f3460;
+            border-bottom: 1px solid #333;
+            padding: 0.75rem 1rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            background-color: #0a0a0a;
+            border-radius: 0 0 8px 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .output-line {
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .output-line.server {
+            color: #00d4ff;
+            border-left: 3px solid #00d4ff;
+            padding-left: 0.75rem;
+        }
+
+        .output-line.sent {
+            color: #00ff00;
+            border-left: 3px solid #00ff00;
+            padding-left: 0.75rem;
+        }
+
+        .output-line.error {
+            color: #e94560;
+            border-left: 3px solid #e94560;
+            padding-left: 0.75rem;
+        }
+
+        .output-line.system {
+            color: #ffa500;
+            border-left: 3px solid #ffa500;
+            padding-left: 0.75rem;
+        }
+
+        .output-line.timestamp {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .input-section {
+            border-top: 1px solid #333;
+            padding: 1rem;
+            background-color: #0f3460;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 0.75rem;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            color: #00d4ff;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+        }
+
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #e94560;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background-color: #d63452;
+            transform: translateY(-2px);
+        }
+
+        .send-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .status-bar {
+            border-top: 1px solid #333;
+            padding: 0.75rem 1rem;
+            background-color: #0f3460;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background-color: #00d4ff;
+            animation: none;
+        }
+
+        .status-dot.disconnected {
+            background-color: #e94560;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d63452;
+        }
+
+        .clear-btn {
+            padding: 0.5rem 1rem;
+            background-color: #666;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .clear-btn:hover {
+            background-color: #777;
+        }
+
+        .command-buttons {
+            border-top: 1px solid #333;
+            padding: 0.75rem 1rem;
+            background-color: #0f3460;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .command-btn {
+            padding: 0.5rem 0.75rem;
+            background-color: #1a3a52;
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .command-btn:hover {
+            background-color: #00d4ff;
+            color: #0a0a0a;
+            transform: scale(1.05);
+        }
+
+        .command-btn:active {
+            transform: scale(0.95);
+        }
+
+        .attributes-panel {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .attributes-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            font-size: 0.85rem;
+            background-color: #0a0a0a;
+        }
+
+        .attribute-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #0f3460;
+            border-left: 3px solid #00d4ff;
+            border-radius: 3px;
+            line-height: 1.4;
+        }
+
+        .attribute-label {
+            color: #00d4ff;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .attribute-value {
+            color: #e94560;
+            font-weight: bold;
+            text-align: right;
+            min-width: 60px;
+        }
+
+        .attribute-empty {
+            text-align: center;
+            color: #666;
+            padding: 2rem 1rem;
+            font-style: italic;
+        }
+
+        .inventory-panel {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .inventory-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            font-size: 0.85rem;
+            background-color: #0a0a0a;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #0f3460;
+            border-left: 3px solid #00d4ff;
+            border-radius: 3px;
+            line-height: 1.4;
+            align-items: center;
+        }
+
+        .inventory-name {
+            color: #00d4ff;
+            font-weight: bold;
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .inventory-quantity {
+            color: #e94560;
+            font-weight: bold;
+            text-align: right;
+            min-width: 40px;
+            margin-left: 0.5rem;
+        }
+
+        .inventory-empty {
+            text-align: center;
+            color: #666;
+            padding: 2rem 1rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 500px) {
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .input-group-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo">⚔️</div>
+                <div class="title">csChat</div>
+                <div class="subtitle">Chat Server Login</div>
+
+                <div class="error-box" id="error-box"></div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            placeholder="Enter your username" 
+                            maxlength="32"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Server Address</label>
+                        <div class="input-group-row">
+                            <input 
+                                type="text" 
+                                id="server-ip" 
+                                placeholder="127.0.0.1" 
+                                value="127.0.0.1"
+                            >
+                            <input 
+                                type="number" 
+                                id="server-port" 
+                                placeholder="8888" 
+                                value="8888"
+                                min="1"
+                                max="65535"
+                            >
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-btn" id="login-btn">Login</button>
+                </form>
+
+                <div class="status-section" id="status-section">
+                    <div class="status-text">
+                        <span class="status-icon connecting" id="status-icon"></span>
+                        <span id="status-label">Connecting...</span>
+                    </div>
+                    <div class="status-message" id="status-message"></div>
+                </div>
+
+                <div class="info-text">
+                    <strong>Server Details:</strong><br>
+                    Default: localhost:8888<br>
+                    Make sure csServer2 is running
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Screen -->
+    <div class="terminal-screen hidden" id="terminal-screen">
+        <div class="header">
+            <div class="header-title">Terminal</div>
+            <div class="header-info">
+                <div class="info-item">
+                    <span class="info-label">Username</span>
+                    <span class="info-value" id="username-display">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Server</span>
+                    <span class="info-value" id="server-display">-</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="output-panel">
+                <div class="panel-header">Server Output</div>
+                <div class="output" id="output"></div>
+                <div class="command-buttons" id="command-buttons">
+                    <button class="command-btn" onclick="sendCommand('a')">!a</button>
+                    <button class="command-btn" onclick="sendCommand('help')">!help</button>
+                    <button class="command-btn" onclick="sendCommand('users')">!users</button>
+                    <button class="command-btn" onclick="sendCommand('look')">!look</button>
+                    <button class="command-btn" onclick="sendCommand('locals')">!locals</button>
+                    <button class="command-btn" onclick="sendCommand('move')">!move</button>
+                    <button class="command-btn" onclick="sendCommand('quest')">!quest</button>
+                    <button class="command-btn" onclick="sendCommand('inventory')">!inventory</button>
+                    <button class="command-btn" onclick="sendCommand('shop')">!shop</button>
+                    <button class="command-btn" onclick="sendCommand('class')">!class</button>
+                    <button class="command-btn" onclick="sendCommand('attributes')">!attributes</button>
+                    <button class="command-btn" onclick="sendCommand('duel')">!duel</button>
+                    <button class="command-btn" onclick="sendCommand('fight')">!fight</button>
+                    <button class="command-btn" onclick="sendCommand('listEnemies')">!listEnemies</button>
+                    <button class="command-btn" onclick="sendCommand('attackEnemy')">!attackEnemy</button>
+                    <button class="command-btn" onclick="sendCommand('revive')">!revive</button>
+                </div>
+                <div class="input-section">
+                    <input 
+                        type="text" 
+                        class="input-field" 
+                        id="input-field" 
+                        placeholder="Enter command..." 
+                        autocomplete="off"
+                    >
+                    <button class="send-btn" id="send-btn" onclick="sendMessage()">Send</button>
+                    <button class="clear-btn" onclick="clearOutput()">Clear</button>
+                </div>
+            </div>
+
+            <div class="attributes-panel">
+                <div class="panel-header">Character Attributes</div>
+                <div class="attributes-content" id="attributes-content">
+                    <div class="attribute-empty">Use !a to view attributes</div>
+                </div>
+            </div>
+
+            <div class="inventory-panel">
+                <div class="panel-header">Inventory</div>
+                <div class="inventory-content" id="inventory-content">
+                    <div class="inventory-empty">Use !inventory to view items</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="connection-status">
+                <span class="status-dot connecting" id="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+            <div id="message-stats">Messages: <span id="msg-count">0</span></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            proxyUrl: 'ws://localhost:9090',
+            defaultIp: '127.0.0.1',
+            defaultPort: 8888
+        };
+
+        // Login State
+        let socket = null;
+        let isConnected = false;
+        let messageCount = 0;
+        let currentUsername = '';
+        let currentServerIp = '';
+        let currentServerPort = '';
+        let currentAttributes = {};
+        let capturingAttributes = false;
+        let silentAttributeCapture = false;
+        let currentInventory = {};
+        let capturingInventory = false;
+        let silentInventoryCapture = false;
+
+        // DOM Elements - Login
+        const loginScreen = document.getElementById('login-screen');
+        const loginForm = document.getElementById('login-form');
+        const usernameInput = document.getElementById('username');
+        const serverIpInput = document.getElementById('server-ip');
+        const serverPortInput = document.getElementById('server-port');
+        const loginBtn = document.getElementById('login-btn');
+        const errorBox = document.getElementById('error-box');
+        const statusSection = document.getElementById('status-section');
+        const statusIcon = document.getElementById('status-icon');
+        const statusLabel = document.getElementById('status-label');
+        const statusMessage = document.getElementById('status-message');
+
+        // DOM Elements - Terminal
+        const terminalScreen = document.getElementById('terminal-screen');
+        const output = document.getElementById('output');
+        const inputField = document.getElementById('input-field');
+        const sendBtn = document.getElementById('send-btn');
+        const usernameDisplay = document.getElementById('username-display');
+        const serverDisplay = document.getElementById('server-display');
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+        const msgCountDisplay = document.getElementById('msg-count');
+
+        // Initialize
+        window.addEventListener('load', () => {
+            usernameInput.focus();
+        });
+
+        // Login Form Event Listeners
+        loginForm.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !loginBtn.disabled) {
+                handleLogin(e);
+            }
+        });
+
+        usernameInput.addEventListener('input', () => clearLoginError());
+        serverIpInput.addEventListener('input', () => clearLoginError());
+        serverPortInput.addEventListener('input', () => clearLoginError());
+
+        // Terminal Input Enter Key
+        inputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !sendBtn.disabled) {
+                sendMessage();
+            }
+        });
+
+        // Login Functions
+        function clearLoginError() {
+            errorBox.classList.remove('show');
+        }
+
+        function showLoginError(message) {
+            errorBox.textContent = message;
+            errorBox.classList.add('show');
+            statusSection.classList.remove('show');
+        }
+
+        function showLoginStatus(label, message = '', isConnecting = true) {
+            clearLoginError();
+            statusLabel.textContent = label;
+            statusMessage.textContent = message;
+            statusIcon.className = `status-icon ${isConnecting ? 'connecting' : 'connected'}`;
+            if (!isConnecting) {
+                statusMessage.classList.remove('error');
+            }
+            statusSection.classList.add('show');
+        }
+
+        function showLoginErrorStatus(label, message) {
+            clearLoginError();
+            statusLabel.textContent = label;
+            statusMessage.textContent = message;
+            statusMessage.classList.add('error');
+            statusIcon.className = 'status-icon error';
+            statusSection.classList.add('show');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const username = usernameInput.value.trim();
+            const serverIp = serverIpInput.value.trim() || CONFIG.defaultIp;
+            const serverPort = serverPortInput.value || CONFIG.defaultPort;
+
+            // Validate username
+            if (!username) {
+                showLoginError('Please enter a username');
+                usernameInput.focus();
+                return;
+            }
+
+            if (username.length > 32) {
+                showLoginError('Username cannot exceed 32 characters');
+                usernameInput.focus();
+                return;
+            }
+
+            // Validate server address
+            if (!serverIp || !serverPort) {
+                showLoginError('Please enter server IP and port');
+                return;
+            }
+
+            // Attempt connection
+            attemptConnection(username, serverIp, serverPort);
+        }
+
+        function attemptConnection(username, serverIp, serverPort) {
+            loginBtn.disabled = true;
+            showLoginStatus('Connecting...', `Connecting to ${serverIp}:${serverPort}...`);
+
+            // Verify proxy is available before attempting connection
+            checkProxyHealth().then(proxyAvailable => {
+                if (!proxyAvailable) {
+                    showLoginErrorStatus(
+                        'Proxy Not Available',
+                        'WebSocket proxy server is not running. See console for instructions.'
+                    );
+                    loginBtn.disabled = false;
+                    showProxyInstructions(serverIp, serverPort);
+                    return;
+                }
+
+                // Connect through proxy
+                connectThroughProxy(username, serverIp, serverPort);
+            });
+        }
+
+        function connectThroughProxy(username, serverIp, serverPort) {
+            try {
+                socket = new WebSocket(CONFIG.proxyUrl);
+                let waitingForPrompt = true;
+                let usernamesent = false;
+
+                socket.onopen = () => {
+                    console.log(`[CLIENT] Connected to proxy at ${CONFIG.proxyUrl}`);
+                    showLoginStatus('Connected', 'Waiting for server...', true);
+                };
+
+                socket.onmessage = (event) => {
+                    const message = event.data.trim();
+                    console.log(`[CLIENT] Received: ${message}`);
+
+                    // First, wait for the username prompt
+                    if (waitingForPrompt && message.includes('Enter Username')) {
+                        console.log(`[CLIENT] Received username prompt, sending username...`);
+                        showLoginStatus('Connected', 'Authenticating...', true);
+                        waitingForPrompt = false;
+                        usernamesent = true;
+                        socket.send(username);
+                        
+                        // After sending username, transition to terminal
+                        // The server doesn't send a confirmation, so we proceed immediately
+                        setTimeout(() => {
+                            console.log(`[CLIENT] Login successful as ${username}`);
+                            currentUsername = username;
+                            currentServerIp = serverIp;
+                            currentServerPort = serverPort;
+
+                            showLoginStatus(
+                                'Connected!',
+                                `Logged in as ${username}`,
+                                false
+                            );
+
+                            // Redirect after 1.5 seconds
+                            setTimeout(() => {
+                                transitionToTerminal();
+                            }, 1500);
+                        }, 100);
+                        return;
+                    }
+
+                    // Check for error messages from server (only if we sent username)
+                    if (usernamesent && (message.includes('already in use') || message.includes('Invalid username'))) {
+                        showLoginErrorStatus('Login Failed', message);
+                        socket.close();
+                        loginBtn.disabled = false;
+                        return;
+                    }
+                };
+
+                socket.onerror = (error) => {
+                    console.error(`[CLIENT] WebSocket error:`, error);
+                    showLoginErrorStatus(
+                        'Connection Error',
+                        `Failed to connect to proxy at ${CONFIG.proxyUrl}. Make sure it's running.`
+                    );
+                    loginBtn.disabled = false;
+                };
+
+                socket.onclose = () => {
+                    console.log(`[CLIENT] Disconnected from proxy`);
+                    if (loginBtn.disabled) {
+                        showLoginErrorStatus(
+                            'Connection Lost',
+                            'The proxy server disconnected. Please try again.'
+                        );
+                        loginBtn.disabled = false;
+                    }
+                };
+
+            } catch (error) {
+                console.error(`[CLIENT] Connection error:`, error);
+                showLoginErrorStatus(
+                    'Connection Error',
+                    error.message
+                );
+                loginBtn.disabled = false;
+            }
+        }
+
+        async function checkProxyHealth() {
+            return new Promise((resolve) => {
+                const healthCheckTimeout = setTimeout(() => {
+                    console.log(`[CLIENT] Proxy health check timeout - proxy not responding`);
+                    resolve(false);
+                }, 2000);
+
+                try {
+                    const testSocket = new WebSocket(CONFIG.proxyUrl);
+                    
+                    testSocket.onopen = () => {
+                        clearTimeout(healthCheckTimeout);
+                        console.log(`[CLIENT] Proxy is available at ${CONFIG.proxyUrl}`);
+                        testSocket.close();
+                        resolve(true);
+                    };
+
+                    testSocket.onerror = () => {
+                        clearTimeout(healthCheckTimeout);
+                        console.log(`[CLIENT] Proxy health check failed`);
+                        resolve(false);
+                    };
+
+                    testSocket.onclose = () => {
+                        clearTimeout(healthCheckTimeout);
+                    };
+                } catch (error) {
+                    clearTimeout(healthCheckTimeout);
+                    console.error(`[CLIENT] Health check error:`, error);
+                    resolve(false);
+                }
+            });
+        }
+
+        function showProxyInstructions(serverIp, serverPort) {
+            console.warn(`
+╔════════════════════════════════════════════════════════════╗
+║           WEBSOCKET PROXY REQUIRED                         ║
+╚════════════════════════════════════════════════════════════╝
+
+The browser cannot connect directly to TCP sockets. You need to run 
+the WebSocket-to-TCP proxy server.
+
+SETUP:
+┌────────────────────────────────────────────────────────────┐
+│ 1. Open PowerShell/Terminal in the csWebClient folder      │
+│                                                            │
+│ 2. Run setup (one time only):                             │
+│    npm install                                            │
+│                                                            │
+│ 3. Start the proxy server:                                │
+│    npm start                                              │
+│    OR: node proxy.js                                      │
+│                                                            │
+│ 4. Keep the proxy running and refresh this page           │
+│                                                            │
+│ Proxy will listen on: ws://localhost:9090                 │
+│ Forwarding to: ${serverIp}:${serverPort}                  │
+└────────────────────────────────────────────────────────────┘
+
+REQUIREMENTS:
+• Node.js installed (https://nodejs.org/)
+• csServer2 running on ${serverIp}:${serverPort}
+• Proxy running before accessing this login page
+
+HELP:
+Visit README.md for detailed troubleshooting and configuration options.
+            `);
+        }
+
+        // Terminal Functions
+        function transitionToTerminal() {
+            loginScreen.classList.add('hidden');
+            terminalScreen.classList.remove('hidden');
+
+            usernameDisplay.textContent = currentUsername;
+            serverDisplay.textContent = `${currentServerIp}:${currentServerPort}`;
+
+            addLog(`Connected as ${currentUsername}`, 'system');
+            addLog(`Server: ${currentServerIp}:${currentServerPort}`, 'system');
+            addLog('Ready to send commands', 'system');
+
+            updateTerminalStatus(true);
+            isConnected = true;
+            inputField.focus();
+
+            // Auto-query attributes after login
+            setTimeout(() => {
+                if (isConnected) {
+                    silentAttributeCapture = true;
+                    sendCommand('a', true);
+                }
+            }, 500);
+        }
+
+        function sendMessage() {
+            const message = inputField.value.trim();
+            
+            if (!message) {
+                return;
+            }
+
+            if (!isConnected) {
+                addLog('Not connected to server', 'error');
+                return;
+            }
+
+            // Set flag to capture attributes if attributes command
+            if (message === '!a' || message === '!attributes') {
+                capturingAttributes = true;
+            }
+
+            try {
+                socket.send(message);
+                addLog(message, 'sent');
+                inputField.value = '';
+                inputField.focus();
+            } catch (error) {
+                console.error('Send error:', error);
+                addLog(`Send error: ${error.message}`, 'error');
+            }
+        }
+
+        function sendCommand(command, silent = false) {
+            const message = `!${command}`;
+            
+            if (!isConnected) {
+                addLog('Not connected to server', 'error');
+                return;
+            }
+
+            // Set flag to capture attributes if attributes command
+            if (command === 'attributes' || command === 'a') {
+                capturingAttributes = true;
+            }
+
+            try {
+                socket.send(message);
+                if (!silent) {
+                    addLog(message, 'sent');
+                }
+            } catch (error) {
+                console.error('Send error:', error);
+                addLog(`Send error: ${error.message}`, 'error');
+            }
+        }
+
+        function addLog(message, type = 'server') {
+            const line = document.createElement('div');
+            line.className = `output-line ${type}`;
+            
+            // Add message
+            const msgSpan = document.createElement('span');
+            msgSpan.textContent = message;
+            line.appendChild(msgSpan);
+            
+            output.appendChild(line);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            output.innerHTML = '';
+            messageCount = 0;
+            msgCountDisplay.textContent = messageCount;
+            addLog('Output cleared', 'system');
+        }
+
+        function updateTerminalStatus(connected) {
+            if (connected) {
+                statusDot.className = 'status-dot connected';
+                statusText.textContent = 'Connected';
+                sendBtn.disabled = false;
+                inputField.disabled = false;
+            } else {
+                statusDot.className = 'status-dot disconnected';
+                statusText.textContent = 'Disconnected';
+                sendBtn.disabled = true;
+                inputField.disabled = true;
+            }
+        }
+
+        function logout() {
+            if (socket) {
+                socket.close();
+            }
+            isConnected = false;
+            messageCount = 0;
+            currentUsername = '';
+            currentServerIp = '';
+            currentServerPort = '';
+
+            terminalScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+
+            // Reset login form
+            loginForm.reset();
+            errorBox.classList.remove('show');
+            statusSection.classList.remove('show');
+            loginBtn.disabled = false;
+
+            usernameInput.focus();
+        }
+
+        // Parse attributes from server response
+        function parseAttributes(message) {
+            const lines = message.split('\n');
+            const attributes = {};
+            
+            lines.forEach(line => {
+                // Match patterns like "Name: value" or "Health: 50/100" or "Strength: 15"
+                const match = line.match(/([^:]+):\s*(.+)/);
+                if (match) {
+                    const key = match[1].trim();
+                    const value = match[2].trim();
+                    if (key && value) {
+                        attributes[key] = value;
+                    }
+                }
+            });
+            
+            return attributes;
+        }
+
+        // Display attributes in the attributes panel
+        function displayAttributes(attributes) {
+            const panel = document.getElementById('attributes-content');
+            
+            if (!attributes || Object.keys(attributes).length === 0) {
+                panel.innerHTML = '<div class="attribute-empty">No attributes to display</div>';
+                return;
+            }
+            
+            panel.innerHTML = '';
+            
+            // Display attributes in order of importance
+            const displayOrder = [
+                'Name', 'Class', 'Level', 'Experience', 'Equipment', 'Health', 'Mana',
+                'Strength', 'Dexterity', 'Intelligence', 'Wisdom', 'Constitution', 'Charisma',
+                'Attack Power', 'Defense', 'Luck'
+            ];
+            
+            // First add in display order
+            displayOrder.forEach(key => {
+                if (attributes[key]) {
+                    const row = document.createElement('div');
+                    row.className = 'attribute-row';
+                    row.innerHTML = `<span class="attribute-label">${key}</span><span class="attribute-value">${attributes[key]}</span>`;
+                    panel.appendChild(row);
+                }
+            });
+            
+            // Then add any remaining attributes not in the display order
+            Object.keys(attributes).forEach(key => {
+                if (!displayOrder.includes(key)) {
+                    const row = document.createElement('div');
+                    row.className = 'attribute-row';
+                    row.innerHTML = `<span class="attribute-label">${key}</span><span class="attribute-value">${attributes[key]}</span>`;
+                    panel.appendChild(row);
+                }
+            });
+        }
+
+        // Update socket message handler to display server messages in terminal
+        // This is called after transitionToTerminal when socket is ready
+        function setupTerminalSocket() {
+            socket.onmessage = (event) => {
+                const message = event.data.trim();
+                if (message) {
+                    // Don't log if this is a silent attribute capture
+                    if (!silentAttributeCapture) {
+                        addLog(message, 'server');
+                        messageCount++;
+                        msgCountDisplay.textContent = messageCount;
+                    }
+                    
+                    const lowerMessage = message.toLowerCase();
+                    
+                    // Detect level up and auto-refresh attributes
+                    if (lowerMessage.includes('level up') || 
+                        lowerMessage.includes('leveled up') ||
+                        lowerMessage.includes('you are now level')) {
+                        setTimeout(() => {
+                            if (isConnected) {
+                                silentAttributeCapture = true;
+                                sendCommand('a', true);
+                            }
+                        }, 500);
+                    }
+                    
+                    // Detect fight end and auto-refresh attributes for HP update
+                    if (lowerMessage.includes('you defeated') || 
+                        lowerMessage.includes('defeated you') ||
+                        lowerMessage.includes('won the fight') ||
+                        lowerMessage.includes('lost the fight') ||
+                        lowerMessage.includes('enemy defeated') ||
+                        lowerMessage.includes('you won') ||
+                        lowerMessage.includes('you lost') ||
+                        lowerMessage.includes('combat ended') ||
+                        lowerMessage.includes('victory') ||
+                        lowerMessage.includes('defeated')) {
+                        setTimeout(() => {
+                            if (isConnected) {
+                                silentAttributeCapture = true;
+                                sendCommand('a', true);
+                            }
+                        }, 500);
+                    }
+                    
+                    // Capture attributes if flag is set
+                    if (capturingAttributes) {
+                        const attrs = parseAttributes(message);
+                        if (Object.keys(attrs).length > 0) {
+                            currentAttributes = attrs;
+                            displayAttributes(attrs);
+                            capturingAttributes = false;
+                            silentAttributeCapture = false;
+                        }
+                    }
+                }
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                addLog('Connection error occurred', 'error');
+                updateTerminalStatus(false);
+                isConnected = false;
+            };
+
+            socket.onclose = () => {
+                isConnected = false;
+                updateTerminalStatus(false);
+                addLog('Disconnected from server', 'error');
+            };
+        }
+
+        // Initialize socket message handlers after terminal is shown
+        // We override the login handlers with terminal handlers
+        // First call setupTerminalSocket in transitionToTerminal
+        (function() {
+            const originalTransition = transitionToTerminal;
+            transitionToTerminal = function() {
+                originalTransition();
+                setupTerminalSocket();
+            };
+        })();
+    </script>
+</body>
+</html>

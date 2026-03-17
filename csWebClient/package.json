@@ -1,0 +1,22 @@
+{
+  "name": "csserver2-websocket-proxy",
+  "version": "1.0.0",
+  "description": "WebSocket-to-TCP proxy for csServer2 chat server",
+  "main": "proxy.js",
+  "scripts": {
+    "start": "node proxy.js",
+    "proxy": "node proxy.js"
+  },
+  "keywords": [
+    "websocket",
+    "proxy",
+    "tcp",
+    "chat",
+    "server"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}
