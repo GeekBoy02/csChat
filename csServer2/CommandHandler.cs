@@ -16,6 +16,9 @@ namespace SocketServer
         public static Dictionary<string, CommandDelegate> Commands = new Dictionary<string, CommandDelegate>(StringComparer.OrdinalIgnoreCase);
 
         // Command Dict
+        /// <summary>
+        /// Static constructor that initializes the Commands dictionary with all available command mappings.
+        /// </summary>
         static CommandHandler()
         {
             Commands["help"] = Help;
@@ -60,13 +63,13 @@ namespace SocketServer
             Commands["fight"] = Fight;
             Commands["f"] = Fight;
 
-            Commands["listenemies"] = Listenemies;
+            Commands["listEnemies"] = Listenemies;
             Commands["le"] = Listenemies;
 
-            Commands["attackenemy"] = AttackLocalEnemy;
+            Commands["attackEnemy"] = AttackLocalEnemy;
             Commands["ae"] = AttackLocalEnemy;
 
-            Commands["allocate_attributes"] = AllocateAttributes;
+            Commands["allocateAttributes"] = AllocateAttributes;
             Commands["aa"] = AllocateAttributes;
 
             Commands["attributes"] = Attributes;
@@ -75,6 +78,9 @@ namespace SocketServer
 
         //Command Functions
 
+        /// <summary>
+        /// Displays a help message with all available commands and their usage.
+        /// </summary>
         private static void Help(TcpClient client, User user, string cmd, string[] args)
         {
             string help = "Available commands:\n" +
@@ -98,10 +104,10 @@ namespace SocketServer
                 "!look around - Reveals info about your current location \n" +
                 "!revive - Revives you for a price\n" +
                 "!fight [enemy_level] - Initiates a battle with an enemy of the specified level\n" +
-                "!listenemies - Displays a list of available Enemies in the current location\n" +
-                "!attackenemy [enemy_index] - Attack the enemy at the specified index\n" +
+                "!listEnemies - Displays a list of available Enemies in the current location\n" +
+                "!attackEnemy [enemy_index] - Attack the enemy at the specified index\n" +
                 "!duel [username] - Initiates a battle with another User if he/she is online\n" +
-                "!allocate_attributes [speed] [intellect] [luck] - Increases the user's speed, intellect, and luck attributes by the specified amounts\n" +
+                "!allocateAttributes [speed] [intellect] [luck] - Increases the user's speed, intellect, and luck attributes by the specified amounts\n" +
                 "!attributes - Displays the user's current attributes\n" +
                 "!users - Displays a list of all connected users\n" +
                 "!locals - Displays a list of all users in current location\n" +
@@ -109,6 +115,13 @@ namespace SocketServer
             Program.SendMessage(client, help);
         }
 
+        /// <summary>
+        /// Displays a list of all connected users.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
+        /// <param name="cmd"></param>
+        /// <param name="args"></param>
         private static void Users(TcpClient client, User user, string cmd, string[] args)
         {
             StringBuilder sb = new StringBuilder();
@@ -130,7 +143,14 @@ namespace SocketServer
 
             Program.SendMessage(client, sb.ToString());
         }
-
+        /// <summary>
+        /// Displays information about the user's current location, including its description and any relevant details. 
+        /// If the location cannot be found, a default message is shown instead.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
+        /// <param name="cmd"></param>
+        /// <param name="args"></param>
         private static void Look(TcpClient client, User user, string cmd, string[] args)
         {
             Location loc = Program.FindLocation(user.CurrentLocation);
@@ -143,7 +163,14 @@ namespace SocketServer
                 Program.SendMessage(client, "You are in nowhere. The sound of Nigh̶̑ẗ̸m̴͝a̸͒res surrounds you.");
             }
         }
-
+        /// <summary>
+        /// Locals command that retrieves the current location of the user and lists all other users present in the same location. 
+        /// If the location is not found, a default message is displayed.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
+        /// <param name="cmd"></param>
+        /// <param name="args"></param>
         private static void Locals(TcpClient client, User user, string cmd, string[] args)
         {
             //StringBuilder sb = new StringBuilder();
@@ -164,7 +191,13 @@ namespace SocketServer
 
             Program.SendMessage(client, locals);
         }
-
+        /// <summary>
+        /// Moves the user to a specified location if it exists. The location name is parsed from the command arguments, and the user's current location is updated accordingly.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param>
+        /// <param name="cmd"></param>
+        /// <param name="args"></param>
         private static void Move(TcpClient client, User user, string cmd, string[] args)
         {
             /*string[] parts = message.Split(' ', 2);
@@ -239,7 +272,9 @@ namespace SocketServer
             }
         }
 
-        // quest get
+        /// <summary>
+        /// Handles quest retrieval and acceptance. Displays available quests or accepts a specific quest if the user meets prerequisites.
+        /// </summary>
         private static void HandleQuestGet(TcpClient client, User user, string[] args)
         {
             Location loc = Program.FindLocation(user.CurrentLocation);
@@ -279,7 +314,9 @@ namespace SocketServer
             }
         }
 
-        // wuest completed
+        /// <summary>
+        /// Displays all quests that the user has completed.
+        /// </summary>
         private static void HandleQuestCompleted(TcpClient client, User user)
         {
             Program.SendMessage(client, "Quests you completed: ");
@@ -289,7 +326,9 @@ namespace SocketServer
             }
         }
 
-        // quest abandon
+        /// <summary>
+        /// Handles quest abandonment. Removes the user's active quest if they have one.
+        /// </summary>
         private static void HandleQuestAbandon(TcpClient client, User user)
         {
             if (user.ActiveQuest != null)
@@ -304,6 +343,9 @@ namespace SocketServer
         }
         //QUEST END
 
+        /// <summary>
+        /// Handles shop interactions. Displays shop items or purchases items from the local shop.
+        /// </summary>
         private static void Shop(TcpClient client, User user, string cmd, string[] args)
         {
             // Check if shop
@@ -342,6 +384,9 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Revives a dead user by restoring health at the cost of a quarter of their current credits.
+        /// </summary>
         private static void Revive(TcpClient client, User user, string cmd, string[] args)
         {
             if (user.Hp == 0)
@@ -356,6 +401,9 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Uses an item from the user's inventory with an optional quantity parameter.
+        /// </summary>
         private static void UseItem(TcpClient client, User user, string cmd, string[] args)
         {
             if (user.IsDead)
@@ -383,6 +431,9 @@ namespace SocketServer
                 Program.SendMessage(client, "Item " + itemName + " not found.");
         }
 
+        /// <summary>
+        /// Manages inventory operations including displaying items, removing items, inspecting items, and selling items.
+        /// </summary>
         private static void Inventory(TcpClient client, User user, string cmd, string[] args)
         {
             // <- 
@@ -457,6 +508,9 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Changes the user's class to Soldier, Engineer, or Explorer.
+        /// </summary>
         private static void Class(TcpClient client, User user, string cmd, string[] args)
         {
             if (args.Length == 0)
@@ -478,7 +532,11 @@ namespace SocketServer
             Program.SendMessage(client, $"You are now a {className}!");
             User.SaveToJsonFile(user);
         }
-
+        /// <summary>
+        /// Initiates a duel between the user and another online user specified by their username. If the opponent is found, the User.Fight method is called to start the duel; otherwise, a message is sent indicating that the specified user is not online.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="user"></param> 
         private static void Duel(TcpClient client, User user, string cmd, string[] args)
         {
             if (args.Length == 0)
@@ -495,6 +553,9 @@ namespace SocketServer
                 Program.SendMessage(client, "That user is not online.");
         }
 
+        /// <summary>
+        /// Initiates a fight with an enemy. Can fight a random location enemy or a specific level enemy if provided.
+        /// </summary>
         private static void Fight(TcpClient client, User user, string cmd, string[] args)
         {
             Enemy enemy;
@@ -519,6 +580,9 @@ namespace SocketServer
             User.Fight(client, user, enemy.userObj);
         }
 
+        /// <summary>
+        /// Displays a list of all enemies available in the user's current location.
+        /// </summary>
         private static void Listenemies(TcpClient client, User user, string cmd, string[] args)
         {
             Location loc = Program.FindLocation(user.CurrentLocation);
@@ -537,6 +601,9 @@ namespace SocketServer
             Program.SendMessage(client, sb.ToString());
         }
 
+        /// <summary>
+        /// Attacks a specific enemy in the current location by index. Handles combat between player and enemy.
+        /// </summary>
         private static void AttackLocalEnemy(TcpClient client, User user, string cmd, string[] args)
         {
             if (args.Length == 0)
@@ -586,6 +653,9 @@ namespace SocketServer
             }
         }
 
+        /// <summary>
+        /// Allocates attribute points to the user's speed, intellect, and luck stats.
+        /// </summary>
         private static void AllocateAttributes(TcpClient client, User user, string cmd, string[] args)
         {
             if (args.Length < 3 ||
@@ -600,6 +670,9 @@ namespace SocketServer
             Game.AllocateAP(client, user, speed, intellect, luck);
         }
 
+        /// <summary>
+        /// Displays the user's current attributes and profile information.
+        /// </summary>
         private static void Attributes(TcpClient client, User user, string cmd, string[] args)
         {
             Game.DisplayProfile(client, user);
