@@ -26,6 +26,7 @@ ServerManager/obj*
 csShared/obj*
 csServer2/world*
 WorldEditor/world*
+**/world/**
 csServer2/users
 csClient/.vscode*
 csServer/.vscode*

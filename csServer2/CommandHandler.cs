@@ -305,7 +305,7 @@ namespace SocketServer
             if (user.Level >= quest.Prerequisite_lvl && user.Intellect >= quest.Prerequisite_int)
             {
                 user.ActiveQuest = quest;
-                User.SaveToJsonFile(user);
+                User.SaveUserToJsonFile(user);
                 Program.SendMessage(client, "You accepted the " + user.ActiveQuest.Name + " Quest");
             }
             else
@@ -530,7 +530,7 @@ namespace SocketServer
             }
 
             Program.SendMessage(client, $"You are now a {className}!");
-            User.SaveToJsonFile(user);
+            User.SaveUserToJsonFile(user);
         }
         /// <summary>
         /// Initiates a duel between the user and another online user specified by their username. If the opponent is found, the User.Fight method is called to start the duel; otherwise, a message is sent indicating that the specified user is not online.
@@ -548,7 +548,7 @@ namespace SocketServer
             string opponentName = args[0];
             User opponent = Program.FindOnlineUser(opponentName);
             if (opponent != null)
-                User.Fight(client, user, opponent);
+                User.Fight(client, user, opponent, Program.speedModItemNamesListPath, Program.intModItemNamesListPath, Program.luckModItemNamesListPath);
             else
                 Program.SendMessage(client, "That user is not online.");
         }
@@ -577,7 +577,7 @@ namespace SocketServer
 
             Program.SendMessage(client, "Your Opponent:");
             Game.DisplayProfile(client, enemy.userObj);
-            User.Fight(client, user, enemy.userObj);
+            User.Fight(client, user, enemy.userObj, Program.speedModItemNamesListPath, Program.intModItemNamesListPath, Program.luckModItemNamesListPath);
         }
 
         /// <summary>
@@ -641,14 +641,14 @@ namespace SocketServer
             //enemy = Enemy.RandomizeStats(enemy, false, true);
             Program.SendMessage(client, "Your Opponent:");
             Game.DisplayProfile(client, enemy.userObj);
-            User.AttackEnemy(client, user, enemy.userObj);                          // player attacks enemy
+            User.AttackEnemy(client, user, enemy.userObj, Item.GetItemNames(Program.speedModItemNamesListPath),Item.GetItemNames(Program.intModItemNamesListPath), Item.GetItemNames(Program.luckModItemNamesListPath));                          // player attacks enemy
             if (eDead)
             {
                 User.LevelUp(client, user);                                         // check if player can lvl up after attack
             }
             else
             {
-                User.AttackEnemy(client, enemy.userObj, user);                      // enemy attacks player
+                User.AttackEnemy(client, enemy.userObj, user, Item.GetItemNames(Program.speedModItemNamesListPath), Item.GetItemNames(Program.intModItemNamesListPath), Item.GetItemNames(Program.luckModItemNamesListPath));                      // enemy attacks player
                 if (user.Hp <= 0) { User.LevelUp(client, enemy.userObj); }          // check if enemy can lvl up after attack (remove if enemy should not be able to lvl up)
             }
         }

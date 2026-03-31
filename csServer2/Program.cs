@@ -24,6 +24,9 @@ namespace SocketServer
             //new Location().CryoStation()
             //new Location().LandingBay()
         };
+        public static string speedModItemNamesListPath = "world/ItemDB/speedMods.json";
+        public static string intModItemNamesListPath = "world/ItemDB/intMods.json";
+        public static string luckModItemNamesListPath = "world/ItemDB/luckMods.json";
 
         //Main
         static void Main(string[] args)
@@ -135,7 +138,7 @@ namespace SocketServer
                     user = new User(username, client.Client.RemoteEndPoint.ToString());
                     if (File.Exists("users/" + user.Name + ".json"))
                     {
-                        user = User.LoadFromJsonFile(user.Name);
+                        user = User.LoadUserFromJsonFile(user.Name);
                         Location.AddVisitors(user, world);          // add player to Location Visitors on login
                         user.Status = UserStatus.Idle;              // set user status to idle on login
                     }
@@ -211,7 +214,7 @@ namespace SocketServer
                 clients.Remove(client);
                 Console.WriteLine("{0} has left the chat", username);
                 BroadcastMessage(username + " has left the chat");
-                User.SaveToJsonFile(user);
+                User.SaveUserToJsonFile(user);
                 onlineUserList.Remove(user);
                 Location.RemoveVisitors(user, world);
             }
@@ -227,19 +230,19 @@ namespace SocketServer
         static bool ContainsInvalidCharacters(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return true;
-            
+
             // Reject if contains illegal filename characters
             char[] invalidChars = { '<', '>', ':', '"', '/', '\\', '|', '?', '*', '\n', '\r', '\t' };
             if (input.IndexOfAny(invalidChars) >= 0) return true;
-            
+
             // Reject if contains HTTP protocol strings (WebSocket upgrade attempts)
-            if (input.ToUpper().Contains("HTTP") || input.ToUpper().Contains("GET") || 
+            if (input.ToUpper().Contains("HTTP") || input.ToUpper().Contains("GET") ||
                 input.ToUpper().Contains("HOST") || input.Contains("Upgrade"))
                 return true;
-            
+
             // Reject if too long
             if (input.Length > 32) return true;
-            
+
             return false;
         }
 

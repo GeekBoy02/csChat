@@ -1127,6 +1127,11 @@ Visit README.md for detailed troubleshooting and configuration options.
                 capturingAttributes = true;
             }
 
+            // Set flag to capture inventory if inventory command
+            if (message === '!inventory' || message === '!i') {
+                capturingInventory = true;
+            }
+
             try {
                 socket.send(message);
                 addLog(message, 'sent');
@@ -1149,6 +1154,11 @@ Visit README.md for detailed troubleshooting and configuration options.
             // Set flag to capture attributes if attributes command
             if (command === 'attributes' || command === 'a') {
                 capturingAttributes = true;
+            }
+
+            // Set flag to capture inventory if inventory command
+            if (command === 'inventory' || command === 'i') {
+                capturingInventory = true;
             }
 
             try {
@@ -1277,6 +1287,70 @@ Visit README.md for detailed troubleshooting and configuration options.
             });
         }
 
+        // Parse inventory from server response
+        function parseInventory(message) {
+            const normalized = message.trim();
+            if (!normalized) {
+                return [];
+            }
+
+            if (/no items|inventory empty|empty inventory|nothing in your inventory/i.test(normalized)) {
+                return [];
+            }
+
+            const items = [];
+            const parts = normalized.split(',');
+
+            parts.forEach(token => {
+                const entry = token.trim();
+                if (!entry) {
+                    return;
+                }
+
+                const dashIndex = entry.indexOf('-');
+                if (dashIndex > 0 && dashIndex < entry.length - 1) {
+                    const icon = entry.slice(0, dashIndex).trim();
+                    const name = entry.slice(dashIndex + 1).trim();
+                    if (name) {
+                        items.push({ icon, name });
+                        return;
+                    }
+                }
+
+                // Fallback to raw item text when no icon separator
+                items.push({ icon: '', name: entry });
+            });
+
+            return items;
+        }
+
+        // Display inventory in the inventory panel
+        function displayInventory(inventory) {
+            const panel = document.getElementById('inventory-content');
+            if (!inventory || inventory.length === 0) {
+                panel.innerHTML = '<div class="inventory-empty">No inventory items to display</div>';
+                return;
+            }
+
+            panel.innerHTML = '';
+            inventory.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'inventory-item';
+
+                const name = document.createElement('div');
+                name.className = 'inventory-name';
+                name.textContent = item.icon ? `${item.icon} ${item.name}` : item.name;
+
+                const qty = document.createElement('div');
+                qty.className = 'inventory-quantity';
+                qty.textContent = '';
+
+                row.appendChild(name);
+                row.appendChild(qty);
+                panel.appendChild(row);
+            });
+        }
+
         // Update socket message handler to display server messages in terminal
         // This is called after transitionToTerminal when socket is ready
         function setupTerminalSocket() {
@@ -1331,6 +1405,17 @@ Visit README.md for detailed troubleshooting and configuration options.
                             displayAttributes(attrs);
                             capturingAttributes = false;
                             silentAttributeCapture = false;
+                        }
+                    }
+
+                    // Capture inventory if flag is set
+                    if (capturingInventory) {
+                        const inventoryItems = parseInventory(message);
+                        if (inventoryItems.length > 0 || /no items|inventory empty|empty inventory|nothing in your inventory/i.test(message)) {
+                            currentInventory = inventoryItems;
+                            displayInventory(inventoryItems);
+                            capturingInventory = false;
+                            silentInventoryCapture = false;
                         }
                     }
                 }

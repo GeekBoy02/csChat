@@ -264,6 +264,13 @@ namespace SocketServer
 
             return droppedItem;
         }
+        /// <summary>
+        /// InspectItem is a method that allows the user to inspect an item in their inventory or equipped item,
+        /// it takes in the item name and checks if the item is in the user's inventory or equipped, if it is it sends a message to the user with the item's name, icon,
+        /// description and value, if the item is not found it sends a message asking the user to input a valid item name
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="itemName"></param>
         public void InspectItem(TcpClient client, string itemName)
         {
             Item i = FindItemInInventory(itemName);
@@ -271,9 +278,9 @@ namespace SocketServer
             {
                 ServerCallbacks.SendMessage?.Invoke(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
             }
-            else if (EquippedItem == i)
+            else if (EquippedItem.Name == itemName)
             {
-                ServerCallbacks.SendMessage?.Invoke(client, $" {i.Icon} {i.Name} | {i.Description} | Value: {i.Value} ");
+                ServerCallbacks.SendMessage?.Invoke(client, $" {EquippedItem.Icon} {EquippedItem.Name} | {EquippedItem.Description} | Value: {EquippedItem.Value} ");
             }
             else
             {
@@ -359,7 +366,7 @@ namespace SocketServer
                 File.WriteAllText("users/" + user.Name + ".json", json);
             }
         }
-        public static void SaveToJsonFile(User user)
+        public static void SaveUserToJsonFile(User user)
         {
             // Create a json serializer options object with some settings
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -374,7 +381,7 @@ namespace SocketServer
             Directory.CreateDirectory("users");
             File.WriteAllText("users/" + user.Name + ".json", json);
         }
-        public static User LoadFromJsonFile(string name)
+        public static User LoadUserFromJsonFile(string name)
         {
             if (File.Exists("users/" + name + ".json"))
             {
@@ -382,7 +389,7 @@ namespace SocketServer
             }
             return new User("notLoaded", "");
         }
-        public static void Fight(TcpClient client, User p1, User p2)
+        public static void Fight(TcpClient client, User p1, User p2, string speedModNamesListPath, string intModNamesListPath, string luckModNamesListPath)
         {
             if (p1.IsDead || p2.IsDead)
             {
@@ -399,10 +406,14 @@ namespace SocketServer
                 defender = p1;
             }
 
+            string[] speedModItemNames = Item.GetItemNames(speedModNamesListPath);
+            string[] intModItemNames = Item.GetItemNames(intModNamesListPath);
+            string[] luckModItemNames = Item.GetItemNames(luckModNamesListPath);
+
             while (true)
             {
                 Thread.Sleep(10);
-                AttackEnemy(client, attacker, defender);
+                AttackEnemy(client, attacker, defender, speedModItemNames, intModItemNames, luckModItemNames);
                 if (defender.Hp <= 0)
                 {
                     LevelUp(client, attacker);
@@ -413,9 +424,34 @@ namespace SocketServer
                 defender = attacker;
                 attacker = temp;
             }
-            SaveToJsonFile(p1);
-            SaveToJsonFile(p2);
+            SaveUserToJsonFile(p1);
+            SaveUserToJsonFile(p2);
         }
+
+        // public static string[] GetStatModItemNames(string path)
+        // {
+        //     string[] nameList = new string[0];
+        //     var ItemList = new List<Item>();
+        //     try
+        //     {
+        //         if (!File.Exists(path)) ItemList = new List<Item>();
+        //         var txt = File.ReadAllText(path);
+        //         ItemList = JsonSerializer.Deserialize<List<Item>>(txt) ?? new List<Item>();
+        //     }
+        //     catch
+        //     {
+        //         ItemList = new List<Item>();
+        //     }
+
+        //     foreach (var item in ItemList)
+        //     {
+        //         nameList = nameList.Append(item.Name).ToArray();
+        //         //nameList.Append(item.Name).ToArray();
+        //     }
+
+        //     return nameList ?? new string[0];
+        // }
+
         /// <summary>
         /// AttackEnemy is a method that takes in an attacker and a defender and calculates the damage dealt by the 
         /// attacker to the defender based on their attributes and equipped items, the method also checks for critical hits and applies them if 
@@ -425,13 +461,13 @@ namespace SocketServer
         /// <param name="client"> The TCP client associated with the user </param>
         /// <param name="Attacker"> The user who is attacking </param>
         /// <param name="Defender"> The user who is being attacked </param>
-        public static void AttackEnemy(TcpClient client, User Attacker, User Defender)
+        public static void AttackEnemy(TcpClient client, User Attacker, User Defender, string[] speedModItemNamesList, string[] intModItemNamesList, string[] luckModItemNamesList)
         {
             // change attributes depending on Equipment for Attacker
-            int trueSpeed = Item.Consider_Speed_Equipment(Attacker);
-            int trueInt = Item.Consider_Int_Equipment(Defender);
-            int trueLuckATK = Item.Consider_Luck_Equipment(Attacker);
-            int trueLuckDEF = Item.Consider_Luck_Equipment(Defender);
+            int trueSpeed = Item.Consider_Speed_Equipment(Attacker, speedModItemNamesList);
+            int trueInt = Item.Consider_Int_Equipment(Defender, intModItemNamesList);
+            int trueLuckATK = Item.Consider_Luck_Equipment(Attacker, luckModItemNamesList);
+            int trueLuckDEF = Item.Consider_Luck_Equipment(Defender, luckModItemNamesList);
 
             string icon = "⚔️  ";
             int attackValue = Game.Randomize(trueSpeed);
@@ -603,9 +639,9 @@ namespace SocketServer
                 if (u == null)
                 {
                     Console.WriteLine("🩹 healing " + file);
-                    u = LoadFromJsonFile(file);
+                    u = LoadUserFromJsonFile(file);
                     u.Hp += 10;
-                    SaveToJsonFile(u);
+                    SaveUserToJsonFile(u);
                 }
             }
         }
@@ -634,7 +670,7 @@ namespace SocketServer
             loc.Visitors.Add(this);   // add user to location visitors
             CurrentLocation = locationName;
             ServerCallbacks.SendMessage?.Invoke(client, $"You arrive at {locationName} \n \n  << " + loc.WelcomeMessage + " >> ");
-            SaveToJsonFile(this);
+            SaveUserToJsonFile(this);
             //loc.SaveToJsonFile(loc);
         }
         public void BuyItem(TcpClient client, string itemName, List<Location> world)

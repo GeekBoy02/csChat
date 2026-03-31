@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using SocketServer;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace WorldEditor
 {
@@ -153,6 +154,16 @@ namespace WorldEditor
         {
             var dbPath = Path.Combine(worldDir, "ItemDB", "items.json");
             Directory.CreateDirectory(Path.GetDirectoryName(dbPath) ?? "");
+
+            var smPath = Path.Combine(worldDir, "ItemDB", "speedMods.json"); // all items that modify the SPEED stat in fights
+            var imPath = Path.Combine(worldDir, "ItemDB", "intMods.json"); // all items that modify the INTELLECT stat in fights
+            var lmPath = Path.Combine(worldDir, "ItemDB", "luckMods.json"); // all items that modify the LUCK stat in fights
+            var hiPath = Path.Combine(worldDir, "ItemDB", "healItems.json"); // all items that modify the HEALTH stat in fights
+            if (!File.Exists(smPath)) { File.WriteAllText(smPath, JsonSerializer.Serialize(new List<Item>())); }
+            if (!File.Exists(imPath)) { File.WriteAllText(imPath, JsonSerializer.Serialize(new List<Item>())); }
+            if (!File.Exists(lmPath)) { File.WriteAllText(lmPath, JsonSerializer.Serialize(new List<Item>())); }
+            if (!File.Exists(hiPath)) { File.WriteAllText(hiPath, JsonSerializer.Serialize(new List<Item>())); }
+
             for (; ; )
             {
                 Console.WriteLine();
@@ -175,28 +186,33 @@ namespace WorldEditor
                 {
                     do
                     {
+                        string name = Prompt("item name", "Item");
                         var it = new Item
                         {
-                            Name = Prompt("item name", "Item"),
+                            Name = name,
                             Icon = Prompt("icon", ""),
                             Description = Prompt("description", ""),
                             Value = PromptInt("value", 0),
+                            OnUseMessage = Prompt("on-use message", ""),
+                            isEquippable = PromptBoolEquippable("is the item equippable (true/false)", false, name, smPath, imPath, lmPath, name)
                         };
+                        PromptHealItem(name, hiPath, name);
+
                         var existsIndex = items.FindIndex(x => string.Equals(x.Name, it.Name, StringComparison.OrdinalIgnoreCase));
                         if (existsIndex >= 0) Console.WriteLine($"Item '{it.Name}' already exists in ItemDB at index {existsIndex}. Use 'edit {existsIndex}' to modify it. Skipping add.");
                         else { items.Add(it); SaveItemDb(dbPath, items); }
                     }
                     while (Confirm("Add another item? (y/N): "));
                 }
-                else if (action == "populate")
+                else if (action == "populate") // kinda outdated
                 {
                     var defaults = new List<Item>
                 {
-                    new Item { Name = "Bandage", Icon = "🩹", Description = "Restores some health.", Value = 1 },
-                    new Item { Name = "Drink", Icon = "🧃", Description = "Tasty Drink that restores some health.", Value = 2 },
-                    new Item { Name = "Boots", Icon = "👢", Description = "Increases your SPEED in a Fight", Value = 10 },
-                    new Item { Name = "Glasses", Icon = "👓", Description = "Increases your INTELLECT in a Fight", Value = 10 },
-                    new Item { Name = "Scanner", Icon = "📡", Description = "Increases your LUCK in a Fight", Value = 10 }
+                    new Item { Name = "Bandage", Icon = "🩹", Description = "Restores some health.", Value = 1, OnUseMessage = "You used a Bandage.", isEquippable = false },
+                    new Item { Name = "Drink", Icon = "🧃", Description = "Tasty Drink that restores some health.", Value = 2, OnUseMessage = "You drank a Drink.", isEquippable = false },
+                    new Item { Name = "Boots", Icon = "👢", Description = "Increases your SPEED in a Fight", Value = 10, OnUseMessage = "You equipped some Boots.", isEquippable = true },
+                    new Item { Name = "Glasses", Icon = "👓", Description = "Increases your INTELLECT in a Fight", Value = 10, OnUseMessage = "You equipped Glasses.", isEquippable = true },
+                    new Item { Name = "Scanner", Icon = "📡", Description = "Increases your LUCK in a Fight", Value = 10, OnUseMessage = "You equipped a Scanner.", isEquippable = true },
                 };
                     var added = 0;
                     foreach (var d in defaults)
@@ -212,23 +228,190 @@ namespace WorldEditor
                 }
                 else if (action == "remove" && parts.Length > 1 && int.TryParse(parts[1], out var ridx) && ridx >= 0 && ridx < items.Count)
                 {
+                    var itemName = items[ridx].Name;
+                    if (items[ridx].isEquippable)
+                    {
+                        // remove items (item names) from the use-lists if they are removed by the user, to avoid orphaned references and keep the db clean.
+                        var smList = LoadItemDb(smPath); smList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); SaveItemDb(smPath, smList);
+                        var imList = LoadItemDb(imPath); imList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); SaveItemDb(imPath, imList);
+                        var lmList = LoadItemDb(lmPath); lmList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); SaveItemDb(lmPath, lmList);
+                    }
+                    var hiList = LoadItemDb(hiPath); hiList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); SaveItemDb(hiPath, hiList);
+
                     items.RemoveAt(ridx);
                     SaveItemDb(dbPath, items);
                 }
                 else if (action == "edit" && parts.Length > 1 && int.TryParse(parts[1], out var eidx) && eidx >= 0 && eidx < items.Count)
                 {
                     var it = items[eidx];
+                    var oldName = it.Name;
                     it.Name = Prompt("new name (enter to keep)", it.Name);
                     it.Icon = Prompt("new icon (enter to keep)", it.Icon);
                     it.Description = Prompt("new description (enter to keep)", it.Description);
-                    it.Value = PromptInt("new value (enter to keep)", it.Value);
+                    it.Value = PromptInt("new item value (enter to keep)", it.Value);
+                    it.OnUseMessage = Prompt("new on-use message (enter to keep)", it.OnUseMessage);
+                    it.isEquippable = PromptBoolEquippable("is the item equippable (true/false or enter to keep)", it.isEquippable, it.Name, smPath, imPath, lmPath, oldName);
                     items[eidx] = it; SaveItemDb(dbPath, items);
+                    PromptHealItem(it.Name, hiPath, oldName);
                 }
                 else
                 {
                     Console.WriteLine("Usage: [list|add|populate|remove <index>|edit <index>|back|exit]");
                 }
             }
+        }
+
+        private static void PromptHealItem(string itemName, string jFilePath, string oldName)
+        {
+            Console.Write("Does this Item heal the user (y/N/enter to keep): "); var a1 = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(a1) && a1.Trim().Equals("y", StringComparison.OrdinalIgnoreCase))
+            {
+                if (jFilePath != null)
+                {
+                    var list = LoadItemDb(jFilePath);
+                    if (oldName != itemName) list.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                    list.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); // ensure no duplicates
+                    list.Add(new Item { Name = itemName });
+                    SaveItemDb(jFilePath, list);
+                }
+                else { Console.WriteLine("Warning: hiPath not set, cannot add item to healItems.json"); }
+            }
+            else if (a1 == Environment.NewLine)
+            {
+                // if user just pressed enter, keep existing stat mod associations, so do nothing
+            }
+        }
+        /// <summary>
+        /// Prompts the user to enter a boolean value for whether an item is equippable, 
+        /// and if it is equippable, also prompts about which stats it modifies and updates the corresponding stat mod lists accordingly. 
+        /// If the item is not equippable, it ensures the item is removed from all stat mod lists. 
+        /// This method helps maintain consistency between the equippable status of items and their presence in stat modification lists.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="default"></param>
+        /// <param name="itemName"></param>
+        /// <param name="smPath"></param>
+        /// <param name="imPath"></param>
+        /// <param name="lmPath"></param>
+        /// <returns></returns>
+        private static bool PromptBoolEquippable(string label, bool @default, string itemName, string smPath, string imPath, string lmPath, string oldName)
+        {
+            Console.Write(label + ": ");
+            var v = Console.ReadLine();
+            bool bv = bool.TryParse(v, out var isEq) ? isEq : @default;
+            if (bv)
+            {
+                Console.Write("Does this Item modify any stats (y/N/enter to keep): "); var a1 = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(a1) && a1.Trim().Equals("y", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.Write("Does this Item modify SPEED (y/N): "); var a2 = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(a2) && a2.Trim().Equals("y", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (smPath != null)
+                        {
+                            var statModList = LoadItemDb(smPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); // ensure no duplicates
+                            statModList.Add(new Item { Name = itemName });
+                            SaveItemDb(smPath, statModList);
+                        }
+                        else { Console.WriteLine("Warning: smPath not set, cannot add item to speedMods.json"); }
+                    }
+                    else
+                    {
+                        if (smPath != null)
+                        {
+                            var statModList = LoadItemDb(smPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                            SaveItemDb(smPath, statModList);
+                        }
+                    }
+                    Console.Write("Does this Item modify INTELLECT (y/N): "); a2 = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(a2) && a2.Trim().Equals("y", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (imPath != null)
+                        {
+                            var statModList = LoadItemDb(imPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); // ensure no duplicates
+                            statModList.Add(new Item { Name = itemName });
+                            SaveItemDb(imPath, statModList);
+                        }
+                        else { Console.WriteLine("Warning: imPath not set, cannot add item to intMods.json"); }
+                    }
+                    else
+                    {
+                        if (imPath != null)
+                        {
+                            var statModList = LoadItemDb(imPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                            SaveItemDb(imPath, statModList);
+                        }
+                    }
+                    Console.Write("Does this Item modify LUCK (y/N): "); a2 = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(a2) && a2.Trim().Equals("y", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (lmPath != null)
+                        {
+                            var statModList = LoadItemDb(lmPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase)); // ensure no duplicates
+                            statModList.Add(new Item { Name = itemName });
+                            SaveItemDb(lmPath, statModList);
+                        }
+                        else { Console.WriteLine("Warning: lmPath not set, cannot add item to luckMods.json"); }
+                    }
+                    else
+                    {
+                        if (lmPath != null)
+                        {
+                            var statModList = LoadItemDb(lmPath);
+                            if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                            statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                            SaveItemDb(lmPath, statModList);
+                        }
+                    }
+                }
+                else if (a1 == Environment.NewLine)
+                {
+                    // if user just pressed enter, keep existing stat mod associations, so do nothing
+                }
+            }
+            else
+            {
+                // if not equippable, ensure it's removed from all stat mod lists
+                if (smPath != null)
+                {
+                    var statModList = LoadItemDb(smPath);
+                    if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                    statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                    SaveItemDb(smPath, statModList);
+                }
+                if (imPath != null)
+                {
+                    var statModList = LoadItemDb(imPath);
+                    if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                    statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                    SaveItemDb(imPath, statModList);
+                }
+                if (lmPath != null)
+                {
+                    var statModList = LoadItemDb(lmPath);
+                    if (oldName != itemName) statModList.RemoveAll(x => string.Equals(x.Name, oldName, StringComparison.OrdinalIgnoreCase)); // ensure old itme name gets deleted from the list if the user changed it
+                    statModList.RemoveAll(x => string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase));
+                    SaveItemDb(lmPath, statModList);
+                }
+            }
+                    ;
+            return bool.TryParse(v, out var r) ? r : @default;
+        }
+        private static bool PromptBool(string label, bool @default)
+        {
+            Console.Write(label + ": ");
+            var v = Console.ReadLine();
+            return bool.TryParse(v, out var r) ? r : @default;
         }
 
         /// <summary>
@@ -261,6 +444,7 @@ namespace WorldEditor
             string csServer2Dir = Path.Combine(worldDir, "..", "..", "csServer2");
             if (Directory.Exists(Path.Combine(csServer2Dir, "world"))) Directory.Delete(Path.Combine(csServer2Dir, "world"), recursive: true);
             CopyDirectory(worldDir, Path.Combine(csServer2Dir, "world"));
+            Console.WriteLine("World pushed to csServer2/world");
         }
         /// <summary>
         /// Recursively copies a directory and its contents to a new location. If overwrite is true, existing files will be overwritten. (ChatGPT written)
@@ -425,7 +609,7 @@ namespace WorldEditor
                             if (string.IsNullOrWhiteSpace(pick)) break;
                             if (!int.TryParse(pick, out var pidx) || pidx < 0 || pidx >= db.Count) { Console.WriteLine("Invalid index"); continue; }
                             var chosen = db[pidx];
-                            loc.Shop.Add(new Item { Name = chosen.Name, Icon = chosen.Icon, Description = chosen.Description, Value = chosen.Value });
+                            loc.Shop.Add(new Item { Name = chosen.Name, Icon = chosen.Icon, Description = chosen.Description, Value = chosen.Value, isEquippable = chosen.isEquippable, OnUseMessage = chosen.OnUseMessage });
                             Console.Write("Add another item? (y/N): "); var moreI = Console.ReadLine();
                             if (string.IsNullOrWhiteSpace(moreI) || !moreI.Trim().Equals("y", StringComparison.OrdinalIgnoreCase)) break;
                         }
@@ -511,7 +695,6 @@ namespace WorldEditor
                 return new List<Item>();
             }
         }
-
         /// <summary>
         /// Saves the item database to a JSON file. Creates the directory if it doesn't exist.
         /// </summary>

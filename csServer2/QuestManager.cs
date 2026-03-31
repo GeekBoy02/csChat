@@ -44,7 +44,7 @@ namespace SocketServer
             Program.SendMessage(client, "You completed the <" + user.ActiveQuest.Name + "> Quest");
             Program.SendMessage(client, "You gained " + user.ActiveQuest.XP_reward + " XP and " + user.ActiveQuest.Credit_reward + " CREDITS");
             user.ActiveQuest = new Quest().DefaultQuest();
-            User.SaveToJsonFile(user);
+            User.SaveUserToJsonFile(user);
         }
         /// <summary>
         /// AdvanceQuestStep is a method that progresses the user's active quest by one step. It checks if the current step is complete, if the user is alive, 
@@ -80,7 +80,7 @@ namespace SocketServer
                 foreach (Enemy enemy in currentStep.Enemies)
                 {
                     Game.DisplayProfile(client, enemy.userObj);
-                    User.Fight(client, user, enemy.userObj);
+                    User.Fight(client, user, enemy.userObj, Program.speedModItemNamesListPath, Program.intModItemNamesListPath, Program.luckModItemNamesListPath);
                     if (user.IsDead)
                     {
                         Program.SendMessage(client, "You died during the last Fight and abandoned the Quest");
