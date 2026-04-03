@@ -48,6 +48,8 @@ namespace SocketServer
         {
             return shop.Find(item => item.Name == itemName);
         }
+        [JsonPropertyName("modStation")]
+        public bool ModStation { get; set; }
 
         [JsonPropertyName("x")]
         public int x { get; set; }
@@ -66,9 +68,10 @@ namespace SocketServer
             Quests = new List<Quest>();
             Enemies = new List<Enemy>();
             Shop = new List<Item>();
+            ModStation = true;
             Visitors = new List<User>();
         }
-        
+
         /// <summary>
         /// Adds all online users to their respective locations based on their current location.
         /// </summary>
@@ -188,12 +191,12 @@ namespace SocketServer
             Directory.CreateDirectory($"world/{location.Name}");
             File.WriteAllText($"world/{location.Name}/{location.Name}.json", json);
         }        /// <summary>
-        /// Saves a location to a JSON file, overwriting any existing file.
-        /// </summary>
-        /// <param name="location">The location to save.</param>        /// <summary>
-        /// Saves a location to a JSON file, overwriting any existing file.
-        /// </summary>
-        /// <param name="location">The location to save.</param>
+                 /// Saves a location to a JSON file, overwriting any existing file.
+                 /// </summary>
+                 /// <param name="location">The location to save.</param>        /// <summary>
+                 /// Saves a location to a JSON file, overwriting any existing file.
+                 /// </summary>
+                 /// <param name="location">The location to save.</param>
         public void SaveToJsonFile(Location location)
         {
             // Create a json serializer options object with some settings

@@ -184,7 +184,7 @@ namespace SocketServer
                         }
                         else
                         {
-                            SendMessage(client, "Unknown Coammnd");
+                            SendMessage(client, "Unknown Command");
                         }
                     }
                 }

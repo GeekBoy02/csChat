@@ -32,6 +32,18 @@ namespace SocketServer
 
         }
 
+        public static Item newItem(Item oldItem)
+        {
+            return new Item
+            {
+                Name = oldItem.Name,
+                Icon = oldItem.Icon,
+                Description = oldItem.Description,
+                Value = oldItem.Value,
+                OnUseMessage = oldItem.OnUseMessage,
+                isEquippable = oldItem.isEquippable
+            };
+        }
         /// <summary>
         /// Initializes this item as a Bandage, a consumable that restores health.
         /// </summary>
@@ -133,18 +145,18 @@ namespace SocketServer
                 switch (current.Name)
                 {
                     // case "Bandage":
-                        //if (sendMsg) Program.SendMessage(client, "You used a Bandage.");
-                        //user.Hp += current.Value * 5;
-                        // user.HealUser(client, current.Value * 5, sendMsg: false);
-                        // if (user.Inventory.Remove(current)) usedCount++;
-                        // break;
+                    //if (sendMsg) Program.SendMessage(client, "You used a Bandage.");
+                    //user.Hp += current.Value * 5;
+                    // user.HealUser(client, current.Value * 5, sendMsg: false);
+                    // if (user.Inventory.Remove(current)) usedCount++;
+                    // break;
 
                     // case "Drink":
-                        //if (sendMsg) Program.SendMessage(client, "You drank a Drink.");
-                        //user.Hp += current.Value * 5;
-                        // user.HealUser(client, current.Value * 5, sendMsg: false);
-                        // if (user.Inventory.Remove(current)) usedCount++;
-                        // break;
+                    //if (sendMsg) Program.SendMessage(client, "You drank a Drink.");
+                    //user.Hp += current.Value * 5;
+                    // user.HealUser(client, current.Value * 5, sendMsg: false);
+                    // if (user.Inventory.Remove(current)) usedCount++;
+                    // break;
 
                     // case "Boots":
                     //     if (sendMsg) ServerCallbacks.SendMessage?.Invoke(client, "You equipped some Boots.");

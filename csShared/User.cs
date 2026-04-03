@@ -221,6 +221,14 @@ namespace SocketServer
         {
             return Inventory.Find(item => item.Name == itemName);
         }
+        public static int GetItemCountInInventory(List<Item> inventory, string itemName)
+        {
+            return inventory.Count(item => item.Name == itemName);
+        }
+        public int GetItemCountInInventory(string itemName)
+        {
+            return Inventory.Count(item => item.Name == itemName);
+        }
         /// <summary>
         /// Adds an [newItem] to the users inventory and sends him a message
         /// </summary>
@@ -711,6 +719,41 @@ namespace SocketServer
                 {
                     ServerCallbacks.SendMessage?.Invoke(client, "You don't have enough CREDITS ");
                 }
+            }
+        }
+
+        public void ModItem(TcpClient client, string itemName)
+        {
+            Item item = FindItemInInventory(itemName);
+            Item newItem = Item.newItem(item);
+
+            int itemAmount = Inventory.Count(i => i.Name == itemName);
+            if (itemAmount >= 2)
+            {
+                Random rand = new Random();
+                if (rand.Next(2) == 0)
+                {
+                    newItem.Value++;
+                    // if (!newItem.Name.EndsWith("+"))
+                    // {
+                    newItem.Name = newItem.Name + "+";
+                    // }
+                    RemoveItemFromInventory(FindItemInInventory(itemName));
+                    RemoveItemFromInventory(FindItemInInventory(itemName));
+                    AddItemToInventory(newItem);
+                    ServerCallbacks.SendMessage?.Invoke(client, $"You modified {itemName}");
+                }
+                else
+                {
+                    ServerCallbacks.SendMessage?.Invoke(client, "You failed to modify the item");
+                    RemoveItemFromInventory(FindItemInInventory(itemName));
+                    RemoveItemFromInventory(FindItemInInventory(itemName));
+                    // SaveUserToJsonFile(this);
+                }
+            }
+            else
+            {
+                ServerCallbacks.SendMessage?.Invoke(client, "You need at least 2 of the same item to modify it ");
             }
         }
     }

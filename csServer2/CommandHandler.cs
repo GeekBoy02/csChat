@@ -36,6 +36,8 @@ namespace SocketServer
             Commands["move"] = Move;
             Commands["m"] = Move;
 
+            Commands["mod"] = Mod;
+
             Commands["quest"] = Quest;
             Commands["q"] = Quest;
             Commands["qg"] = Quest;
@@ -53,6 +55,7 @@ namespace SocketServer
             Commands["ir"] = Inventory;
             Commands["ii"] = Inventory;
             Commands["is"] = Inventory;
+            Commands["ic"] = Inventory;
             Commands["isa"] = Inventory;
 
             Commands["class"] = Class;
@@ -93,6 +96,7 @@ namespace SocketServer
                 "!use [item name] - Use item from your inventory\n" +
                 "!i [item name] - Use item from your inventory\n" +
                 "!i [item name] [amount] - Use [amount] of [item name] from your inventory\n" +
+                "!ic - Get item count in inventory\n" +
                 "!ir [item name] - Remove item from your inventory\n" +
                 "!ii [item name] - Inspect item in your inventory\n" +
                 "!is [item name] - Sell item from your inventory\n" +
@@ -101,6 +105,7 @@ namespace SocketServer
                 "!shop [item name] - Buy [Item name] from the Shop \n" +
                 "!shop [item name] [amount]- Buy [amount] of [Item name] from the Shop \n" +
                 "!move [location name] - move to [location name] \n" +
+                "!mod [item name] - Modify an item in your inventory, you need two of the same item in your inventory\n" +
                 "!look around - Reveals info about your current location \n" +
                 "!revive - Revives you for a price\n" +
                 "!fight [enemy_level] - Initiates a battle with an enemy of the specified level\n" +
@@ -220,6 +225,26 @@ namespace SocketServer
             {
                 Program.SendMessage(client, "Input a valid Location  ");
             }
+        }
+
+        private static void Mod(TcpClient client, User user, string cmd, string[] args)
+        {
+            if (args.Length == 0)
+            {
+                return;
+            }
+
+            string itemName = string.Join(" ", args);
+
+            if (user.FindItemInInventory(itemName) != null)
+            {
+                user.ModItem(client, itemName);
+            }
+            else
+            {
+                Program.SendMessage(client, "Input a valid Item name");
+            }
+            User.SaveUserToJsonFile(user);
         }
 
         // QUEST START
@@ -463,6 +488,23 @@ namespace SocketServer
                     }
                     break;
 
+                case "ic":
+
+                    // Get item count
+                    if (user.Inventory == null || user.Inventory.Count == 0)
+                    {
+                        Program.SendMessage(client, "Inventory is empty.");
+                        break;
+                    }
+
+                    var itemCounts = user.Inventory
+                        .GroupBy(i => i.Name)
+                        .Select(g => $"{g.First().Icon}-{g.Key} x{g.Count()}");
+
+                    Program.SendMessage(client, string.Join(" | ", itemCounts));
+
+                    break;
+
                 case "ii":
                     if (args.Length == 0)
                         Program.SendMessage(client, "Usage: !ii [item]");
@@ -641,7 +683,7 @@ namespace SocketServer
             //enemy = Enemy.RandomizeStats(enemy, false, true);
             Program.SendMessage(client, "Your Opponent:");
             Game.DisplayProfile(client, enemy.userObj);
-            User.AttackEnemy(client, user, enemy.userObj, Item.GetItemNames(Program.speedModItemNamesListPath),Item.GetItemNames(Program.intModItemNamesListPath), Item.GetItemNames(Program.luckModItemNamesListPath));                          // player attacks enemy
+            User.AttackEnemy(client, user, enemy.userObj, Item.GetItemNames(Program.speedModItemNamesListPath), Item.GetItemNames(Program.intModItemNamesListPath), Item.GetItemNames(Program.luckModItemNamesListPath));                          // player attacks enemy
             if (eDead)
             {
                 User.LevelUp(client, user);                                         // check if player can lvl up after attack

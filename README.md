@@ -34,6 +34,8 @@ for commands when connected.
 - add a party feature
 - add player trading 
 - add player market
+- expand Item crafting/modification (add probability depending on the intellect attribute)
+
 
 ## Attributes
 - Speed:        decides who strikes first, is the "attack value".
