@@ -236,9 +236,16 @@ namespace SocketServer
 
             string itemName = string.Join(" ", args);
 
-            if (user.FindItemInInventory(itemName) != null)
+            Location loc = Program.FindLocation(user.CurrentLocation);
+
+            if (user.FindItemInInventory(itemName) != null && loc.ModStation)
             {
                 user.ModItem(client, itemName);
+            }
+            else if (loc == null || !loc.ModStation)
+            {
+                Program.SendMessage(client, "There is no mod station here.");
+                return;
             }
             else
             {

@@ -424,8 +424,8 @@ namespace WorldEditor
             Console.Write("level (int): "); var lvlStr = Console.ReadLine(); int.TryParse(lvlStr, out var level);
             Console.Write("description: "); var desc = Console.ReadLine() ?? "";
             Console.Write("welcomeMsg: "); var welcome = Console.ReadLine() ?? "";
-
-            var loc = new Location { Name = name, Level = level, Description = desc, WelcomeMessage = welcome, x = 0, y = 0 };
+            Console.Write("has a mod station: (true/false)"); var hasModStation = Console.ReadLine() ?? "";
+            var loc = new Location { Name = name, Level = level, Description = desc, WelcomeMessage = welcome, ModStation = bool.Parse(hasModStation), x = 0, y = 0 };
 
             // create a folder per location and write the JSON inside it
             var locationDir = Path.Combine(worldDir, name);
@@ -493,6 +493,9 @@ namespace WorldEditor
             Console.Write("new description (enter to keep): "); var desc = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(desc)) loc.Description = desc;
             Console.WriteLine("current welcomeMsg: " + loc.WelcomeMessage);
             Console.Write("new welcomeMsg (enter to keep): "); var wm = Console.ReadLine(); if (!string.IsNullOrWhiteSpace(wm)) loc.WelcomeMessage = wm;
+            Console.WriteLine("current has mod station: " + loc.ModStation);
+            Console.Write("new has mod station (enter to keep): "); var modStation = Console.ReadLine(); if (bool.TryParse(modStation, out var nms)) loc.ModStation = nms;
+            
             // allow editing enemies (show loot counts)
             Console.WriteLine($"Enemies ({loc.Enemies.Count}):");
             for (int i = 0; i < loc.Enemies.Count; i++)
