@@ -1,6 +1,6 @@
 # csChat
 
-Minimalist Client/Server TextRPG and Chat.
+Minimalist Client/Server TextRPG and Chat Creation Toolkit.
 
 !help
 for commands when connected.
